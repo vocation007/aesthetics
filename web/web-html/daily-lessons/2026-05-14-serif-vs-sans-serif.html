@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>衬线体与非衬线体：字形里的性格、秩序与时代感</title>
+  <style>
+    :root {
+      --paper: #f5f1e8;
+      --paper-deep: #e6dccb;
+      --ink: #171615;
+      --muted: #706a61;
+      --line: #d7cec0;
+      --red: #b6412d;
+      --green: #4d7254;
+      --blue: #246c79;
+      --gold: #a37a2c;
+      --white: #fffaf0;
+      --measure: 760px;
+      --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+      --serif: Georgia, "Times New Roman", "Songti SC", "SimSun", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.75;
+      letter-spacing: 0;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        linear-gradient(90deg, rgba(23, 22, 21, .045) 1px, transparent 1px) 0 0 / 80px 80px,
+        linear-gradient(0deg, rgba(23, 22, 21, .035) 1px, transparent 1px) 0 0 / 80px 80px,
+        var(--paper);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      overflow: hidden;
+    }
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      align-items: end;
+      padding: 48px clamp(20px, 5vw, 72px) 56px;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+    }
+
+    .hero::before {
+      content: "Aa";
+      position: absolute;
+      top: 4vh;
+      right: -3vw;
+      font-family: var(--serif);
+      font-size: clamp(180px, 31vw, 520px);
+      line-height: .8;
+      color: rgba(182, 65, 45, .13);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, .95fr);
+      gap: clamp(32px, 6vw, 96px);
+      align-items: end;
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .kicker {
+      margin: 0 0 28px;
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-family: var(--serif);
+      font-size: clamp(44px, 5vw, 78px);
+      line-height: 1.02;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .title-line {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .hero-note {
+      max-width: 520px;
+      padding-top: 28px;
+      border-top: 2px solid var(--ink);
+    }
+
+    .hero-note p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(16px, 1.45vw, 21px);
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, .55);
+      color: var(--muted);
+      padding: 7px 11px;
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .specimen-band {
+      border-bottom: 1px solid var(--line);
+      background: var(--ink);
+      color: var(--white);
+      padding: 42px clamp(20px, 5vw, 72px);
+    }
+
+    .specimen-grid {
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: rgba(245, 241, 232, .2);
+      border: 1px solid rgba(245, 241, 232, .18);
+    }
+
+    .specimen {
+      min-height: 310px;
+      padding: clamp(24px, 4vw, 46px);
+      background: var(--ink);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .specimen .letter {
+      font-size: clamp(116px, 18vw, 250px);
+      line-height: .82;
+      color: var(--white);
+    }
+
+    .specimen.serif .letter {
+      font-family: var(--serif);
+      font-weight: 500;
+    }
+
+    .specimen.sans .letter {
+      font-family: Helvetica, Arial, sans-serif;
+      font-weight: 800;
+    }
+
+    .caption {
+      color: rgba(255, 250, 240, .68);
+      font-size: 14px;
+      max-width: 430px;
+    }
+
+    main {
+      background: var(--paper);
+    }
+
+    .section {
+      padding: 76px clamp(20px, 5vw, 72px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-inner {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .article-grid {
+      display: grid;
+      grid-template-columns: minmax(160px, 260px) minmax(0, var(--measure));
+      gap: clamp(32px, 6vw, 86px);
+      align-items: start;
+    }
+
+    .section-label {
+      position: sticky;
+      top: 24px;
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 750;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0 0 24px;
+      font-family: var(--serif);
+      font-size: clamp(32px, 4.2vw, 56px);
+      line-height: 1.06;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 34px 0 12px;
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    p {
+      margin: 0 0 18px;
+    }
+
+    .lead {
+      font-size: clamp(20px, 2.3vw, 30px);
+      line-height: 1.48;
+      color: var(--ink);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .figure {
+      margin: 38px 0;
+      border-top: 2px solid var(--ink);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 0 16px;
+    }
+
+    .figure img,
+    .figure svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: var(--paper);
+    }
+
+    .figure figcaption {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 12px;
+    }
+
+    .quote-rule {
+      margin: 38px 0;
+      padding: 28px 0 0;
+      border-top: 2px solid var(--red);
+      font-family: var(--serif);
+      font-size: clamp(24px, 3vw, 40px);
+      line-height: 1.25;
+    }
+
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      margin-top: 36px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .principle {
+      background: var(--white);
+      padding: 24px 18px;
+      min-height: 190px;
+    }
+
+    .principle b {
+      display: block;
+      margin-bottom: 18px;
+      font-size: 14px;
+      color: var(--red);
+    }
+
+    .principle p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.62;
+    }
+
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      margin-top: 34px;
+    }
+
+    .case {
+      background: var(--white);
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .case-visual {
+      min-height: 190px;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      padding: 22px;
+      background:
+        linear-gradient(90deg, rgba(23, 22, 21, .05) 1px, transparent 1px) 0 0 / 34px 34px,
+        var(--paper);
+    }
+
+    .case-visual.vogue {
+      font-family: Didot, "Bodoni 72", Georgia, serif;
+      font-size: clamp(46px, 6vw, 76px);
+      letter-spacing: .02em;
+    }
+
+    .case-visual.metro {
+      background: #171615;
+      color: var(--white);
+      font-family: Helvetica, Arial, sans-serif;
+      font-weight: 800;
+      font-size: clamp(40px, 5vw, 68px);
+    }
+
+    .case-visual.apple {
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 650;
+    }
+
+    .case-body {
+      padding: 24px;
+    }
+
+    .case-body h3 {
+      margin-top: 0;
+    }
+
+    .case-body p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.72;
+    }
+
+    .scale {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 30px 0 0;
+    }
+
+    .scale-item {
+      border-top: 3px solid var(--ink);
+      padding-top: 12px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .scale-item:nth-child(2) {
+      border-color: var(--green);
+    }
+
+    .scale-item:nth-child(3) {
+      border-color: var(--blue);
+    }
+
+    .scale-item:nth-child(4) {
+      border-color: var(--red);
+    }
+
+    .exercise {
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .exercise .section-label,
+    .exercise .muted {
+      color: rgba(255, 250, 240, .64);
+    }
+
+    .exercise h2 {
+      color: var(--white);
+    }
+
+    .exercise-list {
+      display: grid;
+      gap: 1px;
+      background: rgba(255, 250, 240, .22);
+      border: 1px solid rgba(255, 250, 240, .2);
+      margin-top: 34px;
+    }
+
+    .exercise-step {
+      display: grid;
+      grid-template-columns: 90px minmax(0, 1fr);
+      gap: 24px;
+      background: var(--ink);
+      padding: 24px;
+    }
+
+    .exercise-step span {
+      color: var(--gold);
+      font-family: var(--serif);
+      font-size: 36px;
+      line-height: 1;
+    }
+
+    .exercise-step p {
+      margin: 0;
+      color: rgba(255, 250, 240, .8);
+    }
+
+    .reflection {
+      padding: 90px clamp(20px, 5vw, 72px);
+      background: var(--red);
+      color: var(--white);
+    }
+
+    .reflection-inner {
+      width: min(980px, 100%);
+      margin: 0 auto;
+    }
+
+    .reflection p {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(32px, 5vw, 72px);
+      line-height: 1.08;
+    }
+
+    .footer {
+      padding: 28px clamp(20px, 5vw, 72px);
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      display: grid;
+      gap: 2px;
+    }
+
+    .footer-brand strong {
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .footer-brand small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid,
+      .article-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-label {
+        position: static;
+      }
+
+      .principles,
+      .case-grid,
+      .scale {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .hero {
+        min-height: 88vh;
+        padding-top: 32px;
+      }
+
+      .specimen-grid,
+      .principles,
+      .case-grid,
+      .scale {
+        grid-template-columns: 1fr;
+      }
+
+      .specimen {
+        min-height: 230px;
+      }
+
+      .exercise-step {
+        grid-template-columns: 1fr;
+      }
+
+      .title-line {
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-grid">
+        <div>
+          <p class="kicker">审美的逻辑 · ISSUE 001 · 2026-05-14</p>
+          <h1>
+            <span class="title-line">衬线体 / 非衬线体</span>
+            <span class="title-line">字形里的性格、</span>
+            <span class="title-line">秩序与时代感</span>
+          </h1>
+        </div>
+        <div class="hero-note">
+          <p>AI 可以生成无数版式，但设计师仍然要判断：一种文字的语气是否准确，是否让内容被正确地相信。</p>
+          <div class="meta-row" aria-label="课程标签">
+            <span class="tag">字体基础</span>
+            <span class="tag">排版判断</span>
+            <span class="tag">5-8 分钟</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="specimen-band" aria-label="字体标本对照">
+      <div class="specimen-grid">
+        <div class="specimen serif">
+          <div class="letter">Aa</div>
+          <div class="caption">衬线体像被书写、雕刻、印刷传统沉淀过的文字。它常带来文学、制度、历史、精致与权威的联想。</div>
+        </div>
+        <div class="specimen sans">
+          <div class="letter">Aa</div>
+          <div class="caption">非衬线体像被系统分发的信息。小写 a 的钩状端点是双层 a 的 terminal，不是衬线；它常带来清晰、理性、公共、当代与界面化的联想。</div>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section class="section">
+        <div class="section-inner article-grid">
+          <div class="section-label">01 · Core idea</div>
+          <article>
+            <p class="lead">如果把平面设计看成“组织视觉注意力”的工作，那么字体就是最基础、也最容易被低估的材料。</p>
+            <p>很多设计看起来“不高级”“不稳”“不对劲”，并不是因为配色多差，而是字体的性格、信息层级和场景语气没有对齐。衬线体与非衬线体，是理解字体审美的第一道门。</p>
+            <p>简单说，衬线体是在笔画末端带有小装饰、小收笔或横脚的字体；非衬线体则去掉这些收笔装饰，笔画更简洁直接。但真正重要的不是“有没有小脚”，而是它们背后代表的阅读经验、媒介历史和视觉气质。</p>
+            <figure class="figure">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="anatomy-title anatomy-desc">
+                <title id="anatomy-title">衬线体与非衬线体字形结构对照图</title>
+                <desc id="anatomy-desc">图中对比了衬线体的末端收笔和粗细对比，以及非衬线体的干净端点和低对比笔画。</desc>
+                <defs>
+                  <style>
+                    .anatomy-bg { fill: #f5f1e8; }
+                    .anatomy-ink { fill: #171615; }
+                    .anatomy-muted { fill: #6f6a61; }
+                    .anatomy-red { stroke: #b6412d; fill: none; }
+                    .anatomy-blue { stroke: #246c79; fill: none; }
+                    .anatomy-green { stroke: #4d7254; fill: none; }
+                    .anatomy-label { font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; font-size: 28px; letter-spacing: .04em; }
+                    .anatomy-small { font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; font-size: 21px; }
+                    .anatomy-serif { font-family: Georgia, "Times New Roman", serif; font-size: 430px; }
+                    .anatomy-sans { font-family: Helvetica, Arial, sans-serif; font-size: 410px; font-weight: 700; }
+                    .anatomy-rule { stroke: #d7cec0; stroke-width: 2; }
+                    .anatomy-axis { stroke-width: 4; stroke-linecap: round; }
+                    .anatomy-callout { stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+                  </style>
+                </defs>
+                <rect class="anatomy-bg" x="0" y="0" width="1600" height="900"/>
+                <line class="anatomy-rule" x1="800" y1="96" x2="800" y2="804"/>
+                <text class="anatomy-label anatomy-ink" x="150" y="110">SERIF / 衬线体</text>
+                <text class="anatomy-small anatomy-muted" x="150" y="150">历史感、书写痕迹、长文节奏、制度与文学气质</text>
+                <text class="anatomy-label anatomy-ink" x="950" y="110">SANS-SERIF / 非衬线体</text>
+                <text class="anatomy-small anatomy-muted" x="950" y="150">结构化、清晰、系统、公共信息与屏幕界面</text>
+                <text class="anatomy-serif anatomy-ink" x="195" y="610">A</text>
+                <text class="anatomy-sans anatomy-ink" x="1000" y="610">A</text>
+                <line class="anatomy-red anatomy-callout" x1="315" y1="610" x2="210" y2="710"/>
+                <circle cx="210" cy="710" r="8" fill="#b6412d"/>
+                <text class="anatomy-small anatomy-muted" x="130" y="760">衬线：笔画末端的收笔</text>
+                <text class="anatomy-small anatomy-muted" x="130" y="790">让字形带有书写与印刷传统</text>
+                <line class="anatomy-green anatomy-callout" x1="430" y1="282" x2="540" y2="220"/>
+                <circle cx="430" cy="282" r="8" fill="#4d7254"/>
+                <text class="anatomy-small anatomy-muted" x="548" y="214">粗细对比</text>
+                <text class="anatomy-small anatomy-muted" x="548" y="244">形成优雅、锋利或权威的语气</text>
+                <line class="anatomy-blue anatomy-callout" x1="1118" y1="610" x2="1016" y2="710"/>
+                <circle cx="1118" cy="610" r="8" fill="#246c79"/>
+                <text class="anatomy-small anatomy-muted" x="970" y="760">无衬线端点：更直接</text>
+                <text class="anatomy-small anatomy-muted" x="970" y="790">适合导视、界面和系统化信息</text>
+                <line class="anatomy-green anatomy-callout" x1="1196" y1="280" x2="1320" y2="220"/>
+                <circle cx="1196" cy="280" r="8" fill="#4d7254"/>
+                <text class="anatomy-small anatomy-muted" x="1328" y="214">低对比笔画</text>
+                <text class="anatomy-small anatomy-muted" x="1328" y="244">降低情绪，强化秩序与可读性</text>
+                <line class="anatomy-axis anatomy-red" x1="150" y1="842" x2="650" y2="842"/>
+                <line class="anatomy-axis anatomy-blue" x1="950" y1="842" x2="1450" y2="842"/>
+                <text class="anatomy-small anatomy-muted" x="150" y="872">更像“被沉淀的文字”</text>
+                <text class="anatomy-small anatomy-muted" x="950" y="872">更像“被系统分发的信息”</text>
+              </svg>
+              <figcaption>图解：衬线不是单纯装饰，非衬线也不只是“少了装饰”。它们分别携带不同的媒介经验与信息语气。</figcaption>
+            </figure>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner article-grid">
+          <div class="section-label">02 · History</div>
+          <article>
+            <h2>衬线不是装饰，而是书写痕迹</h2>
+            <p>衬线体的起源常被追溯到罗马碑刻、手写书法和早期印刷。你看到的那些小小末端处理，并不是随便加上去的花边，而是来自工具、手势和材料的痕迹：凿刻石碑时的收刀，宽头笔书写时的转折，金属活字时代对字形稳定性的塑造。</p>
+            <p>所以衬线体天然带有一种“来自旧媒介的重量”：书籍、报纸、文学、制度、历史、学术、经典。它让文字看起来像是被沉淀过，而不是刚刚从屏幕界面里弹出来。</p>
+            <p>这也是为什么许多报纸和书籍正文长期使用衬线体。它们不只是“传统”，也是一种阅读节奏的安排。衬线帮助字母之间形成更连续的横向流动，在长篇阅读里容易产生稳定、细密、有韵律的视觉线索。</p>
+            <div class="quote-rule">好的字体选择不是“看起来漂亮”，而是让内容以正确的身份出现。</div>
+            <h2>非衬线体不是“现代”，而是现代主义的视觉语言</h2>
+            <p>非衬线体兴起于 19 世纪，但真正成为现代设计的核心语言，是在 20 世纪现代主义、包豪斯、瑞士国际主义风格中。</p>
+            <p>它的美学方向很明确：减少装饰，强调结构、功能、理性和清晰度。你可以把它理解成工业时代和信息时代共同推崇的一种视觉伦理：少一点个人笔触，多一点系统秩序；少一点历史暗示，多一点当下效率。</p>
+            <p>但“中性”也可能变成平庸。非衬线体用不好，会让设计变得像模板、像默认界面、像没有判断。它干净，但不自动高级；它现代，但不自动有审美。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner">
+          <div class="article-grid">
+            <div class="section-label">03 · Judgement</div>
+            <article>
+              <h2>不要问哪种更好，要问语气是否准确</h2>
+              <p>看衬线体与非衬线体，最关键的是判断“语气”。一个字体选择好不好，至少看五点。</p>
+            </article>
+          </div>
+          <div class="principles" aria-label="五个字体审美判断点">
+            <div class="principle">
+              <b>01 身份</b>
+              <p>它是否匹配内容的身份？文学杂志、法律文本、奢侈品牌和机场导视需要完全不同的语气。</p>
+            </div>
+            <div class="principle">
+              <b>02 距离</b>
+              <p>海报标题、书籍正文、手机按钮、导视系统的阅读条件不同，字号与字重不能照搬。</p>
+            </div>
+            <div class="principle">
+              <b>03 系统</b>
+              <p>好字体不只是一款 Regular。完整字族才能支撑标题、正文、注释、数字和多端界面。</p>
+            </div>
+            <div class="principle">
+              <b>04 细节</b>
+              <p>看 a、g、e、R、S，也看中文重心与灰度。廉价字体常败在曲线、字腔和转折。</p>
+            </div>
+            <div class="principle">
+              <b>05 同频</b>
+              <p>字体要和图像、留白、网格一起成立。漂亮字体放进拥挤版式，也会显得做作。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner">
+          <div class="article-grid">
+            <div class="section-label">04 · Cases</div>
+            <article>
+              <h2>同样是字体，为什么气质差这么多</h2>
+              <p>下面三个案例不要求你记住字体名称，而是训练你看见：字体如何参与品牌、媒介和信息任务。</p>
+            </article>
+          </div>
+          <div class="case-grid">
+            <article class="case">
+              <div class="case-visual vogue">Vogue</div>
+              <div class="case-body">
+                <h3>Vogue 与 Didot 气质</h3>
+                <p>Vogue 标志接近高对比衬线体的气质：细处极细，粗处坚决，纵向姿态挺拔。它不追求亲切，而追求距离感，与高级时装摄影、大片留白和冷静构图自然匹配。</p>
+              </div>
+            </article>
+            <article class="case">
+              <div class="case-visual metro">Helvetica</div>
+              <div class="case-body">
+                <h3>纽约地铁导视与 Helvetica</h3>
+                <p>在嘈杂、移动、光线复杂的公共环境中，字体需要快速被识别。Helvetica 的中性、均衡和稳定性，让设计退到信息后面，这正是公共导视的美学。</p>
+              </div>
+            </article>
+            <article class="case">
+              <div class="case-visual apple">San Francisco</div>
+              <div class="case-body">
+                <h3>Apple 的系统字体</h3>
+                <p>San Francisco 的价值不在某个字母特别漂亮，而在于它能服务多设备、多尺寸和多语言环境。AI时代的设计师要能判断字体是否能支撑一个系统。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner article-grid">
+          <div class="section-label">05 · Mistakes</div>
+          <article>
+            <h2>四个常见误区</h2>
+            <h3>衬线体等于高级</h3>
+            <p>不对。粗糙的衬线体、错误的字距、拥挤的版式，会让设计显得廉价而老派。高级感来自比例、节奏、材料和场景共同成立。</p>
+            <h3>非衬线体等于现代</h3>
+            <p>也不对。很多非衬线体只是默认、平淡、缺少记忆点。现代感不是去掉衬线，而是让形式服务于清晰的秩序。</p>
+            <h3>字体只看标题</h3>
+            <p>真正的字体判断要看全套场景：标题、正文、注释、按钮、数字、英文、中文混排、移动端、印刷品。一个漂亮标题字体，未必能做完整系统。</p>
+            <h3>中文字体可以随便配英文字体</h3>
+            <p>中英文混排很考验审美。中文方块字的重心、灰度和字面，与拉丁字母差异很大。中文黑体配过于轻佻的英文字体，或中文宋体配过于工业的西文非衬线体，都可能出现气质断裂。</p>
+            <div class="scale" aria-label="字体语气观察标尺">
+              <div class="scale-item">权威 / 亲切</div>
+              <div class="scale-item">文学 / 工业</div>
+              <div class="scale-item">系统 / 个性</div>
+              <div class="scale-item">沉淀 / 即时</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section exercise">
+        <div class="section-inner article-grid">
+          <div class="section-label">06 · Practice</div>
+          <article>
+            <h2>今天的观察练习</h2>
+            <p class="muted">花 20 分钟，找三个你今天会接触到的界面或印刷物：一个 App 首页或设置页，一个品牌官网或电商页面，一本书、杂志、包装或街头招牌。</p>
+            <div class="exercise-list">
+              <div class="exercise-step">
+                <span>01</span>
+                <p>判断它主要使用衬线体还是非衬线体；如果是混排，观察哪一种负责标题，哪一种负责正文或功能信息。</p>
+              </div>
+              <div class="exercise-step">
+                <span>02</span>
+                <p>用三个词描述字体给你的第一语气：权威、亲切、理性、昂贵、快速、年轻、传统、实验，都可以。</p>
+              </div>
+              <div class="exercise-step">
+                <span>03</span>
+                <p>问自己：这种语气和内容是否一致？如果换成另一类字体，会变得更准确，还是更失焦？</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="reflection" aria-label="反思问题">
+        <div class="reflection-inner">
+          <p>当你下次选择字体时，你是在选择一个形状，还是在选择一种“内容应该如何被相信”的方式？</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span class="footer-brand">
+        <strong>审美的逻辑</strong>
+        <small>有关视觉、设计与判断力</small>
+        </span>
+      <span>Powered by Skip</span>
+    </footer>
+  </div>
+</body>
+</html>

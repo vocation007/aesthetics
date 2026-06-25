@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>格式塔原则：为什么眼睛总想把世界整理成整体</title>
+  <style>
+    :root {
+      --paper: #f4efe5;
+      --paper-2: #e8dfcf;
+      --ink: #161616;
+      --muted: #6d675f;
+      --line: #d4c8b8;
+      --red: #a9402d;
+      --blue: #235f73;
+      --green: #58765a;
+      --gold: #a77d30;
+      --cream: #fffaf0;
+      --measure: 760px;
+      --serif: Georgia, "Times New Roman", "Songti SC", "SimSun", serif;
+      --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.76;
+      letter-spacing: 0;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(90deg, rgba(22, 22, 22, .04) 1px, transparent 1px) 0 0 / 72px 72px,
+        linear-gradient(0deg, rgba(22, 22, 22, .032) 1px, transparent 1px) 0 0 / 72px 72px,
+        var(--paper);
+    }
+
+    .page { overflow: hidden; }
+
+    .hero {
+      min-height: 92vh;
+      display: grid;
+      align-items: end;
+      padding: 46px clamp(20px, 5vw, 72px) 58px;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 8vh 6vw auto auto;
+      width: min(44vw, 560px);
+      aspect-ratio: 1;
+      border: 1px solid rgba(22, 22, 22, .08);
+      background:
+        radial-gradient(circle at 25% 30%, rgba(169, 64, 45, .24) 0 5%, transparent 5.4%),
+        radial-gradient(circle at 42% 30%, rgba(169, 64, 45, .24) 0 5%, transparent 5.4%),
+        radial-gradient(circle at 59% 30%, rgba(169, 64, 45, .24) 0 5%, transparent 5.4%),
+        radial-gradient(circle at 25% 49%, rgba(35, 95, 115, .22) 0 5%, transparent 5.4%),
+        radial-gradient(circle at 42% 49%, rgba(35, 95, 115, .22) 0 5%, transparent 5.4%),
+        radial-gradient(circle at 59% 49%, rgba(35, 95, 115, .22) 0 5%, transparent 5.4%),
+        radial-gradient(circle at 25% 68%, rgba(88, 118, 90, .24) 0 5%, transparent 5.4%),
+        radial-gradient(circle at 42% 68%, rgba(88, 118, 90, .24) 0 5%, transparent 5.4%),
+        radial-gradient(circle at 59% 68%, rgba(88, 118, 90, .24) 0 5%, transparent 5.4%);
+      opacity: .85;
+      z-index: -1;
+    }
+
+    .hero-grid {
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, 470px);
+      gap: clamp(34px, 6vw, 96px);
+      align-items: end;
+    }
+
+    .kicker {
+      margin: 0 0 26px;
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 760;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 860px;
+      font-family: var(--serif);
+      font-size: clamp(48px, 6.3vw, 102px);
+      line-height: 1.01;
+      font-weight: 500;
+    }
+
+    .title-line {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .hero-note {
+      border-top: 2px solid var(--ink);
+      padding-top: 26px;
+    }
+
+    .hero-note p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(16px, 1.45vw, 21px);
+    }
+
+    .meta-row {
+      margin-top: 26px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, .55);
+      color: var(--muted);
+      padding: 7px 11px;
+      font-size: 13px;
+      line-height: 1;
+    }
+
+    .opening {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 44px clamp(20px, 5vw, 72px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .opening-inner {
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      border: 1px solid rgba(255, 250, 240, .18);
+      background: rgba(255, 250, 240, .2);
+    }
+
+    .opening-panel {
+      min-height: 310px;
+      background: var(--ink);
+      padding: clamp(24px, 4vw, 46px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .dots {
+      display: grid;
+      grid-template-columns: repeat(6, 26px);
+      gap: 18px;
+      align-content: start;
+    }
+
+    .dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--cream);
+    }
+
+    .dot.red { background: var(--red); }
+    .dot.blue { background: var(--blue); }
+    .dot.green { background: var(--green); }
+
+    .opening-panel p {
+      max-width: 520px;
+      margin: 0;
+      color: rgba(255, 250, 240, .75);
+      font-size: 15px;
+    }
+
+    .section {
+      padding: 78px clamp(20px, 5vw, 72px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-inner {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .article-grid {
+      display: grid;
+      grid-template-columns: minmax(150px, 250px) minmax(0, var(--measure));
+      gap: clamp(32px, 6vw, 86px);
+      align-items: start;
+    }
+
+    .section-label {
+      position: sticky;
+      top: 24px;
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 760;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0 0 24px;
+      font-family: var(--serif);
+      font-size: clamp(32px, 4.2vw, 58px);
+      line-height: 1.06;
+      font-weight: 500;
+    }
+
+    h3 {
+      margin: 34px 0 12px;
+      font-size: 18px;
+      line-height: 1.35;
+    }
+
+    p { margin: 0 0 18px; }
+
+    .lead {
+      font-size: clamp(20px, 2.3vw, 30px);
+      line-height: 1.48;
+    }
+
+    .muted { color: var(--muted); }
+
+    .figure {
+      margin: 38px 0;
+      border-top: 2px solid var(--ink);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 0 16px;
+    }
+
+    .figure svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: var(--paper);
+    }
+
+    .figure figcaption {
+      color: var(--muted);
+      font-size: 14px;
+      margin-top: 12px;
+    }
+
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      margin-top: 36px;
+      border: 1px solid var(--line);
+      background: var(--line);
+    }
+
+    .principle {
+      background: var(--cream);
+      min-height: 210px;
+      padding: 24px 18px;
+    }
+
+    .principle b {
+      display: block;
+      margin-bottom: 18px;
+      color: var(--red);
+      font-size: 14px;
+    }
+
+    .principle p {
+      color: var(--muted);
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.62;
+    }
+
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin-top: 34px;
+      border: 1px solid var(--line);
+      background: var(--line);
+    }
+
+    .case {
+      background: var(--cream);
+      min-height: 410px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .case-visual {
+      min-height: 185px;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background:
+        linear-gradient(90deg, rgba(22, 22, 22, .05) 1px, transparent 1px) 0 0 / 34px 34px,
+        var(--paper);
+    }
+
+    .case-visual svg {
+      width: min(240px, 100%);
+      height: auto;
+    }
+
+    .case-body { padding: 24px; }
+
+    .case-body h3 { margin-top: 0; }
+
+    .case-body p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.72;
+    }
+
+    .quote-rule {
+      margin: 38px 0;
+      padding: 28px 0 0;
+      border-top: 2px solid var(--red);
+      font-family: var(--serif);
+      font-size: clamp(24px, 3vw, 40px);
+      line-height: 1.25;
+    }
+
+    .exercise {
+      background: var(--ink);
+      color: var(--cream);
+    }
+
+    .exercise .section-label,
+    .exercise .muted {
+      color: rgba(255, 250, 240, .64);
+    }
+
+    .exercise h2 { color: var(--cream); }
+
+    .exercise-list {
+      display: grid;
+      gap: 1px;
+      margin-top: 34px;
+      border: 1px solid rgba(255, 250, 240, .2);
+      background: rgba(255, 250, 240, .22);
+    }
+
+    .exercise-step {
+      display: grid;
+      grid-template-columns: 90px minmax(0, 1fr);
+      gap: 24px;
+      padding: 24px;
+      background: var(--ink);
+    }
+
+    .exercise-step span {
+      color: var(--gold);
+      font-family: var(--serif);
+      font-size: 36px;
+      line-height: 1;
+    }
+
+    .exercise-step p {
+      margin: 0;
+      color: rgba(255, 250, 240, .8);
+    }
+
+    .reflection {
+      padding: 90px clamp(20px, 5vw, 72px);
+      background: var(--blue);
+      color: var(--cream);
+    }
+
+    .reflection-inner {
+      width: min(980px, 100%);
+      margin: 0 auto;
+    }
+
+    .reflection p {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(32px, 5vw, 72px);
+      line-height: 1.08;
+    }
+
+    .footer {
+      padding: 28px clamp(20px, 5vw, 72px);
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      display: grid;
+      gap: 2px;
+    }
+
+    .footer-brand strong {
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .footer-brand small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid,
+      .opening-inner,
+      .article-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-label { position: static; }
+
+      .principles,
+      .case-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .hero { min-height: 86vh; }
+
+      .principles,
+      .case-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .opening-panel { min-height: 240px; }
+
+      .exercise-step { grid-template-columns: 1fr; }
+
+      h1 { font-size: clamp(42px, 11vw, 62px); }
+
+      .title-line { white-space: normal; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-grid">
+        <div>
+          <p class="kicker">审美的逻辑 · ISSUE 002 · 2026-05-15</p>
+          <h1>
+            <span class="title-line">格式塔原则：</span>
+            <span class="title-line">为什么眼睛</span>
+            <span class="title-line">总想把世界</span>
+            <span class="title-line">整理成整体</span>
+          </h1>
+        </div>
+        <div class="hero-note">
+          <p>我们以为自己在看元素，其实常常在看关系。好设计不是把东西摆上去，而是让关系先被看见。</p>
+          <div class="meta-row" aria-label="课程标签">
+            <span class="tag">视觉心理</span>
+            <span class="tag">构图基础</span>
+            <span class="tag">5-8 分钟</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="opening" aria-label="格式塔开场图解">
+      <div class="opening-inner">
+        <div class="opening-panel">
+          <div class="dots" aria-hidden="true">
+            <span class="dot red"></span><span class="dot red"></span><span class="dot red"></span>
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="dot blue"></span><span class="dot blue"></span><span class="dot blue"></span>
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="dot green"></span><span class="dot green"></span><span class="dot green"></span>
+          </div>
+          <p>相同的圆点，只要改变距离、颜色、方向和边界，眼睛就会自动组织出不同的“组”。</p>
+        </div>
+        <div class="opening-panel">
+          <div class="dots" aria-hidden="true" style="grid-template-columns: repeat(3, 26px); column-gap: 54px; row-gap: 18px;">
+            <span class="dot red"></span><span class="dot red"></span><span class="dot red"></span>
+            <span class="dot red"></span><span class="dot red"></span><span class="dot red"></span>
+            <span class="dot blue"></span><span class="dot blue"></span><span class="dot blue"></span>
+            <span class="dot blue"></span><span class="dot blue"></span><span class="dot blue"></span>
+          </div>
+          <p>格式塔不是某种风格，而是关于“人如何看见整体”的一组规律。</p>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section class="section">
+        <div class="section-inner article-grid">
+          <div class="section-label">01 · Core idea</div>
+          <article>
+            <p class="lead">格式塔心理学有一句核心判断：整体不等于部分的简单相加。放在设计里，它意味着：观众看到的不是一个个孤立的点、线、字、图，而是它们之间形成的关系。</p>
+            <p>这就是为什么同样的文字和图片，换一种间距就会显得高级，换一种对齐就会显得杂乱。不是内容变了，而是眼睛组织内容的方式变了。</p>
+            <p>AI 时代尤其需要理解这一点。生成工具可以很快给你一堆“元素”，但它不一定知道哪些东西应该被看成一组，哪些应该保持距离，哪里需要停顿，哪里需要连续。审美判断常常就藏在这些关系里。</p>
+            <figure class="figure">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="gestalt-title gestalt-desc">
+                <title id="gestalt-title">五种格式塔原则图解</title>
+                <desc id="gestalt-desc">图中用圆点和线条展示接近、相似、连续、闭合和共同区域五种视觉组织原则。</desc>
+                <defs>
+                  <style>
+                    .g-bg { fill: #f4efe5; }
+                    .g-ink { fill: #161616; }
+                    .g-muted { fill: #6d675f; }
+                    .g-red { fill: #a9402d; }
+                    .g-blue { fill: #235f73; }
+                    .g-green { fill: #58765a; }
+                    .g-line { stroke: #d4c8b8; stroke-width: 2; }
+                    .g-rule { stroke: #161616; stroke-width: 4; fill: none; stroke-linecap: round; }
+                    .g-card { fill: #fffaf0; stroke: #d4c8b8; stroke-width: 2; }
+                    .g-label { font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; font-size: 28px; font-weight: 700; letter-spacing: .04em; }
+                    .g-small { font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; font-size: 20px; }
+                  </style>
+                </defs>
+                <rect class="g-bg" width="1600" height="900"/>
+                <text class="g-label g-ink" x="88" y="92">GESTALT PRINCIPLES / 格式塔原则</text>
+                <text class="g-small g-muted" x="88" y="128">眼睛会主动寻找关系：接近、相似、连续、闭合与共同区域。</text>
+                <g transform="translate(80 190)">
+                  <rect class="g-card" width="420" height="260"/>
+                  <text class="g-label g-ink" x="34" y="56">接近</text>
+                  <text class="g-small g-muted" x="34" y="86">距离越近，越容易被看成一组</text>
+                  <circle class="g-red" cx="80" cy="150" r="16"/><circle class="g-red" cx="124" cy="150" r="16"/><circle class="g-red" cx="168" cy="150" r="16"/>
+                  <circle class="g-blue" cx="282" cy="150" r="16"/><circle class="g-blue" cx="326" cy="150" r="16"/><circle class="g-blue" cx="370" cy="150" r="16"/>
+                </g>
+                <g transform="translate(590 190)">
+                  <rect class="g-card" width="420" height="260"/>
+                  <text class="g-label g-ink" x="34" y="56">相似</text>
+                  <text class="g-small g-muted" x="34" y="86">颜色、形状、大小会建立同类感</text>
+                  <circle class="g-red" cx="85" cy="145" r="16"/><circle class="g-blue" cx="145" cy="145" r="16"/><circle class="g-red" cx="205" cy="145" r="16"/><circle class="g-blue" cx="265" cy="145" r="16"/><circle class="g-red" cx="325" cy="145" r="16"/>
+                  <circle class="g-red" cx="85" cy="195" r="16"/><circle class="g-blue" cx="145" cy="195" r="16"/><circle class="g-red" cx="205" cy="195" r="16"/><circle class="g-blue" cx="265" cy="195" r="16"/><circle class="g-red" cx="325" cy="195" r="16"/>
+                </g>
+                <g transform="translate(1100 190)">
+                  <rect class="g-card" width="420" height="260"/>
+                  <text class="g-label g-ink" x="34" y="56">连续</text>
+                  <text class="g-small g-muted" x="34" y="86">眼睛倾向沿着顺滑路径继续看</text>
+                  <path class="g-rule" d="M70 188 C135 92, 210 92, 350 188"/>
+                  <circle class="g-red" cx="70" cy="188" r="13"/><circle class="g-red" cx="140" cy="125" r="13"/><circle class="g-red" cx="210" cy="111" r="13"/><circle class="g-red" cx="280" cy="136" r="13"/><circle class="g-red" cx="350" cy="188" r="13"/>
+                </g>
+                <g transform="translate(330 540)">
+                  <rect class="g-card" width="420" height="260"/>
+                  <text class="g-label g-ink" x="34" y="56">闭合</text>
+                  <text class="g-small g-muted" x="34" y="86">缺口会被大脑补成完整形状</text>
+                  <path class="g-rule" d="M150 126 L222 126 M270 174 L270 236 M222 284 L150 284 M102 236 L102 174"/>
+                  <text class="g-small g-muted" x="126" y="226">看见一个方形</text>
+                </g>
+                <g transform="translate(850 540)">
+                  <rect class="g-card" width="420" height="260"/>
+                  <text class="g-label g-ink" x="34" y="56">共同区域</text>
+                  <text class="g-small g-muted" x="34" y="86">边界会把内部元素组织成整体</text>
+                  <rect x="58" y="122" width="136" height="112" rx="0" fill="none" stroke="#a9402d" stroke-width="4"/>
+                  <rect x="226" y="122" width="136" height="112" rx="0" fill="none" stroke="#235f73" stroke-width="4"/>
+                  <circle class="g-red" cx="92" cy="156" r="13"/><circle class="g-red" cx="158" cy="156" r="13"/><circle class="g-red" cx="92" cy="202" r="13"/><circle class="g-red" cx="158" cy="202" r="13"/>
+                  <circle class="g-blue" cx="260" cy="156" r="13"/><circle class="g-blue" cx="326" cy="156" r="13"/><circle class="g-blue" cx="260" cy="202" r="13"/><circle class="g-blue" cx="326" cy="202" r="13"/>
+                </g>
+              </svg>
+              <figcaption>图解：格式塔原则帮助我们理解“关系”如何先于单个元素被看见。</figcaption>
+            </figure>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner article-grid">
+          <div class="section-label">02 · History</div>
+          <article>
+            <h2>它不是排版技巧，而是一套关于“看见”的理论</h2>
+            <p>格式塔心理学兴起于 20 世纪初的德国和奥地利语境，代表人物包括 Max Wertheimer、Wolfgang Kohler、Kurt Koffka。它反对把知觉拆成一个个孤立感觉元素，认为人类知觉天然会组织整体、寻找结构。</p>
+            <p>这套思想后来进入视觉设计、建筑、摄影、界面设计和信息设计。它解释了为什么一个版面是否“有秩序”，不只取决于网格是否准确，也取决于观众是否能快速理解：哪些信息同属一组，哪里是开始，哪里是重点，哪里应该停顿。</p>
+            <p>如果说网格是设计师给版面建立的外部骨架，格式塔原则就是观众在观看时形成的内部骨架。一个成熟的版面，往往是这两套骨架互相支持。</p>
+            <div class="quote-rule">好的版面不是元素很多却不乱，而是关系复杂但仍然可读。</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner">
+          <div class="article-grid">
+            <div class="section-label">03 · Judgement</div>
+            <article>
+              <h2>五个最常用的审美判断入口</h2>
+              <p>你不需要把格式塔原则背成术语表。更重要的是用它们来检查一个设计为什么清楚，或者为什么让人费劲。</p>
+            </article>
+          </div>
+          <div class="principles" aria-label="五个格式塔判断入口">
+            <div class="principle">
+              <b>01 接近</b>
+              <p>相关信息要靠近。不相关信息要拉开。很多版面的问题不是内容太多，而是距离没有表达关系。</p>
+            </div>
+            <div class="principle">
+              <b>02 相似</b>
+              <p>相同功能应有相同视觉语言。按钮、标题、注释、标签如果样式乱跳，观众会失去分类依据。</p>
+            </div>
+            <div class="principle">
+              <b>03 连续</b>
+              <p>视线喜欢沿线、方向和节奏移动。好构图会让眼睛自然走到重点，而不是到处撞墙。</p>
+            </div>
+            <div class="principle">
+              <b>04 闭合</b>
+              <p>不必把一切画满。适当留白和缺口能让观众参与补全，形成更有张力的视觉经验。</p>
+            </div>
+            <div class="principle">
+              <b>05 共同区域</b>
+              <p>边框、底色、卡片、分区会制造整体感。用得好是组织信息，用过头就会变成满屏盒子。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner">
+          <div class="article-grid">
+            <div class="section-label">04 · Cases</div>
+            <article>
+              <h2>三个案例：眼睛如何被组织</h2>
+              <p>案例不是为了崇拜经典，而是为了训练你看见背后的秩序：距离、重复、方向和边界如何一起工作。</p>
+            </article>
+          </div>
+          <div class="case-grid">
+            <article class="case">
+              <div class="case-visual">
+                <svg viewBox="0 0 260 170" role="img" aria-label="瑞士海报式网格图解">
+                  <rect width="260" height="170" fill="#f4efe5"/>
+                  <rect x="26" y="28" width="42" height="116" fill="#a9402d"/>
+                  <rect x="82" y="28" width="126" height="18" fill="#161616"/>
+                  <rect x="82" y="58" width="96" height="10" fill="#6d675f"/>
+                  <rect x="82" y="82" width="136" height="10" fill="#6d675f"/>
+                  <rect x="82" y="106" width="118" height="10" fill="#6d675f"/>
+                  <rect x="82" y="130" width="70" height="10" fill="#235f73"/>
+                </svg>
+              </div>
+              <div class="case-body">
+                <h3>瑞士国际主义海报</h3>
+                <p>瑞士风格常通过网格、对齐和重复建立秩序。文字块之间的接近关系非常明确，观众很快知道标题、正文、信息标签分别属于什么层级。</p>
+              </div>
+            </article>
+            <article class="case">
+              <div class="case-visual">
+                <svg viewBox="0 0 260 170" role="img" aria-label="IBM 标志式条纹闭合图解">
+                  <rect width="260" height="170" fill="#161616"/>
+                  <g fill="#fffaf0">
+                    <rect x="42" y="42" width="176" height="10"/>
+                    <rect x="42" y="62" width="176" height="10"/>
+                    <rect x="42" y="82" width="176" height="10"/>
+                    <rect x="42" y="102" width="176" height="10"/>
+                    <rect x="42" y="122" width="176" height="10"/>
+                  </g>
+                  <text x="54" y="114" font-family="Helvetica, Arial, sans-serif" font-size="82" font-weight="800" fill="#161616">IBM</text>
+                </svg>
+              </div>
+              <div class="case-body">
+                <h3>IBM 标志与闭合</h3>
+                <p>Paul Rand 的 IBM 标志让横向条纹和字母轮廓互相作用。你看到的是完整字母，但实际形状被切分；大脑主动补全，这就是闭合带来的力量。</p>
+              </div>
+            </article>
+            <article class="case">
+              <div class="case-visual">
+                <svg viewBox="0 0 260 170" role="img" aria-label="界面卡片共同区域图解">
+                  <rect width="260" height="170" fill="#f4efe5"/>
+                  <rect x="28" y="30" width="88" height="112" fill="#fffaf0" stroke="#d4c8b8" stroke-width="2"/>
+                  <rect x="144" y="30" width="88" height="112" fill="#fffaf0" stroke="#d4c8b8" stroke-width="2"/>
+                  <circle cx="56" cy="62" r="14" fill="#a9402d"/>
+                  <rect x="78" y="54" width="24" height="8" fill="#161616"/>
+                  <rect x="48" y="92" width="48" height="8" fill="#6d675f"/>
+                  <circle cx="172" cy="62" r="14" fill="#235f73"/>
+                  <rect x="194" y="54" width="24" height="8" fill="#161616"/>
+                  <rect x="164" y="92" width="48" height="8" fill="#6d675f"/>
+                </svg>
+              </div>
+              <div class="case-body">
+                <h3>界面设计里的卡片</h3>
+                <p>卡片不是为了“好看地包起来”，而是为了制造共同区域。它告诉观众：这些文字、图标和按钮属于同一个对象。但卡片太多，会让页面碎成一堆盒子。</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-inner article-grid">
+          <div class="section-label">05 · Mistakes</div>
+          <article>
+            <h2>常见误区：把“整齐”误认为“整体”</h2>
+            <h3>所有东西都对齐，但关系仍然混乱</h3>
+            <p>对齐只是秩序的工具，不是秩序本身。两个不相关的信息即使左边缘对齐，也不应该被放得太近。</p>
+            <h3>所有模块都做成卡片</h3>
+            <p>共同区域很有用，但过度使用会让每个模块都喊“我是重点”。当所有东西都被框起来，观众反而不知道哪里更重要。</p>
+            <h3>重复样式没有规则</h3>
+            <p>相似性会制造系统感，但前提是相似有理由。标题、引用、按钮、标签的样式如果随意重复或随意变化，观众会怀疑这是系统还是巧合。</p>
+            <h3>留白只是空出来的地方</h3>
+            <p>留白不是剩余空间，而是关系空间。它决定哪些信息连在一起，哪些信息应该分开，哪里需要停顿。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section exercise">
+        <div class="section-inner article-grid">
+          <div class="section-label">06 · Practice</div>
+          <article>
+            <h2>今天的观察练习</h2>
+            <p class="muted">找一个你今天会打开的页面：电商首页、文章页、App 设置页、海报或公众号封面都可以。不要先评价好不好看，先用格式塔原则拆它。</p>
+            <div class="exercise-list">
+              <div class="exercise-step">
+                <span>01</span>
+                <p>圈出三组你第一眼认为“属于一起”的信息，判断它们是因为接近、相似，还是共同区域被组织在一起。</p>
+              </div>
+              <div class="exercise-step">
+                <span>02</span>
+                <p>找到一个让你迟疑的地方：是不是距离太近、样式太像、边界太多，或者视线移动不连续？</p>
+              </div>
+              <div class="exercise-step">
+                <span>03</span>
+                <p>只改一个变量：间距、颜色、边框或对齐。观察整体关系是否立刻变清楚。</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="reflection" aria-label="反思问题">
+        <div class="reflection-inner">
+          <p>当一个设计看起来“很舒服”时，你能说出是哪一种关系让它成立吗？</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span class="footer-brand">
+        <strong>审美的逻辑</strong>
+        <small>有关视觉、设计与判断力</small>
+        </span>
+      <span>Powered by Skip</span>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Serif and sans-serif anatomy comparison</title>
+  <desc id="desc">A typographic diagram comparing the serif details of a serif letterform with the clean terminals of a sans-serif letterform.</desc>
+  <defs>
+    <style>
+      .bg { fill: #f5f1e8; }
+      .ink { fill: #171615; }
+      .muted { fill: #6f6a61; }
+      .red { stroke: #b6412d; fill: none; }
+      .blue { stroke: #246c79; fill: none; }
+      .green { stroke: #4d7254; fill: none; }
+      .label { font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; font-size: 28px; letter-spacing: .04em; }
+      .small { font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif; font-size: 21px; }
+      .serif { font-family: Georgia, "Times New Roman", serif; font-size: 430px; }
+      .sans { font-family: Helvetica, Arial, sans-serif; font-size: 410px; font-weight: 700; }
+      .rule { stroke: #d7cec0; stroke-width: 2; }
+      .axis { stroke-width: 4; stroke-linecap: round; }
+      .callout { stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+  <rect class="bg" x="0" y="0" width="1600" height="900"/>
+  <line class="rule" x1="800" y1="96" x2="800" y2="804"/>
+  <text class="label ink" x="150" y="110">SERIF / 衬线体</text>
+  <text class="small muted" x="150" y="150">历史感、书写痕迹、长文节奏、制度与文学气质</text>
+  <text class="label ink" x="950" y="110">SANS-SERIF / 非衬线体</text>
+  <text class="small muted" x="950" y="150">结构化、清晰、系统、公共信息与屏幕界面</text>
+  <text class="serif ink" x="195" y="610">A</text>
+  <text class="sans ink" x="1000" y="610">A</text>
+  <line class="red callout" x1="315" y1="610" x2="210" y2="710"/>
+  <circle cx="210" cy="710" r="8" fill="#b6412d"/>
+  <text class="small muted" x="130" y="760">衬线：笔画末端的收笔</text>
+  <text class="small muted" x="130" y="790">让字形带有书写与印刷传统</text>
+  <line class="green callout" x1="430" y1="282" x2="540" y2="220"/>
+  <circle cx="430" cy="282" r="8" fill="#4d7254"/>
+  <text class="small muted" x="548" y="214">粗细对比</text>
+  <text class="small muted" x="548" y="244">形成优雅、锋利或权威的语气</text>
+  <line class="blue callout" x1="1118" y1="610" x2="1016" y2="710"/>
+  <circle cx="1118" cy="610" r="8" fill="#246c79"/>
+  <text class="small muted" x="970" y="760">无衬线端点：更直接</text>
+  <text class="small muted" x="970" y="790">适合导视、界面和系统化信息</text>
+  <line class="green callout" x1="1196" y1="280" x2="1320" y2="220"/>
+  <circle cx="1196" cy="280" r="8" fill="#4d7254"/>
+  <text class="small muted" x="1328" y="214">低对比笔画</text>
+  <text class="small muted" x="1328" y="244">降低情绪，强化秩序与可读性</text>
+  <line class="axis red" x1="150" y1="842" x2="650" y2="842"/>
+  <line class="axis blue" x1="950" y1="842" x2="1450" y2="842"/>
+  <text class="small muted" x="150" y="872">更像“被沉淀的文字”</text>
+  <text class="small muted" x="950" y="872">更像“被系统分发的信息”</text>
+</svg>

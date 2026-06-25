@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>色彩对比：好看的颜色，首先要站得住</title>
+  <style>
+    :root {
+      --paper:#f6efe4; --ink:#171514; --muted:#6f675d; --line:#d7c9b8; --cream:#fffaf0;
+      --red:#b54432; --blue:#215d72; --green:#5f7655; --gold:#a77a2d; --violet:#5f4b78;
+      --serif: Georgia, "Times New Roman", "Songti SC", "SimSun", serif;
+      --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+    }
+    *{box-sizing:border-box} html{background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.76;letter-spacing:0}
+    body{margin:0;background:linear-gradient(90deg,rgba(23,21,20,.045) 1px,transparent 1px) 0 0/72px 72px,linear-gradient(0deg,rgba(23,21,20,.035) 1px,transparent 1px) 0 0/72px 72px,var(--paper)}
+    .hero{min-height:92vh;display:grid;align-items:end;padding:48px clamp(20px,5vw,72px) 58px;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+    .hero:before{content:"";position:absolute;right:5vw;top:10vh;width:min(44vw,560px);aspect-ratio:1;background:conic-gradient(from 20deg,var(--red),var(--gold),var(--green),var(--blue),var(--violet),var(--red));opacity:.16;border-radius:50%}
+    .hero-grid{position:relative;z-index:1;width:min(1320px,100%);margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,470px);gap:clamp(34px,6vw,96px);align-items:end}
+    .kicker{margin:0 0 26px;color:var(--red);font-size:13px;font-weight:760;letter-spacing:.12em;text-transform:uppercase}
+    h1{margin:0;max-width:840px;font-family:var(--serif);font-size:clamp(52px,6.4vw,104px);line-height:1.01;font-weight:500}.title-line{display:block;white-space:nowrap}
+    .hero-note{border-top:2px solid var(--ink);padding-top:26px}.hero-note p{margin:0;color:var(--muted);font-size:clamp(16px,1.45vw,21px)}
+    .meta-row{margin-top:26px;display:flex;gap:10px;flex-wrap:wrap}.tag{border:1px solid var(--line);background:rgba(255,250,240,.58);color:var(--muted);padding:7px 11px;font-size:13px;line-height:1}
+    .band{background:var(--ink);color:var(--cream);padding:44px clamp(20px,5vw,72px);border-bottom:1px solid var(--line)}
+    .swatches{width:min(1320px,100%);margin:0 auto;display:grid;grid-template-columns:repeat(6,1fr);min-height:270px;border:1px solid rgba(255,250,240,.18)}
+    .swatch{display:flex;align-items:end;padding:22px;font-size:13px;color:var(--cream)}.s1{background:#171514}.s2{background:#b54432}.s3{background:#a77a2d}.s4{background:#5f7655}.s5{background:#215d72}.s6{background:#f6efe4;color:var(--ink)}
+    .section{padding:78px clamp(20px,5vw,72px);border-bottom:1px solid var(--line)}.inner{width:min(1180px,100%);margin:0 auto}.grid{display:grid;grid-template-columns:minmax(150px,250px) minmax(0,760px);gap:clamp(32px,6vw,86px);align-items:start}
+    .label{position:sticky;top:24px;color:var(--red);font-size:13px;font-weight:760;letter-spacing:.12em;text-transform:uppercase}
+    h2{margin:0 0 24px;font-family:var(--serif);font-size:clamp(32px,4.2vw,58px);line-height:1.06;font-weight:500}h3{margin:34px 0 12px;font-size:18px}p{margin:0 0 18px}.lead{font-size:clamp(20px,2.3vw,30px);line-height:1.48}.muted{color:var(--muted)}
+    .figure{margin:38px 0;border-top:2px solid var(--ink);border-bottom:1px solid var(--line);padding:18px 0 16px}.figure svg{display:block;width:100%;height:auto;background:var(--paper)}figcaption{color:var(--muted);font-size:14px;margin-top:12px}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:34px;background:var(--line);border:1px solid var(--line)}.card{background:var(--cream);min-height:210px;padding:24px 18px}.card b{display:block;margin-bottom:18px;color:var(--red);font-size:14px}.card p{font-size:14px;line-height:1.62;color:var(--muted);margin:0}
+    .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:34px;background:var(--line);border:1px solid var(--line)}.case{background:var(--cream)}.case-visual{min-height:190px;display:grid;place-items:center;border-bottom:1px solid var(--line);padding:24px}.case-body{padding:24px}.case-body h3{margin-top:0}.case-body p{font-size:15px;color:var(--muted);line-height:1.72}
+    .quote{margin:38px 0;padding-top:28px;border-top:2px solid var(--red);font-family:var(--serif);font-size:clamp(24px,3vw,40px);line-height:1.25}
+    .exercise{background:var(--ink);color:var(--cream)}.exercise .label,.exercise .muted{color:rgba(255,250,240,.65)}.exercise h2{color:var(--cream)}.steps{display:grid;gap:1px;margin-top:34px;background:rgba(255,250,240,.22);border:1px solid rgba(255,250,240,.2)}.step{display:grid;grid-template-columns:90px 1fr;gap:24px;background:var(--ink);padding:24px}.step span{color:var(--gold);font-family:var(--serif);font-size:36px;line-height:1}.step p{margin:0;color:rgba(255,250,240,.8)}
+    .reflection{padding:90px clamp(20px,5vw,72px);background:var(--red);color:var(--cream)}.reflection div{width:min(980px,100%);margin:0 auto}.reflection p{font-family:var(--serif);font-size:clamp(32px,5vw,72px);line-height:1.08;margin:0}
+    .footer{padding:28px clamp(20px,5vw,72px);color:var(--muted);font-size:13px;display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}.brand{display:grid;gap:2px}.brand strong{color:var(--ink);font-size:14px}.brand small{font-size:12px;color:var(--muted)}
+    @media(max-width:960px){.hero-grid,.grid{grid-template-columns:1fr}.label{position:static}.cards,.cases{grid-template-columns:1fr 1fr}.swatches{grid-template-columns:repeat(3,1fr)}}@media(max-width:680px){.cards,.cases,.swatches{grid-template-columns:1fr}.step{grid-template-columns:1fr}.title-line{white-space:normal}h1{font-size:clamp(42px,11vw,62px)}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-grid">
+      <div>
+        <p class="kicker">审美的逻辑 · ISSUE 003 · 2026-05-16</p>
+        <h1><span class="title-line">色彩对比：</span><span class="title-line">好看的颜色，</span><span class="title-line">首先要站得住</span></h1>
+      </div>
+      <div class="hero-note">
+        <p>颜色不是“选一个喜欢的色”。它是一套关系：明暗、冷暖、纯度和面积，决定一个画面是否有秩序、有情绪，也有可读性。</p>
+        <div class="meta-row"><span class="tag">色彩基础</span><span class="tag">视觉层级</span><span class="tag">5-8 分钟</span></div>
+      </div>
+    </div>
+  </header>
+  <section class="band"><div class="swatches" aria-label="色彩关系标本"><div class="swatch s1">Ink / 明度锚点</div><div class="swatch s2">Warm / 情绪推进</div><div class="swatch s3">Accent / 注意力</div><div class="swatch s4">Calm / 平衡</div><div class="swatch s5">Cool / 后退</div><div class="swatch s6">Paper / 呼吸</div></div></section>
+  <main>
+    <section class="section"><div class="inner grid"><div class="label">01 · Core idea</div><article>
+      <p class="lead">色彩审美的第一步，不是问“这个颜色好不好看”，而是问：它和旁边的颜色是什么关系。</p>
+      <p>一个颜色单独看很漂亮，放进版面却可能失控；一个颜色单独看很普通，放进正确的明暗关系里，却能显得克制、昂贵、准确。色彩不是孤立的颜料，而是视觉秩序的分配方式。</p>
+      <p>设计里最常见的问题，不是颜色不够多，而是所有颜色都在同一个音量说话。没有主色、没有背景色、没有强调色，也没有让文字站稳的明度对比。结果就是“花”，而不是“丰富”。</p>
+      <figure class="figure">
+        <svg viewBox="0 0 1600 900" role="img" aria-labelledby="color-title color-desc">
+          <title id="color-title">色彩对比关系图解</title><desc id="color-desc">展示明度、冷暖、纯度和面积四种色彩关系。</desc>
+          <rect width="1600" height="900" fill="#f6efe4"/><text x="90" y="95" font-family="Arial" font-size="28" font-weight="700" fill="#171514">COLOR CONTRAST / 色彩对比</text><text x="90" y="132" font-family="Arial" font-size="20" fill="#6f675d">颜色首先通过关系成立：明度、冷暖、纯度与面积。</text>
+          <g transform="translate(90 210)"><rect width="320" height="500" fill="#fffaf0" stroke="#d7c9b8" stroke-width="2"/><text x="32" y="58" font-family="Arial" font-size="28" font-weight="700" fill="#171514">明度</text><rect x="50" y="110" width="220" height="54" fill="#171514"/><rect x="50" y="190" width="220" height="54" fill="#6f675d"/><rect x="50" y="270" width="220" height="54" fill="#d7c9b8"/><rect x="50" y="350" width="220" height="54" fill="#f6efe4" stroke="#d7c9b8"/><text x="50" y="450" font-family="Arial" font-size="19" fill="#6f675d">决定可读性和重量</text></g>
+          <g transform="translate(460 210)"><rect width="320" height="500" fill="#fffaf0" stroke="#d7c9b8" stroke-width="2"/><text x="32" y="58" font-family="Arial" font-size="28" font-weight="700" fill="#171514">冷暖</text><circle cx="115" cy="205" r="72" fill="#b54432"/><circle cx="205" cy="205" r="72" fill="#215d72" opacity=".92"/><rect x="66" y="325" width="188" height="44" fill="#5f7655"/><text x="50" y="450" font-family="Arial" font-size="19" fill="#6f675d">决定情绪和空间前后</text></g>
+          <g transform="translate(830 210)"><rect width="320" height="500" fill="#fffaf0" stroke="#d7c9b8" stroke-width="2"/><text x="32" y="58" font-family="Arial" font-size="28" font-weight="700" fill="#171514">纯度</text><rect x="54" y="130" width="210" height="70" fill="#b54432"/><rect x="54" y="230" width="210" height="70" fill="#a87b6d"/><rect x="54" y="330" width="210" height="70" fill="#c8b9ad"/><text x="50" y="450" font-family="Arial" font-size="19" fill="#6f675d">决定刺激程度和高级感</text></g>
+          <g transform="translate(1200 210)"><rect width="320" height="500" fill="#fffaf0" stroke="#d7c9b8" stroke-width="2"/><text x="32" y="58" font-family="Arial" font-size="28" font-weight="700" fill="#171514">面积</text><rect x="54" y="122" width="210" height="245" fill="#215d72"/><rect x="54" y="367" width="210" height="26" fill="#b54432"/><text x="50" y="450" font-family="Arial" font-size="19" fill="#6f675d">决定主次，而不是只看色相</text></g>
+        </svg>
+        <figcaption>图解：色彩并不只由色相决定。明度、冷暖、纯度和面积，才是色彩判断的骨架。</figcaption>
+      </figure>
+    </article></div></section>
+    <section class="section"><div class="inner grid"><div class="label">02 · Context</div><article>
+      <h2>色彩理论不是配色表，而是观看秩序</h2>
+      <p>从歌德的色彩观察，到约翰内斯·伊顿在包豪斯整理色相环、冷暖、对比与和谐，现代设计教育一直在把色彩从“感觉”转化为可训练的判断。伊顿的价值不是给出永恒公式，而是提醒设计者：颜色会互相影响，色彩体验来自关系。</p>
+      <p>印刷时代要考虑纸张、油墨和网点；屏幕时代要考虑发光、亮度和不同设备。AI 生成图像又带来新的问题：颜色常常很满、很亮、很戏剧，但缺乏克制的层级。你需要判断哪些颜色应该退后，哪些颜色才值得成为重点。</p>
+      <div class="quote">好的色彩不是“更鲜艳”，而是让重要的东西以正确的强度出现。</div>
+    </article></div></section>
+    <section class="section"><div class="inner"><div class="grid"><div class="label">03 · Judgement</div><article><h2>判断色彩好坏，先看四个关系</h2><p>下面四个问题，比“喜欢不喜欢”更可靠。</p></article></div>
+      <div class="cards"><div class="card"><b>01 明度</b><p>文字和背景是否站得住？如果去掉颜色只看黑白，层级还成立吗？</p></div><div class="card"><b>02 冷暖</b><p>暖色通常前进，冷色通常后退。它们有没有帮助你组织空间和情绪？</p></div><div class="card"><b>03 纯度</b><p>高纯度颜色很响亮，不能每个地方都用。克制纯度，画面才有呼吸。</p></div><div class="card"><b>04 面积</b><p>小面积强色是强调，大面积强色是环境。面积一变，颜色性格也会变。</p></div></div>
+    </div></section>
+    <section class="section"><div class="inner"><div class="grid"><div class="label">04 · Cases</div><article><h2>三个案例：颜色如何变成判断</h2><p>经典案例的价值不在于复制配色，而在于看见颜色如何承担功能。</p></article></div>
+      <div class="cases">
+        <article class="case"><div class="case-visual" style="background:#e7dcc8"><svg viewBox="0 0 260 170" width="240"><rect width="260" height="170" fill="#e7dcc8"/><rect x="22" y="24" width="72" height="122" fill="#b54432"/><circle cx="166" cy="86" r="48" fill="#171514"/><rect x="116" y="130" width="112" height="8" fill="#215d72"/></svg></div><div class="case-body"><h3>包豪斯基础课</h3><p>红、黄、蓝和基础形不是为了幼稚，而是为了拆解视觉语言。强色被放在清楚结构中，才不会变成喧闹。</p></div></article>
+        <article class="case"><div class="case-visual" style="background:#171514"><svg viewBox="0 0 260 170" width="240"><rect width="260" height="170" fill="#171514"/><text x="34" y="92" font-family="Georgia" font-size="56" fill="#fffaf0">Vogue</text><rect x="36" y="112" width="88" height="8" fill="#b54432"/></svg></div><div class="case-body"><h3>时尚杂志的黑白红</h3><p>高对比黑白建立权威，少量红色成为节奏点。高级感常来自限制，而不是配色数量。</p></div></article>
+        <article class="case"><div class="case-visual" style="background:#fffaf0"><svg viewBox="0 0 260 170" width="240"><rect width="260" height="170" fill="#fffaf0"/><rect x="34" y="34" width="192" height="36" fill="#215d72"/><rect x="34" y="82" width="132" height="16" fill="#d7c9b8"/><rect x="34" y="112" width="70" height="28" fill="#b54432"/></svg></div><div class="case-body"><h3>界面里的强调色</h3><p>按钮色不是品牌色的重复使用，而是行动提示。一个界面如果到处都是强调色，就等于没有强调。</p></div></article>
+      </div>
+    </div></section>
+    <section class="section"><div class="inner grid"><div class="label">05 · Mistakes</div><article><h2>常见误区</h2><h3>把鲜艳当高级</h3><p>鲜艳只代表刺激，不代表品质。没有明度秩序，高纯度颜色会让画面变吵。</p><h3>只看色相，不看面积</h3><p>同一个红色，做一条细线和铺满整页完全不同。面积决定情绪的重量。</p><h3>把品牌色用到每个角落</h3><p>品牌色越重要，越需要被节制使用。滥用会削弱识别，而不是加强识别。</p></article></div></section>
+    <section class="section exercise"><div class="inner grid"><div class="label">06 · Practice</div><article><h2>今天的观察练习</h2><p class="muted">找一张海报、一个网页或一个 App 页面，把它截图后做三件事。</p><div class="steps"><div class="step"><span>01</span><p>把图像想象成黑白，判断层级是否依然清楚。</p></div><div class="step"><span>02</span><p>找出面积最大的颜色、最亮的颜色和最吸引注意的颜色，它们是否是同一个？</p></div><div class="step"><span>03</span><p>删除一个高纯度颜色，观察画面是变弱，还是反而变高级。</p></div></div></article></div></section>
+    <section class="reflection"><div><p>你喜欢一个颜色，是因为它本身，还是因为它在关系里做对了事？</p></div></section>
+  </main>
+  <footer class="footer"><span class="brand"><strong>审美的逻辑</strong><small>有关视觉、设计与判断力</small></span><span>Powered by Skip</span></footer>
+</body>
+</html>

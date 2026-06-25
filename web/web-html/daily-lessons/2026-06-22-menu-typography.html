@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>菜单排版：为什么有些菜单让人更容易点单</title>
+  <style>
+    :root{--paper:#f3eee3;--ink:#181614;--muted:#665f57;--line:#d7c9b8;--cream:#fffaf0;--red:#ad432f;--blue:#225e73;--green:#60765a;--gold:#a77d30;--serif:Georgia,"Times New Roman","Songti SC","SimSun",serif;--sans:-apple-system,BlinkMacSystemFont,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif}
+    *{box-sizing:border-box}
+    html{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.82;letter-spacing:0}
+    body{margin:0;overflow-x:hidden;background:linear-gradient(90deg,rgba(24,22,20,.045) 1px,transparent 1px) 0 0/68px 68px,linear-gradient(0deg,rgba(24,22,20,.035) 1px,transparent 1px) 0 0/68px 68px,var(--paper)}
+    svg{display:block;max-width:100%;height:auto}
+    .hero{min-height:88vh;padding:50px clamp(22px,5vw,74px) 58px;display:grid;align-items:end;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+    .hero:before{content:"";position:absolute;right:clamp(-140px,-8vw,-48px);top:7vh;width:min(48vw,560px);height:min(72vh,660px);border:1px solid rgba(24,22,20,.16);background:linear-gradient(180deg,rgba(255,250,240,.92),rgba(255,250,240,.62));box-shadow:24px 28px 0 rgba(24,22,20,.08);transform:rotate(2deg)}
+    .hero:after{content:"";position:absolute;right:clamp(34px,8vw,150px);top:18vh;width:min(34vw,390px);height:min(54vh,470px);background:repeating-linear-gradient(180deg,rgba(24,22,20,.8) 0 2px,transparent 2px 42px),linear-gradient(90deg,transparent 0 72%,rgba(173,67,47,.68) 72% 74%,transparent 74%);opacity:.18;transform:rotate(2deg)}
+    .hero-grid{position:relative;z-index:1;width:min(1220px,100%);margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(290px,440px);gap:clamp(34px,6vw,94px);align-items:end}
+    .kicker{margin:0 0 26px;color:var(--red);font-size:13px;font-weight:760;letter-spacing:.12em;text-transform:uppercase}
+    h1{margin:0;font-family:var(--serif);font-size:clamp(52px,7vw,110px);line-height:.98;font-weight:500}
+    .title-line{display:block}
+    .hero-note{border-top:2px solid var(--ink);padding-top:25px}
+    .hero-note p{margin:0;color:var(--muted);font-size:clamp(18px,1.6vw,22px);line-height:1.76}
+    .meta{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap}
+    .tag{border:1px solid var(--line);background:rgba(255,250,240,.68);color:var(--muted);padding:8px 12px;font-size:14px;line-height:1}
+    .band{background:var(--ink);color:var(--cream);padding:48px clamp(22px,5vw,74px)}
+    .menu-stage{width:min(1180px,100%);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,250,240,.2);border:1px solid rgba(255,250,240,.18)}
+    .menu-card{background:#12100f;padding:clamp(22px,4vw,42px);min-height:390px}
+    .menu-card h2{margin:0 0 22px;color:var(--cream);font-family:var(--serif);font-size:34px;line-height:1.1;font-weight:500}
+    .sample{display:grid;gap:14px}
+    .sample.bad .row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start;padding-bottom:12px;border-bottom:1px solid rgba(255,250,240,.16)}
+    .sample.good .row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px;align-items:baseline;padding-bottom:16px;border-bottom:1px solid rgba(255,250,240,.18)}
+    .name{font-size:18px;color:rgba(255,250,240,.9);line-height:1.4}
+    .desc{display:block;margin-top:4px;color:rgba(255,250,240,.48);font-size:13px;line-height:1.5}
+    .price{font-family:var(--serif);font-size:24px;color:var(--gold);white-space:nowrap}
+    .sample.bad .price{color:rgba(255,250,240,.74);font-size:18px}
+    .sample.bad .name{font-size:15px;line-height:1.45}
+    .menu-card p{margin:22px 0 0;color:rgba(255,250,240,.72);font-size:16px;line-height:1.75}
+    .section{padding:76px clamp(22px,5vw,74px);border-bottom:1px solid var(--line)}
+    .inner{width:min(1120px,100%);margin:0 auto}
+    .grid{display:grid;grid-template-columns:minmax(150px,240px) minmax(0,760px);gap:clamp(32px,6vw,82px);align-items:start}
+    .label{position:sticky;top:24px;color:var(--red);font-size:13px;font-weight:760;letter-spacing:.12em;text-transform:uppercase}
+    h2{margin:0 0 24px;font-family:var(--serif);font-size:clamp(34px,4.3vw,58px);line-height:1.08;font-weight:500}
+    h3{margin:34px 0 12px;font-size:20px;line-height:1.45}
+    p{margin:0 0 19px}
+    .lead{font-size:clamp(22px,2.35vw,30px);line-height:1.52}
+    .muted{color:var(--muted)}
+    .figure{margin:40px 0;border-top:2px solid var(--ink);border-bottom:1px solid var(--line);padding:18px 0 16px}
+    figcaption{color:var(--muted);font-size:15px;line-height:1.7;margin-top:12px}
+    .quote{margin:38px 0;padding-top:28px;border-top:2px solid var(--red);font-family:var(--serif);font-size:clamp(27px,3vw,40px);line-height:1.28}
+    .cards{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;margin-top:34px;background:var(--line);border:1px solid var(--line)}
+    .card{background:var(--cream);min-height:238px;padding:24px 18px}
+    .card b{display:block;margin-bottom:16px;color:var(--red);font-size:15px;line-height:1.38}
+    .card p{font-size:16px;line-height:1.72;color:var(--muted);margin:0}
+    .cases{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:34px;background:var(--line);border:1px solid var(--line)}
+    .case{background:var(--cream)}
+    .case-visual{min-height:200px;display:grid;place-items:center;border-bottom:1px solid var(--line);padding:22px;background:var(--paper)}
+    .case-body{padding:24px}
+    .case-body h3{margin-top:0}
+    .case-body p{font-size:17px;color:var(--muted);line-height:1.76}
+    .exercise{background:var(--ink);color:var(--cream)}
+    .exercise .label,.exercise .muted{color:rgba(255,250,240,.68)}
+    .exercise h2{color:var(--cream)}
+    .steps{display:grid;gap:1px;margin-top:34px;background:rgba(255,250,240,.22);border:1px solid rgba(255,250,240,.2)}
+    .step{display:grid;grid-template-columns:84px 1fr;gap:24px;background:var(--ink);padding:24px}
+    .step span{color:var(--gold);font-family:var(--serif);font-size:38px;line-height:1}
+    .step p{margin:0;color:rgba(255,250,240,.82);font-size:17px;line-height:1.78}
+    .reflection{padding:88px clamp(22px,5vw,74px);background:var(--green);color:var(--cream)}
+    .reflection div{width:min(960px,100%);margin:0 auto}
+    .reflection p{font-family:var(--serif);font-size:clamp(34px,5vw,68px);line-height:1.1;margin:0}
+    .footer{padding:28px clamp(22px,5vw,74px);color:var(--muted);font-size:14px;display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
+    .brand{display:grid;gap:3px}.brand strong{color:var(--ink);font-size:15px}.brand small{font-size:14px;color:var(--muted)}.powered{white-space:nowrap}
+    @media(max-width:960px){.hero-grid,.grid,.menu-stage{grid-template-columns:1fr}.label{position:static}.cards{grid-template-columns:1fr 1fr}.cases{grid-template-columns:1fr 1fr}.hero:before{opacity:.46;right:-34vw;width:86vw}.hero:after{right:-12vw;width:72vw}}
+    @media(max-width:680px){html{font-size:18px}.hero{min-height:auto;padding-top:40px;padding-bottom:44px}h1{font-size:clamp(42px,11vw,62px)}.hero-note p{font-size:18px}.section{padding:48px 22px}.band{padding:36px 22px}.menu-card{min-height:auto}.cards,.cases{grid-template-columns:1fr}.card{min-height:auto;padding:19px 18px}.card b{margin-bottom:10px}.card p{line-height:1.68}.step{grid-template-columns:1fr;gap:8px}.reflection{padding:58px 22px}.powered{font-size:14px}}
+  </style>
+</head>
+<body>
+  <header class="hero"><div class="hero-grid"><div><p class="kicker">审美的逻辑 · ISSUE 020 · 2026-06-22</p><h1><span class="title-line">菜单排版：</span><span class="title-line">为什么有些菜单</span><span class="title-line">让人更容易点单</span></h1></div><div class="hero-note"><p>菜单不是菜名和价格的清单。它是一张很小的决策界面：读者要在几十秒里看懂层级、比较选择、感到安心，然后做出决定。</p><div class="meta"><span class="tag">日常设计</span><span class="tag">字体层级</span><span class="tag">5 分钟</span></div></div></div></header>
+  <section class="band"><div class="menu-stage" aria-label="两种菜单排版对比"><article class="menu-card"><h2>看起来很满</h2><div class="sample bad"><div class="row"><span class="name">烟熏番茄牛肉意面<span class="desc">番茄 / 牛肉 / 芝士 / 罗勒 / 黑胡椒</span></span><span class="price">68</span></div><div class="row"><span class="name">香煎鸡腿凯撒沙拉<span class="desc">鸡腿 / 生菜 / 面包丁 / 帕玛森</span></span><span class="price">58</span></div><div class="row"><span class="name">焦糖海盐拿铁<span class="desc">热 / 冰 / 燕麦奶另加 6 元</span></span><span class="price">36</span></div></div><p>所有信息都在说话，价格、描述和菜名挤在同一层级。顾客不是没耐心，是没有被帮忙。</p></article><article class="menu-card"><h2>更容易决定</h2><div class="sample good"><div class="row"><span class="name">烟熏番茄牛肉意面<span class="desc">番茄、牛肉、罗勒。适合想吃主食的人。</span></span><span class="price">68</span></div><div class="row"><span class="name">香煎鸡腿凯撒沙拉<span class="desc">清爽一点，但有蛋白质和饱腹感。</span></span><span class="price">58</span></div><div class="row"><span class="name">焦糖海盐拿铁<span class="desc">甜感明显。可换燕麦奶。</span></span><span class="price">36</span></div></div><p>菜名先被看见，描述负责降低犹豫，价格稳定地站在右侧。信息没有少，只是各自回到该在的位置。</p></article></div></section>
+  <main>
+    <section class="section"><div class="inner grid"><div class="label">01 · Start here</div><article><p class="lead">我们经常以为菜单的美感来自字体、插画或纸张。但真正影响点单体验的，是它有没有帮人快速做决定。</p><p>一张菜单如果看起来很“设计”，却让你找不到主菜、看不清价格、分不出招牌和普通选项，它就没有完成工作。菜单首先不是装饰物，而是餐厅和顾客之间的一次对话。</p><p>好的菜单会控制读者的视线：先看到分类，再看到菜名，再比较描述和价格，最后找到自己愿意点的那一项。这个过程越顺，人越放松；越乱，人越容易随便点一个，或者把菜单合上问服务员。</p><p>所以今天不聊复杂的餐饮品牌策略，只聊一个很小的判断：菜单排版如何让选择变轻一点。</p><figure class="figure"><svg viewBox="0 0 1600 900" role="img" aria-labelledby="menu-title menu-desc"><title id="menu-title">菜单排版信息层级图解</title><desc id="menu-desc">展示菜单阅读中分类、菜名、描述、价格和推荐信息的层级关系。</desc><rect width="1600" height="900" fill="#f3eee3"/><text x="88" y="94" font-family="Arial" font-size="30" font-weight="700" fill="#181614">MENU AS DECISION INTERFACE</text><text x="88" y="134" font-family="Arial" font-size="21" fill="#665f57">菜单不是把信息放满，而是安排顾客先看什么、再比较什么。</text><g transform="translate(118 205)"><rect width="620" height="540" fill="#fffaf0" stroke="#181614" stroke-width="4"/><text x="48" y="74" font-family="Georgia" font-size="46" fill="#181614">Pasta</text><line x1="48" y1="104" x2="572" y2="104" stroke="#d7c9b8" stroke-width="2"/><g font-family="Arial"><text x="48" y="164" font-size="28" font-weight="700" fill="#181614">烟熏番茄牛肉意面</text><text x="520" y="164" text-anchor="end" font-size="34" fill="#ad432f">68</text><text x="48" y="202" font-size="20" fill="#665f57">番茄、牛肉、罗勒。适合想吃主食的人。</text><line x1="48" y1="238" x2="572" y2="238" stroke="#d7c9b8" stroke-width="2"/><text x="48" y="298" font-size="28" font-weight="700" fill="#181614">奶油蘑菇宽面</text><text x="520" y="298" text-anchor="end" font-size="34" fill="#ad432f">62</text><text x="48" y="336" font-size="20" fill="#665f57">香气更重，适合想吃暖一点的人。</text><line x1="48" y1="372" x2="572" y2="372" stroke="#d7c9b8" stroke-width="2"/><text x="48" y="432" font-size="28" font-weight="700" fill="#181614">柠檬虾仁细面</text><text x="520" y="432" text-anchor="end" font-size="34" fill="#ad432f">72</text><text x="48" y="470" font-size="20" fill="#665f57">酸度清爽，适合不想太腻的人。</text></g></g><g transform="translate(860 210)" font-family="Arial"><rect x="0" y="0" width="540" height="96" fill="#181614"/><text x="28" y="58" font-size="25" font-weight="700" fill="#fffaf0">01 分类：先帮人定位区域</text><rect x="0" y="124" width="540" height="96" fill="#ad432f"/><text x="28" y="182" font-size="25" font-weight="700" fill="#fffaf0">02 菜名：成为阅读主线</text><rect x="0" y="248" width="540" height="96" fill="#225e73"/><text x="28" y="306" font-size="25" font-weight="700" fill="#fffaf0">03 描述：解释差异，不堆材料</text><rect x="0" y="372" width="540" height="96" fill="#60765a"/><text x="28" y="430" font-size="25" font-weight="700" fill="#fffaf0">04 价格：稳定可比，不抢戏</text><rect x="0" y="496" width="540" height="96" fill="#a77d30"/><text x="28" y="554" font-size="25" font-weight="700" fill="#fffaf0">05 推荐：少量出现才可信</text></g><text x="118" y="820" font-family="Arial" font-size="22" fill="#665f57">好菜单的视觉重点，不是让每一道菜都显得重要，而是让顾客知道自己该怎么选。</text></svg><figcaption>图解：菜单的信息层级要像一条阅读路径，而不是一块被填满的版面。</figcaption></figure></article></div></section>
+    <section class="section"><div class="inner grid"><div class="label">02 · Hierarchy</div><article><h2>菜单里最常见的问题，是所有信息都一样重要</h2><p>有些菜单会把菜名、英文名、材料、故事、辣度、推荐语、价格全部放进同一个视觉层级。每一项都不算错，但合在一起就变成噪音。</p><p>顾客点单时不是在认真读论文。他通常只想知道：这是什么？我会不会喜欢？多少钱？和旁边那道有什么区别？如果菜单没有回答这些问题，顾客就会用最省力的方式逃走：点熟悉的、点第一眼看到的、点别人推荐的。</p><p>所以菜单排版的第一件事，是决定哪些信息应该大声，哪些信息应该小声。分类标题负责让人定位，菜名负责成为主线，描述负责解释差异，价格负责比较成本。它们不该抢同一个麦克风。</p><div class="quote">排版不是把内容排漂亮，而是决定谁先被理解。</div></article></div></section>
+    <section class="section"><div class="inner grid"><div class="label">03 · Price</div><article><h2>价格不能躲，也不能太像主角</h2><p>很多菜单会犯两个相反的错误。第一种是价格被藏得很深，顾客要一行行扫过去才找到。第二种是价格太醒目，所有注意力都被数字吸走，菜本身反而变成配角。</p><p>比较舒服的做法，是让价格稳定、清楚、可预期。比如统一靠右，和菜名保持同一基线；或者统一放在每一道菜的结尾，但留出足够空隙。顾客一旦知道价格在哪里，就不需要反复寻找。</p><p>这里的关键不是贵或便宜，而是信任感。一个让人找不到价格的菜单，会制造轻微的不安；一个价格跳来跳去的菜单，会打断阅读节奏。设计越想让人放松，越要把这些小地方处理得诚实。</p></article></div></section>
+    <section class="section"><div class="inner"><div class="grid"><div class="label">04 · Rules</div><article><h2>五个立刻能用的菜单判断</h2><p>下次你拿到一张菜单，可以不急着评价它好不好看。先用这五点扫一遍，基本就能判断它有没有在认真帮助顾客。</p></article></div><div class="cards"><div class="card"><b>01 分类是否清楚</b><p>主食、饮品、甜点、套餐之间要有明确分区。分类不清，人会一直回头找。</p></div><div class="card"><b>02 菜名是否先被看见</b><p>菜名应该是阅读主线。英文名、材料和卖点都不能抢走它的位置。</p></div><div class="card"><b>03 描述是否在降低犹豫</b><p>好的描述不是堆材料，而是告诉顾客口味、分量、适合谁。</p></div><div class="card"><b>04 价格是否稳定可比</b><p>价格位置统一，顾客才不用每一行重新寻找，比较也更轻松。</p></div><div class="card"><b>05 推荐是否克制</b><p>招牌、主厨推荐、必点如果到处都是，就等于没有推荐。</p></div></div></div></section>
+    <section class="section"><div class="inner"><div class="grid"><div class="label">05 · Cases</div><article><h2>三种常见菜单气质</h2></article></div><div class="cases"><article class="case"><div class="case-visual"><svg viewBox="0 0 260 170" width="240"><rect width="260" height="170" fill="#fffaf0"/><text x="28" y="44" font-family="Georgia" font-size="24" fill="#181614">Lunch</text><line x1="28" y1="58" x2="232" y2="58" stroke="#d7c9b8" stroke-width="2"/><text x="28" y="92" font-family="Arial" font-size="15" font-weight="700" fill="#181614">番茄牛肉意面</text><text x="218" y="92" text-anchor="end" font-family="Georgia" font-size="18" fill="#ad432f">68</text><text x="28" y="116" font-family="Arial" font-size="11" fill="#665f57">酸甜、饱腹、适合主食</text></svg></div><div class="case-body"><h3>安静清楚型</h3><p>适合咖啡店、轻餐和社区小店。重点是让人快速找到舒服的选择，不需要太多戏剧感。</p></div></article><article class="case"><div class="case-visual"><svg viewBox="0 0 260 170" width="240"><rect width="260" height="170" fill="#181614"/><text x="30" y="54" font-family="Georgia" font-size="34" fill="#fffaf0">Chef's</text><rect x="30" y="76" width="86" height="24" fill="#ad432f"/><text x="38" y="93" font-family="Arial" font-size="11" font-weight="700" fill="#fffaf0">SIGNATURE</text><text x="30" y="126" font-family="Arial" font-size="15" fill="#fffaf0">炭烤牛排</text><text x="206" y="126" text-anchor="end" font-family="Georgia" font-size="24" fill="#a77d30">168</text></svg></div><div class="case-body"><h3>重点推荐型</h3><p>适合餐厅希望推少数招牌。推荐标识要少，位置要准，不然会变成菜单里的噪音。</p></div></article><article class="case"><div class="case-visual"><svg viewBox="0 0 260 170" width="240"><rect width="260" height="170" fill="#f3eee3"/><rect x="28" y="30" width="204" height="110" fill="#fffaf0" stroke="#d7c9b8" stroke-width="2"/><line x1="70" y1="30" x2="70" y2="140" stroke="#d7c9b8" stroke-width="2"/><line x1="28" y1="68" x2="232" y2="68" stroke="#d7c9b8" stroke-width="2"/><line x1="28" y1="104" x2="232" y2="104" stroke="#d7c9b8" stroke-width="2"/><circle cx="49" cy="49" r="7" fill="#60765a"/><circle cx="49" cy="86" r="7" fill="#225e73"/><circle cx="49" cy="122" r="7" fill="#ad432f"/></svg></div><div class="case-body"><h3>功能筛选型</h3><p>适合选择很多的茶饮、快餐和外卖。辣度、冰量、甜度、素食等信息要像工具一样清楚。</p></div></article></div></div></section>
+    <section class="section"><div class="inner grid"><div class="label">06 · Mistakes</div><article><h2>菜单不需要把餐厅所有优点都说完</h2><h3>描述写得像广告语</h3><p>“甄选优质食材，匠心烹制而成”这种话几乎不能帮助点单。顾客更需要知道它是清爽、浓郁、辣、甜，还是分量很大。</p><h3>图片太多，反而失去判断</h3><p>每一道菜都配一张图，容易让菜单变成相册。图片应该用来解释难以想象的菜，或者突出少数招牌，而不是平均铺满。</p><h3>字体太多，像在展示素材库</h3><p>一个菜单通常不需要三四种字体。字体越多，越难形成稳定气质。真正有用的是字号、字重、间距和对齐关系。</p></article></div></section>
+    <section class="section exercise"><div class="inner grid"><div class="label">07 · Practice</div><article><h2>今天的观察练习</h2><p class="muted">今天吃饭或点咖啡时，花一分钟看菜单。不要只看菜，看看它是怎样引导你的选择。</p><div class="steps"><div class="step"><span>01</span><p>先遮住价格，只看菜名和描述：你能不能快速知道每一项的差异？哪一道最容易被理解？</p></div><div class="step"><span>02</span><p>再只看价格位置：它们是否稳定、好找、方便比较？有没有某些数字突然抢走了注意力？</p></div><div class="step"><span>03</span><p>最后看推荐标识：它是在真的帮你选择，还是每一页都在喊“必点”？</p></div></div></article></div></section>
+    <section class="reflection"><div><p>好的菜单不会替你做决定，但会让决定变得轻一点。</p></div></section>
+  </main>
+  <footer class="footer"><span class="brand"><strong>审美的逻辑</strong><small>有关视觉、设计与判断力</small></span><span class="powered">Powered by Skip</span></footer>
+</body>
+</html>

@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>关于我｜审美的逻辑</title>
+  <meta name="description" content="关于 Skip 和《审美的逻辑》：一份面向普通人的视觉设计、审美判断、字体、色彩、版式与设计史小刊。">
+  <link rel="canonical" href="https://iskip.me/about.html">
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="关于我｜审美的逻辑">
+  <meta property="og:description" content="认识《审美的逻辑》背后的作者 Skip，关注公众号或通过邮箱联系。">
+  <meta property="og:url" content="https://iskip.me/about.html">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Skip",
+      "url": "https://iskip.me/about.html",
+      "email": "mailto:skipskkip007@gmail.com",
+      "knowsAbout": ["审美", "视觉设计", "字体", "色彩", "版式", "设计史", "视觉文化"],
+      "publishingPrinciples": "https://iskip.me/"
+    }
+  </script>
+  <style>
+    :root {
+      --paper: #f5efe4;
+      --paper-2: #ebe1d0;
+      --ink: #171514;
+      --muted: #6f675d;
+      --line: #d7c9b8;
+      --cream: #fffaf0;
+      --red: #ad432f;
+      --blue: #205f76;
+      --green: #60765a;
+      --gold: #a77d30;
+      --serif: Georgia, "Times New Roman", "Songti SC", "SimSun", serif;
+      --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.72;
+      letter-spacing: 0;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(90deg, rgba(23, 21, 20, .045) 1px, transparent 1px) 0 0 / 72px 72px,
+        linear-gradient(0deg, rgba(23, 21, 20, .035) 1px, transparent 1px) 0 0 / 72px 72px,
+        var(--paper);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      min-height: 100vh;
+    }
+
+    .site-nav {
+      width: 100%;
+      height: 64px;
+      padding: 0 clamp(20px, 4vw, 64px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 1px solid rgba(23, 21, 20, .16);
+      background: rgba(245, 239, 228, .94);
+      color: var(--muted);
+      font-size: 13px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+    }
+
+    .site-logo {
+      display: inline-flex;
+      align-items: center;
+      min-height: 64px;
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      flex-wrap: wrap;
+      height: 64px;
+    }
+
+    .nav-links a {
+      display: inline-flex;
+      align-items: center;
+      height: 64px;
+      border-bottom: 1px solid transparent;
+      margin-bottom: -1px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .nav-links a:hover,
+    .nav-links a[aria-current="page"] {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .hero {
+      padding: 86px clamp(20px, 5vw, 72px) 72px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-inner {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      display: block;
+    }
+
+    h1 {
+      margin: 20px 0 0;
+      font-family: var(--serif);
+      font-size: clamp(58px, 9vw, 140px);
+      line-height: .92;
+      font-weight: 500;
+    }
+
+    .kicker,
+    .label {
+      margin: 0;
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 760;
+      text-transform: uppercase;
+    }
+
+    .content {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      padding: 68px clamp(20px, 5vw, 72px) 86px;
+      display: grid;
+      grid-template-columns: minmax(190px, 260px) minmax(0, 1fr);
+      gap: clamp(34px, 7vw, 108px);
+      align-items: start;
+    }
+
+    .rail {
+      position: sticky;
+      top: 28px;
+      display: grid;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .rail p {
+      margin: 0;
+    }
+
+    .mark {
+      width: 88px;
+      aspect-ratio: 1;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, transparent 0 46%, var(--ink) 46% 54%, transparent 54%),
+        radial-gradient(circle at 32% 32%, rgba(173, 67, 47, .38) 0 15%, transparent 15.4%),
+        radial-gradient(circle at 68% 68%, rgba(32, 95, 118, .32) 0 15%, transparent 15.4%),
+        var(--cream);
+    }
+
+    .sections {
+      display: grid;
+      gap: 58px;
+      min-width: 0;
+    }
+
+    section {
+      border-top: 2px solid var(--ink);
+      padding-top: 22px;
+      min-width: 0;
+    }
+
+    h2 {
+      margin: 0 0 22px;
+      font-family: var(--serif);
+      font-size: clamp(32px, 4vw, 56px);
+      line-height: 1.08;
+      font-weight: 500;
+    }
+
+    p {
+      margin: 0 0 18px;
+      max-width: 760px;
+    }
+
+    .lead {
+      font-size: clamp(22px, 2.4vw, 32px);
+      line-height: 1.48;
+      color: var(--ink);
+      max-width: 840px;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .principles {
+      display: grid;
+      gap: 1px;
+      margin-top: 28px;
+      border: 1px solid var(--line);
+      background: var(--line);
+    }
+
+    .principle {
+      display: grid;
+      grid-template-columns: 126px minmax(0, 1fr);
+      gap: 24px;
+      padding: 22px;
+      background: rgba(255, 250, 240, .72);
+    }
+
+    .principle b {
+      color: var(--blue);
+      font-size: 15px;
+      line-height: 1.42;
+    }
+
+    .principle p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .audience {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      margin-top: 28px;
+      border: 1px solid var(--line);
+      background: var(--line);
+    }
+
+    .audience span {
+      min-height: 124px;
+      padding: 20px;
+      background: rgba(255, 250, 240, .72);
+      color: var(--muted);
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .contact {
+      display: grid;
+      grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
+      gap: clamp(24px, 4vw, 48px);
+      align-items: end;
+      margin-top: 28px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, .58);
+    }
+
+    .qr {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+    }
+
+    .qr img {
+      display: block;
+      width: min(100%, 220px);
+      height: auto;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .qr figcaption {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .contact-actions {
+      display: grid;
+      gap: 16px;
+      align-content: end;
+    }
+
+    .email {
+      width: fit-content;
+      max-width: 100%;
+      border-top: 2px solid var(--ink);
+      padding-top: 10px;
+      color: var(--ink);
+      font-size: clamp(18px, 2vw, 25px);
+      line-height: 1.28;
+      overflow-wrap: anywhere;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 28px clamp(20px, 5vw, 72px);
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: grid;
+      gap: 2px;
+    }
+
+    .brand strong {
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .brand small {
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .rail {
+        position: static;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .site-nav {
+        height: 58px;
+        padding-inline: 20px;
+      }
+
+      .site-logo {
+        min-height: 58px;
+        font-size: 20px;
+      }
+
+      .nav-links {
+        gap: 18px;
+        height: 58px;
+      }
+
+      .nav-links a {
+        height: 58px;
+        font-size: 13px;
+      }
+
+      .hero {
+        padding-top: 58px;
+        padding-bottom: 54px;
+      }
+
+      h1 {
+        font-size: clamp(54px, 18vw, 86px);
+      }
+
+      .content {
+        padding-top: 48px;
+        padding-bottom: 62px;
+      }
+
+      .principle,
+      .contact {
+        grid-template-columns: 1fr;
+      }
+
+      .audience {
+        grid-template-columns: 1fr;
+      }
+
+      .audience span {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <nav class="site-nav" aria-label="站点导航">
+      <a class="site-logo" href="index.html" aria-label="审美的逻辑首页">审美的逻辑</a>
+      <span class="nav-links">
+        <a href="index.html">所有文章</a>
+        <a href="about.html" aria-current="page">关于我</a>
+      </span>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-inner">
+        <p class="kicker">About · Skip</p>
+        <h1>关于我</h1>
+      </div>
+    </header>
+
+    <main class="content">
+      <aside class="rail" aria-label="页面摘要">
+        <span class="mark" aria-hidden="true"></span>
+        <p>Skip</p>
+        <p>写一份面向普通人的视觉设计小刊。</p>
+      </aside>
+
+      <div class="sections">
+        <section aria-labelledby="what-title">
+          <p class="label">01 · What</p>
+          <h2 id="what-title">这里写什么</h2>
+          <p class="lead">《审美的逻辑》关心的不是“好看”这个结论，而是一个画面为什么成立。</p>
+          <p class="muted">我会从普通人每天都能遇到的东西出发：一张菜单、一页网页、一只包装盒、一本书的封面、一张海报、一处建筑空间。它们背后都有视觉秩序，也都有可以被说清楚的判断依据。</p>
+          <p class="muted">这里长期记录字体、色彩、版式、构图、信息设计、设计史和视觉文化。目标很简单：让审美不再只是感觉，而变成一种可以慢慢训练的观看能力。</p>
+        </section>
+
+        <section aria-labelledby="method-title">
+          <p class="label">02 · Method</p>
+          <h2 id="method-title">我的方法</h2>
+          <div class="principles" aria-label="写作方法">
+            <div class="principle">
+              <b>从日常开始</b>
+              <p>不把设计只放在展览、奖项和专业术语里，而是先回到正在被使用的东西。</p>
+            </div>
+            <div class="principle">
+              <b>看关系</b>
+              <p>字体、颜色、留白、材料和信息层级不是孤立元素。真正的气质通常发生在关系里。</p>
+            </div>
+            <div class="principle">
+              <b>留下判断</b>
+              <p>每篇文章尽量给出一个可复用的观察方式，让你下次看到类似东西时，可以自己判断。</p>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="reader-title">
+          <p class="label">03 · Reader</p>
+          <h2 id="reader-title">你可能会喜欢这里，如果你</h2>
+          <div class="audience">
+            <span>不是设计专业，但想更清楚地理解视觉世界。</span>
+            <span>做内容、品牌、产品或运营，需要判断页面、图片和物料是否成立。</span>
+            <span>正在学习设计，希望先建立稳定的审美底层。</span>
+            <span>喜欢从日常物件里看见秩序、性格和时代感。</span>
+          </div>
+        </section>
+
+        <section aria-labelledby="contact-title">
+          <p class="label">04 · Contact</p>
+          <h2 id="contact-title">关注与联系</h2>
+          <p class="muted">公众号会同步适合手机阅读的内容。合作、交流、反馈或单纯想说一句话，也可以通过邮箱联系我。</p>
+          <div class="contact">
+            <figure class="qr">
+              <img src="assets/wechat-qrcode.jpg" alt="Skip 个人公众号二维码">
+              <figcaption>微信扫码关注公众号</figcaption>
+            </figure>
+            <div class="contact-actions">
+              <a class="email" href="mailto:skipskkip007@gmail.com">skipskkip007@gmail.com</a>
+              <p class="muted">我会尽量认真读每一封来信。若你是因为某篇文章而来，也欢迎直接告诉我那一篇。</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <span class="brand">
+        <strong>审美的逻辑</strong>
+        <small>有关视觉、设计与判断力</small>
+      </span>
+      <span><a href="index.html">返回所有文章</a></span>
+    </footer>
+  </div>
+</body>
+</html>

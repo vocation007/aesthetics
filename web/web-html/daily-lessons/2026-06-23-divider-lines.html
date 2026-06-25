@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>分隔线：为什么线越多，页面反而越乱</title>
+  <style>
+    :root{--paper:#f4efe6;--paper-2:#e7dccb;--ink:#171514;--muted:#686157;--line:#d5c7b6;--cream:#fffaf0;--red:#a94634;--blue:#235f72;--green:#60775d;--gold:#a47b31;--soft:#ece3d4;--serif:Georgia,"Times New Roman","Songti SC","SimSun",serif;--sans:-apple-system,BlinkMacSystemFont,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif}
+    *{box-sizing:border-box}
+    html{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.82;letter-spacing:0}
+    body{margin:0;overflow-x:hidden;background:linear-gradient(90deg,rgba(23,21,20,.04) 1px,transparent 1px) 0 0/70px 70px,linear-gradient(0deg,rgba(23,21,20,.035) 1px,transparent 1px) 0 0/70px 70px,var(--paper)}
+    svg{display:block;max-width:100%;height:auto}
+    .hero{min-height:86vh;padding:50px clamp(22px,5vw,74px) 56px;display:grid;align-items:end;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+    .hero:before{content:"";position:absolute;right:clamp(-160px,-9vw,-48px);top:8vh;width:min(50vw,610px);height:min(68vh,650px);background:linear-gradient(90deg,transparent 0 18%,rgba(23,21,20,.12) 18% 18.8%,transparent 18.8% 42%,rgba(169,70,52,.22) 42% 43.2%,transparent 43.2% 72%,rgba(35,95,114,.18) 72% 73%,transparent 73%),linear-gradient(0deg,rgba(255,250,240,.82),rgba(255,250,240,.52));border:1px solid rgba(23,21,20,.12);box-shadow:22px 26px 0 rgba(23,21,20,.07);transform:rotate(2deg)}
+    .hero:after{content:"";position:absolute;right:clamp(28px,8vw,140px);top:17vh;width:min(32vw,380px);height:min(50vh,460px);background:repeating-linear-gradient(180deg,rgba(23,21,20,.18) 0 1px,transparent 1px 34px);opacity:.62;transform:rotate(2deg)}
+    .hero-grid{position:relative;z-index:1;width:min(1220px,100%);margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(290px,430px);gap:clamp(34px,6vw,94px);align-items:end}
+    .kicker{margin:0 0 26px;color:var(--red);font-size:13px;font-weight:760;letter-spacing:.12em;text-transform:uppercase}
+    h1{margin:0;font-family:var(--serif);font-size:clamp(50px,7vw,108px);line-height:.99;font-weight:500}
+    .title-line{display:block}
+    .hero-note{border-top:2px solid var(--ink);padding-top:25px}
+    .hero-note p{margin:0;color:var(--muted);font-size:clamp(18px,1.55vw,22px);line-height:1.76}
+    .meta{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap}
+    .tag{border:1px solid var(--line);background:rgba(255,250,240,.7);color:var(--muted);padding:8px 12px;font-size:14px;line-height:1}
+    .band{background:var(--ink);color:var(--cream);padding:48px clamp(22px,5vw,74px)}
+    .divider-stage{width:min(1180px,100%);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,250,240,.2);border:1px solid rgba(255,250,240,.18)}
+    .stage-panel{background:#12100f;padding:clamp(22px,4vw,42px);min-height:380px;display:grid;align-content:space-between}
+    .stage-panel h2{margin:0 0 24px;color:var(--cream);font-family:var(--serif);font-size:34px;line-height:1.1;font-weight:500}
+    .noisy-list,.quiet-list{display:grid;gap:0}
+    .noisy-list span,.quiet-list span{display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center;color:rgba(255,250,240,.9)}
+    .noisy-list span{padding:12px 0;border-top:2px solid rgba(255,250,240,.36);border-bottom:2px solid rgba(255,250,240,.22);box-shadow:0 1px 0 rgba(255,250,240,.16)}
+    .quiet-list{gap:18px}
+    .quiet-list span{padding:0 0 18px;border-bottom:1px solid rgba(255,250,240,.2)}
+    .quiet-list span:last-child{border-bottom:0}
+    .item-name{font-size:17px;line-height:1.45}
+    .item-note{display:block;margin-top:2px;color:rgba(255,250,240,.48);font-size:13px;line-height:1.5}
+    .item-value{font-family:var(--serif);font-size:24px;color:var(--gold);white-space:nowrap}
+    .stage-panel p{margin:24px 0 0;color:rgba(255,250,240,.72);font-size:16px;line-height:1.75}
+    .section{padding:76px clamp(22px,5vw,74px);border-bottom:1px solid var(--line)}
+    .inner{width:min(1120px,100%);margin:0 auto}
+    .grid{display:grid;grid-template-columns:minmax(150px,230px) minmax(0,760px);gap:clamp(32px,6vw,82px);align-items:start}
+    .label{position:sticky;top:24px;color:var(--red);font-size:13px;font-weight:760;letter-spacing:.12em;text-transform:uppercase}
+    h2{margin:0 0 24px;font-family:var(--serif);font-size:clamp(34px,4.3vw,58px);line-height:1.08;font-weight:500}
+    h3{margin:34px 0 12px;font-size:20px;line-height:1.45}
+    p{margin:0 0 19px}
+    .lead{font-size:clamp(22px,2.35vw,30px);line-height:1.52}
+    .muted{color:var(--muted)}
+    .figure{margin:40px 0;border-top:2px solid var(--ink);border-bottom:1px solid var(--line);padding:18px 0 16px}
+    figcaption{color:var(--muted);font-size:15px;line-height:1.7;margin-top:12px}
+    .quote{margin:38px 0;padding-top:28px;border-top:2px solid var(--red);font-family:var(--serif);font-size:clamp(27px,3vw,40px);line-height:1.28}
+    .rules{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;margin-top:34px;background:var(--line);border:1px solid var(--line)}
+    .rule{background:var(--cream);min-height:235px;padding:24px 18px}
+    .rule b{display:block;margin-bottom:16px;color:var(--red);font-size:15px;line-height:1.38}
+    .rule p{font-size:16px;line-height:1.72;color:var(--muted);margin:0}
+    .scenes{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:34px;background:var(--line);border:1px solid var(--line)}
+    .scene{background:var(--cream)}
+    .scene-visual{min-height:200px;display:grid;place-items:center;border-bottom:1px solid var(--line);padding:22px;background:var(--paper)}
+    .scene-body{padding:24px}
+    .scene-body h3{margin-top:0}
+    .scene-body p{font-size:17px;color:var(--muted);line-height:1.76}
+    .exercise{background:var(--ink);color:var(--cream)}
+    .exercise .label,.exercise .muted{color:rgba(255,250,240,.68)}
+    .exercise h2{color:var(--cream)}
+    .steps{display:grid;gap:1px;margin-top:34px;background:rgba(255,250,240,.22);border:1px solid rgba(255,250,240,.2)}
+    .step{display:grid;grid-template-columns:84px 1fr;gap:24px;background:var(--ink);padding:24px}
+    .step span{color:var(--gold);font-family:var(--serif);font-size:38px;line-height:1}
+    .step p{margin:0;color:rgba(255,250,240,.82);font-size:17px;line-height:1.78}
+    .reflection{padding:88px clamp(22px,5vw,74px);background:var(--green);color:var(--cream)}
+    .reflection div{width:min(960px,100%);margin:0 auto}
+    .reflection p{font-family:var(--serif);font-size:clamp(34px,5vw,68px);line-height:1.1;margin:0}
+    .footer{padding:28px clamp(22px,5vw,74px);color:var(--muted);font-size:14px;display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
+    .brand{display:grid;gap:3px}.brand strong{color:var(--ink);font-size:15px}.brand small{font-size:14px;color:var(--muted)}.powered{white-space:nowrap}
+    @media(max-width:960px){.hero-grid,.grid,.divider-stage{grid-template-columns:1fr}.label{position:static}.rules{grid-template-columns:1fr 1fr}.scenes{grid-template-columns:1fr 1fr}.hero:before{opacity:.46;right:-36vw;width:88vw}.hero:after{right:-12vw;width:74vw}}
+    @media(max-width:680px){html{font-size:18px}.hero{min-height:auto;padding-top:40px;padding-bottom:44px}h1{font-size:clamp(42px,11vw,62px)}.hero-note p{font-size:18px}.section{padding:48px 22px}.band{padding:36px 22px}.stage-panel{min-height:auto}.rules,.scenes{grid-template-columns:1fr}.rule{min-height:auto;padding:19px 18px}.rule b{margin-bottom:10px}.rule p{line-height:1.68}.step{grid-template-columns:1fr;gap:8px}.reflection{padding:58px 22px}.powered{font-size:14px}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-grid">
+      <div>
+        <p class="kicker">审美的逻辑 · ISSUE 021 · 2026-06-23</p>
+        <h1><span class="title-line">分隔线：</span><span class="title-line">为什么线越多，</span><span class="title-line">页面反而越乱</span></h1>
+      </div>
+      <div class="hero-note">
+        <p>分隔线看起来是很小的东西。可很多页面、菜单和价签之所以显得累，不是内容太多，而是每一条线都在抢着证明自己有用。</p>
+        <div class="meta"><span class="tag">日常设计</span><span class="tag">版式</span><span class="tag">5 分钟</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="band">
+    <div class="divider-stage" aria-label="分隔线过多与克制使用的对照">
+      <article class="stage-panel">
+        <h2>线很多</h2>
+        <div class="noisy-list">
+          <span><span class="item-name">手冲咖啡<span class="item-note">浅烘 / 花香 / 柑橘</span></span><span class="item-value">42</span></span>
+          <span><span class="item-name">冷萃咖啡<span class="item-note">低酸 / 顺滑 / 玻璃瓶</span></span><span class="item-value">38</span></span>
+          <span><span class="item-name">燕麦拿铁<span class="item-note">热 / 冰 / 可少糖</span></span><span class="item-value">36</span></span>
+        </div>
+        <p>每一行都被线压住，信息之间像被切开。读者看见的不是秩序，而是一连串硬边。</p>
+      </article>
+      <article class="stage-panel">
+        <h2>线更少</h2>
+        <div class="quiet-list">
+          <span><span class="item-name">手冲咖啡<span class="item-note">浅烘、花香、柑橘。</span></span><span class="item-value">42</span></span>
+          <span><span class="item-name">冷萃咖啡<span class="item-note">低酸、顺滑，适合慢慢喝。</span></span><span class="item-value">38</span></span>
+          <span><span class="item-name">燕麦拿铁<span class="item-note">奶感更轻，可做冰饮。</span></span><span class="item-value">36</span></span>
+        </div>
+        <p>线退到辅助位置，组距和对齐开始工作。页面安静了，比较反而更容易。</p>
+      </article>
+    </div>
+  </section>
+
+  <main>
+    <section class="section">
+      <div class="inner grid">
+        <div class="label">01 · Start here</div>
+        <article>
+          <p class="lead">分隔线最容易被误用，因为它给人一种“我把信息整理好了”的错觉。</p>
+          <p>你打开一个手机设置页、外卖菜单、收银小票、后台表格，常常会看到很多细线。横线、竖线、边框、浅灰底、卡片边缘，像一群很勤奋的标点。它们的本意是帮你看清楚，但数量一多，反而让页面变紧、变硬、变碎。</p>
+          <p>问题不在于线不能用。线当然有用。它能切开两组信息，能强调边界，能让比较变得稳定。问题是：很多线只是因为设计者不放心，才被加上去。好像没有线，信息就会散；没有框，内容就不够正式。</p>
+          <p>真正舒服的页面，通常不是没有分隔，而是分隔方式有轻重。能用距离解决的，不急着用线；能用对齐解决的，不急着用框；只有关系真的需要被切开时，线才出来说一句话。</p>
+          <figure class="figure">
+            <svg viewBox="0 0 1600 900" role="img" aria-labelledby="divider-title divider-desc">
+              <title id="divider-title">分隔线强弱与信息分组图解</title>
+              <desc id="divider-desc">展示线、间距、对齐、底色和空白在信息分隔中的不同强度。</desc>
+              <rect width="1600" height="900" fill="#f4efe6"/>
+              <text x="88" y="94" font-family="Arial" font-size="30" font-weight="700" fill="#171514">DIVIDERS ARE VOLUME CONTROLS</text>
+              <text x="88" y="134" font-family="Arial" font-size="21" fill="#686157">分隔线不是默认装饰，而是信息关系的音量控制。</text>
+              <g transform="translate(108 205)">
+                <rect width="600" height="520" fill="#fffaf0" stroke="#171514" stroke-width="4"/>
+                <g font-family="Arial">
+                  <text x="46" y="70" font-size="26" font-weight="700" fill="#171514">线太重：所有边界同时出现</text>
+                  <line x1="46" y1="115" x2="554" y2="115" stroke="#171514" stroke-width="5"/>
+                  <line x1="46" y1="185" x2="554" y2="185" stroke="#171514" stroke-width="5"/>
+                  <line x1="46" y1="255" x2="554" y2="255" stroke="#171514" stroke-width="5"/>
+                  <line x1="46" y1="325" x2="554" y2="325" stroke="#171514" stroke-width="5"/>
+                  <line x1="46" y1="395" x2="554" y2="395" stroke="#171514" stroke-width="5"/>
+                  <text x="72" y="155" font-size="23" fill="#171514">名称</text><text x="470" y="155" font-size="23" fill="#171514">价格</text>
+                  <text x="72" y="225" font-size="23" fill="#171514">名称</text><text x="470" y="225" font-size="23" fill="#171514">价格</text>
+                  <text x="72" y="295" font-size="23" fill="#171514">名称</text><text x="470" y="295" font-size="23" fill="#171514">价格</text>
+                  <text x="72" y="365" font-size="23" fill="#171514">名称</text><text x="470" y="365" font-size="23" fill="#171514">价格</text>
+                  <text x="72" y="435" font-size="23" fill="#171514">名称</text><text x="470" y="435" font-size="23" fill="#171514">价格</text>
+                </g>
+              </g>
+              <g transform="translate(850 205)">
+                <rect width="600" height="520" fill="#fffaf0" stroke="#d5c7b6" stroke-width="2"/>
+                <g font-family="Arial">
+                  <text x="46" y="70" font-size="26" font-weight="700" fill="#171514">线变轻：先用距离，再用边界</text>
+                  <text x="46" y="132" font-size="23" font-weight="700" fill="#171514">咖啡</text>
+                  <text x="490" y="132" text-anchor="end" font-size="26" fill="#a94634">42</text>
+                  <text x="46" y="166" font-size="18" fill="#686157">浅烘，酸度明亮</text>
+                  <line x1="46" y1="205" x2="554" y2="205" stroke="#d5c7b6" stroke-width="2"/>
+                  <text x="46" y="260" font-size="23" font-weight="700" fill="#171514">冷萃</text>
+                  <text x="490" y="260" text-anchor="end" font-size="26" fill="#a94634">38</text>
+                  <text x="46" y="294" font-size="18" fill="#686157">低酸，适合慢喝</text>
+                  <line x1="46" y1="333" x2="554" y2="333" stroke="#d5c7b6" stroke-width="2"/>
+                  <text x="46" y="388" font-size="23" font-weight="700" fill="#171514">燕麦拿铁</text>
+                  <text x="490" y="388" text-anchor="end" font-size="26" fill="#a94634">36</text>
+                  <text x="46" y="422" font-size="18" fill="#686157">奶感更轻，可做冰饮</text>
+                </g>
+              </g>
+              <g transform="translate(118 785)" font-family="Arial" font-size="22" fill="#686157">
+                <text>判断顺序：先看信息是否已经靠距离、对齐和字重形成分组。还不够清楚时，再加线。</text>
+              </g>
+            </svg>
+            <figcaption>图解：同样是三条信息，硬线越多，眼睛越忙。分隔线最好像小声提醒，而不是把每一项都用力切开。</figcaption>
+          </figure>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner grid">
+        <div class="label">02 · Volume</div>
+        <article>
+          <h2>线其实有音量</h2>
+          <p>一条黑色粗线的音量很大。它会告诉你：这里是强分界，前后不是一组。浅灰细线的音量小一些，它只是在提醒你：这里有一个轻微停顿。没有线，只靠距离，也是一种分隔，只是更安静。</p>
+          <p>很多页面的问题，是把所有边界都调到同一个音量。标题下面一条线，段落外面一个框，卡片里又有横线，列表项之间再来几条线。最后页面确实被分开了，但人的注意力也被切碎了。</p>
+          <p>线一旦太多，读者会先看见结构的痕迹，再看见内容。就像一张桌子上摆了很多标签、夹子和胶带，你知道它被整理过，但不一定更想靠近。</p>
+          <div class="quote">线不是秩序本身。线只是秩序不够清楚时的最后一层提示。</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner grid">
+        <div class="label">03 · Distance</div>
+        <article>
+          <h2>能用距离解决的，先别急着画线</h2>
+          <p>最自然的分隔，往往是距离。两个信息靠得近，我们会觉得它们相关；离得远，我们会觉得它们进入了下一组。这比线更接近日常观看经验。</p>
+          <p>比如一张价目表，菜名和描述之间可以靠小间距形成从属关系；两道菜之间可以靠稍大的组距区分；不同分类之间再留出更大的空白。这样读者会顺着空间关系理解内容，而不是被一条条线拦住。</p>
+          <p>线当然可以保留。但它最好只出现在组与组之间，或者需要稳定比较的位置。列表中每一项都画满线，常常不是清楚，而是缺少信任。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner">
+        <div class="grid">
+          <div class="label">04 · Rules</div>
+          <article>
+            <h2>五个立刻能用的分隔线判断</h2>
+            <p>下次看到一个页面显得乱，不妨先别怪颜色和字体。把线当成声音，听一听它们是不是都在抢话。</p>
+          </article>
+        </div>
+        <div class="rules">
+          <div class="rule"><b>01 先删一半线</b><p>如果删掉后信息仍然分得清，说明原来的线只是紧张感，不是必要结构。</p></div>
+          <div class="rule"><b>02 分组靠距离</b><p>同组内容近一点，不同组内容远一点。空间关系比硬边更柔和，也更耐看。</p></div>
+          <div class="rule"><b>03 线要有轻重</b><p>大组之间可以重，小项之间要轻。所有线一样重，页面就没有呼吸。</p></div>
+          <div class="rule"><b>04 别让框套框</b><p>外面已有边界，里面就少用边界。多层框会让内容像被困住。</p></div>
+          <div class="rule"><b>05 颜色别太脏</b><p>浅灰线如果太多，会把页面染成一层灰。宁可少用，也不要让背景变浑。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner">
+        <div class="grid">
+          <div class="label">05 · Scenes</div>
+          <article><h2>三个今天就能观察的场景</h2></article>
+        </div>
+        <div class="scenes">
+          <article class="scene">
+            <div class="scene-visual">
+              <svg viewBox="0 0 260 170" width="240" aria-hidden="true">
+                <rect width="260" height="170" fill="#fffaf0"/>
+                <text x="28" y="44" font-family="Arial" font-size="18" font-weight="700" fill="#171514">设置</text>
+                <line x1="28" y1="65" x2="232" y2="65" stroke="#d5c7b6" stroke-width="2"/>
+                <text x="28" y="94" font-family="Arial" font-size="14" fill="#171514">通知</text>
+                <line x1="28" y1="112" x2="232" y2="112" stroke="#d5c7b6" stroke-width="2"/>
+                <text x="28" y="140" font-family="Arial" font-size="14" fill="#171514">显示与亮度</text>
+              </svg>
+            </div>
+            <div class="scene-body">
+              <h3>手机设置页</h3>
+              <p>好的设置页会让线很轻，更多靠组距和标题提示关系。线太重时，页面会像表格，不像工具。</p>
+            </div>
+          </article>
+          <article class="scene">
+            <div class="scene-visual">
+              <svg viewBox="0 0 260 170" width="240" aria-hidden="true">
+                <rect width="260" height="170" fill="#171514"/>
+                <text x="30" y="48" font-family="Georgia" font-size="30" fill="#fffaf0">Menu</text>
+                <text x="30" y="86" font-family="Arial" font-size="14" fill="#fffaf0">燕麦拿铁</text>
+                <text x="210" y="86" text-anchor="end" font-family="Georgia" font-size="20" fill="#a47b31">36</text>
+                <line x1="30" y1="106" x2="210" y2="106" stroke="#fffaf0" stroke-opacity=".22"/>
+                <text x="30" y="134" font-family="Arial" font-size="14" fill="#fffaf0">冷萃咖啡</text>
+                <text x="210" y="134" text-anchor="end" font-family="Georgia" font-size="20" fill="#a47b31">38</text>
+              </svg>
+            </div>
+            <div class="scene-body">
+              <h3>咖啡店价目表</h3>
+              <p>价格需要可比，但不必每一行都被框住。统一对齐加少量细线，通常比满版格子更舒服。</p>
+            </div>
+          </article>
+          <article class="scene">
+            <div class="scene-visual">
+              <svg viewBox="0 0 260 170" width="240" aria-hidden="true">
+                <rect width="260" height="170" fill="#f4efe6"/>
+                <rect x="34" y="28" width="192" height="114" fill="#fffaf0" stroke="#d5c7b6" stroke-width="2"/>
+                <text x="54" y="58" font-family="Arial" font-size="14" font-weight="700" fill="#171514">今日蔬菜</text>
+                <text x="54" y="90" font-family="Arial" font-size="22" font-weight="700" fill="#a94634">12.8</text>
+                <text x="54" y="120" font-family="Arial" font-size="12" fill="#686157">500g / 产地直送</text>
+              </svg>
+            </div>
+            <div class="scene-body">
+              <h3>超市价签</h3>
+              <p>价签本身已经有边界，内部再加很多分割线会显得廉价。数字、单位和说明的层级更重要。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner grid">
+        <div class="label">06 · Mistakes</div>
+        <article>
+          <h2>分隔线常见的三个误会</h2>
+          <h3>以为线越细越高级</h3>
+          <p>细线如果太多，仍然会让页面变灰。高级感不是把所有线调细，而是知道哪些线可以消失。</p>
+          <h3>以为卡片一定要有边框</h3>
+          <p>卡片可以靠背景、留白、阴影、标题位置或内容密度成立。边框只是其中一种办法，不是身份证。</p>
+          <h3>以为没有线就会乱</h3>
+          <p>没有线时，真正的问题会暴露出来：间距是否合理，对齐是否稳定，标题和正文有没有层级。线有时只是把这些问题盖住。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section exercise">
+      <div class="inner grid">
+        <div class="label">07 · Practice</div>
+        <article>
+          <h2>今天的观察练习</h2>
+          <p class="muted">找一个你今天会反复看的页面：手机设置、外卖菜单、收银小票、会议表格都可以。只观察里面的线。</p>
+          <div class="steps">
+            <div class="step"><span>01</span><p>先数一数：这个页面里有多少种线？横线、竖线、边框、底色边界都算。</p></div>
+            <div class="step"><span>02</span><p>挑三条线问自己：如果删掉它，信息还分得清吗？如果可以，它可能只是多余的紧张感。</p></div>
+            <div class="step"><span>03</span><p>找一个真正有用的分隔：它通常会出现在大组之间，或者帮助你比较同一类信息。</p></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="reflection">
+      <div><p>一条好线，不是为了证明页面被整理过，而是让读者少停顿一次。</p></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="brand"><strong>审美的逻辑</strong><small>有关视觉、设计与判断力</small></span>
+    <span class="powered">Powered by Skip</span>
+  </footer>
+</body>
+</html>

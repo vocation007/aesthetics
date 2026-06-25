@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>审美的逻辑：有关视觉、设计与判断力</title>
+  <style>
+    :root {
+      --paper: #f5efe4;
+      --paper-2: #ebe1d0;
+      --ink: #171514;
+      --muted: #6f675d;
+      --line: #d7c9b8;
+      --cream: #fffaf0;
+      --red: #ad432f;
+      --blue: #205f76;
+      --green: #60765a;
+      --gold: #a77d30;
+      --serif: Georgia, "Times New Roman", "Songti SC", "SimSun", serif;
+      --sans: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.65;
+      letter-spacing: 0;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(90deg, rgba(23, 21, 20, .045) 1px, transparent 1px) 0 0 / 72px 72px,
+        linear-gradient(0deg, rgba(23, 21, 20, .035) 1px, transparent 1px) 0 0 / 72px 72px,
+        var(--paper);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      min-height: 100vh;
+    }
+
+    .site-nav {
+      width: 100%;
+      height: 64px;
+      padding: 0 clamp(20px, 4vw, 64px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 1px solid rgba(23, 21, 20, .16);
+      background: rgba(245, 239, 228, .94);
+      color: var(--muted);
+      font-size: 13px;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+    }
+
+    .site-logo {
+      display: inline-flex;
+      align-items: center;
+      min-height: 64px;
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      flex-wrap: wrap;
+      height: 64px;
+    }
+
+    .nav-links a {
+      display: inline-flex;
+      align-items: center;
+      height: 64px;
+      border-bottom: 1px solid transparent;
+      margin-bottom: -1px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1;
+    }
+
+    .nav-links a:hover,
+    .nav-links a[aria-current="page"] {
+      color: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .hero {
+      padding: 56px clamp(20px, 5vw, 72px) 42px;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      right: clamp(20px, 6vw, 96px);
+      top: 42px;
+      width: min(38vw, 460px);
+      aspect-ratio: 1;
+      border: 1px solid rgba(23, 21, 20, .08);
+      background:
+        linear-gradient(90deg, transparent 0 47%, rgba(23, 21, 20, .76) 47% 53%, transparent 53%),
+        radial-gradient(circle at 33% 33%, rgba(173, 67, 47, .25) 0 16%, transparent 16.4%),
+        radial-gradient(circle at 67% 67%, rgba(32, 95, 118, .22) 0 16%, transparent 16.4%),
+        linear-gradient(135deg, transparent 0 50%, rgba(167, 125, 48, .18) 50%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 420px);
+      gap: clamp(32px, 6vw, 96px);
+      align-items: end;
+    }
+
+    .kicker {
+      margin: 0 0 24px;
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 760;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: var(--serif);
+      font-size: clamp(54px, 7.2vw, 118px);
+      line-height: .96;
+      font-weight: 500;
+    }
+
+    .subtitle {
+      border-top: 2px solid var(--ink);
+      padding-top: 24px;
+      color: var(--muted);
+      font-size: clamp(16px, 1.4vw, 21px);
+    }
+
+    .subtitle p {
+      margin: 0 0 20px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .stat {
+      background: rgba(255, 250, 240, .66);
+      padding: 14px 12px;
+    }
+
+    .stat b {
+      display: block;
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 28px;
+      line-height: 1;
+      font-weight: 500;
+    }
+
+    .stat b.latest-topic {
+      font-family: var(--sans);
+      font-size: 24px;
+      font-weight: 760;
+      line-height: 1.08;
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 8px;
+    }
+
+    .layout {
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      padding: 42px clamp(20px, 5vw, 72px) 72px;
+      display: grid;
+      grid-template-columns: minmax(230px, 310px) minmax(0, 1fr);
+      gap: clamp(28px, 5vw, 72px);
+      align-items: start;
+      min-width: 0;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 24px;
+      display: grid;
+      gap: 18px;
+      min-width: 0;
+    }
+
+    .panel {
+      border-top: 2px solid var(--ink);
+      padding-top: 18px;
+      min-width: 0;
+    }
+
+    .panel-title {
+      margin: 0 0 12px;
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 760;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .search {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, .7);
+      color: var(--ink);
+      font: inherit;
+      padding: 12px 13px;
+      border-radius: 0;
+      outline: none;
+    }
+
+    .search:focus {
+      border-color: var(--ink);
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .filter {
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, .72);
+      color: var(--muted);
+      padding: 8px 10px;
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .filter.active {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--cream);
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .archive-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+    }
+
+    .archive-head h2 {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1;
+      font-weight: 760;
+    }
+
+    .count {
+      color: var(--muted);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .issue-list {
+      display: grid;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .issue {
+      background: rgba(255, 250, 240, .72);
+      display: grid;
+      grid-template-columns: 132px minmax(0, 1fr) 126px;
+      gap: 22px;
+      padding: clamp(18px, 3vw, 28px);
+      align-items: start;
+      transition: background .18s ease, color .18s ease;
+    }
+
+    .issue:hover {
+      background: var(--cream);
+    }
+
+    .issue-index {
+      color: var(--red);
+      font-size: 13px;
+      font-weight: 760;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .date {
+      display: block;
+      color: var(--muted);
+      font-weight: 400;
+      letter-spacing: 0;
+      margin-top: 8px;
+      text-transform: none;
+    }
+
+    .issue h3 {
+      margin: 0 0 10px;
+      font-family: var(--serif);
+      font-size: clamp(24px, 3vw, 36px);
+      line-height: 1.18;
+      font-weight: 500;
+    }
+
+    .summary {
+      margin: 0 0 16px;
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      color: var(--muted);
+      padding: 4px 8px;
+      font-size: 12px;
+      line-height: 1.2;
+      background: rgba(245, 239, 228, .66);
+    }
+
+    .read {
+      justify-self: end;
+      border-top: 2px solid var(--ink);
+      padding-top: 10px;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .empty {
+      display: none;
+      border: 1px solid var(--line);
+      background: rgba(255, 250, 240, .72);
+      padding: 26px;
+      color: var(--muted);
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 28px clamp(20px, 5vw, 72px);
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: grid;
+      gap: 2px;
+    }
+
+    .brand strong {
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .brand small {
+      font-size: 12px;
+    }
+
+    @media (max-width: 960px) {
+      .hero-inner,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+        width: 100%;
+      }
+
+      .issue {
+        grid-template-columns: 108px minmax(0, 1fr);
+      }
+
+      .read {
+        grid-column: 2;
+        justify-self: start;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .hero {
+        padding-top: 38px;
+      }
+
+      .hero::before {
+        width: 72vw;
+        right: -18vw;
+        top: 38px;
+        opacity: .5;
+      }
+
+      h1 {
+        font-size: clamp(46px, 14vw, 68px);
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .archive-head {
+        display: grid;
+        align-items: start;
+      }
+
+      .issue {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .read {
+        grid-column: auto;
+      }
+
+      .filters {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 4px;
+        width: 100%;
+      }
+
+      .filter {
+        white-space: nowrap;
+      }
+
+      .site-nav {
+        height: 58px;
+        padding-inline: 20px;
+      }
+
+      .site-logo {
+        min-height: 58px;
+        font-size: 20px;
+      }
+
+      .nav-links {
+        gap: 18px;
+        height: 58px;
+      }
+
+      .nav-links a {
+        height: 58px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="site-nav" aria-label="站点导航">
+      <a class="site-logo" href="index.html" aria-label="审美的逻辑首页">审美的逻辑</a>
+      <span class="nav-links">
+        <a href="index.html" aria-current="page">所有文章</a>
+        <a href="about.html">关于我</a>
+      </span>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-inner">
+        <div>
+          <p class="kicker">Web · Visual Literacy Journal</p>
+          <h1>审美的逻辑</h1>
+        </div>
+        <div class="subtitle">
+          <p>有关视觉、设计与判断力。一份面向普通人的审美知识小刊，记录字体、色彩、版式、设计史与视觉文化的基本问题。</p>
+          <div class="stats" aria-label="归档统计">
+            <div class="stat"><b>023</b><span>已发布期数</span></div>
+            <div class="stat"><b>18</b><span>主题分类</span></div>
+            <div class="stat"><b class="latest-topic">质感</b><span>最新主题</span></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar" aria-label="筛选与搜索">
+        <section class="panel">
+          <p class="panel-title">Search</p>
+          <input class="search" id="searchInput" type="search" placeholder="搜索主题、关键词、摘要" aria-label="搜索文章">
+        </section>
+        <section class="panel">
+          <p class="panel-title">Categories</p>
+          <div class="filters" role="list" aria-label="分类筛选">
+            <button class="filter active" type="button" data-filter="全部">全部</button>
+            <button class="filter" type="button" data-filter="字体">字体</button>
+            <button class="filter" type="button" data-filter="色彩">色彩</button>
+            <button class="filter" type="button" data-filter="版式">版式</button>
+            <button class="filter" type="button" data-filter="书籍装帧">书籍装帧</button>
+            <button class="filter" type="button" data-filter="构图">构图</button>
+            <button class="filter" type="button" data-filter="留白">留白</button>
+            <button class="filter" type="button" data-filter="设计史">设计史</button>
+            <button class="filter" type="button" data-filter="视觉心理">视觉心理</button>
+            <button class="filter" type="button" data-filter="视觉层级">视觉层级</button>
+            <button class="filter" type="button" data-filter="信息设计">信息设计</button>
+            <button class="filter" type="button" data-filter="数据可视化">数据可视化</button>
+            <button class="filter" type="button" data-filter="现代主义">现代主义</button>
+            <button class="filter" type="button" data-filter="建筑设计">建筑设计</button>
+            <button class="filter" type="button" data-filter="日常设计">日常设计</button>
+            <button class="filter" type="button" data-filter="材料">材料</button>
+            <button class="filter" type="button" data-filter="品牌视觉">品牌视觉</button>
+            <button class="filter" type="button" data-filter="海报史">海报史</button>
+            <button class="filter" type="button" data-filter="视觉文化">视觉文化</button>
+          </div>
+        </section>
+        <section class="panel">
+          <p class="panel-title">How to use</p>
+          <p class="note">每一期都可以单独打开和转发；这个页面负责回顾、检索和按分类进入阅读。</p>
+        </section>
+      </aside>
+
+      <section aria-label="文章归档">
+        <div class="archive-head">
+          <h2>所有文章</h2>
+          <span class="count" id="resultCount">23 篇</span>
+        </div>
+        <div class="issue-list" id="issueList">
+          <a class="issue" href="daily-lessons/2026-06-25-material-feel.html" data-category="日常设计 材料 视觉文化" data-search="ISSUE 023 2026-06-25 质感 为什么有些东西一看就薄 日常设计 材料 视觉文化 质感 材质 材料感 包装 菜单 名片 纸张 纸感 光泽 厚度 边缘 纹理 触感 网页 卡片 弹窗">
+            <span class="issue-index">ISSUE 023 <span class="date">2026-06-25</span></span>
+            <span>
+              <h3>质感：为什么有些东西一看就薄</h3>
+              <p class="summary">从包装、菜单、纸张和屏幕页面观察质感：光泽、厚度、边缘和纹理如何让东西看起来可靠。</p>
+              <span class="tags"><span class="tag">日常设计</span><span class="tag">材料</span><span class="tag">视觉文化</span><span class="tag">质感判断</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-06-24-series-sense.html" data-category="品牌视觉 版式 视觉层级 视觉文化" data-search="ISSUE 022 2026-06-24 系列感 为什么一组东西要相似 也要有差别 品牌视觉 版式 视觉层级 视觉文化 系列 系统 统一 差异 骨架 变量 书籍 包装 海报 App 卡片 品牌识别">
+            <span class="issue-index">ISSUE 022 <span class="date">2026-06-24</span></span>
+            <span>
+              <h3>系列感：为什么一组东西要相似，也要有差别</h3>
+              <p class="summary">从书籍、包装、海报和线上卡片理解系列感：稳定骨架让人认得出，有意义的变量让人分得开。</p>
+              <span class="tags"><span class="tag">品牌视觉</span><span class="tag">版式</span><span class="tag">视觉层级</span><span class="tag">系统感</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-06-23-divider-lines.html" data-category="日常设计 版式 视觉层级" data-search="ISSUE 021 2026-06-23 分隔线 为什么线越多 页面反而越乱 日常设计 版式 视觉层级 分隔线 边框 横线 竖线 卡片 设置页 菜单 价签 表格 留白 间距 对齐 分组 信息边界">
+            <span class="issue-index">ISSUE 021 <span class="date">2026-06-23</span></span>
+            <span>
+              <h3>分隔线：为什么线越多，页面反而越乱</h3>
+              <p class="summary">从手机设置、菜单、价签和表格里的细线，理解分隔线什么时候帮忙，什么时候只是制造噪音。</p>
+              <span class="tags"><span class="tag">日常设计</span><span class="tag">版式</span><span class="tag">视觉层级</span><span class="tag">信息边界</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-06-22-menu-typography.html" data-category="日常设计 字体 版式 视觉层级" data-search="ISSUE 020 2026-06-22 菜单排版 为什么有些菜单让人更容易点单 日常设计 字体层级 版式 视觉层级 菜单 餐厅 菜名 价格 描述 分类 推荐 信息层级 决策界面 点单">
+            <span class="issue-index">ISSUE 020 <span class="date">2026-06-22</span></span>
+            <span>
+              <h3>菜单排版：为什么有些菜单让人更容易点单</h3>
+              <p class="summary">从分类、菜名、描述、价格和推荐标识理解菜单如何组织顾客的选择，让点单这件事变轻一点。</p>
+              <span class="tags"><span class="tag">日常设计</span><span class="tag">字体层级</span><span class="tag">版式</span><span class="tag">点单体验</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-06-12-ando-light-water-church.html" data-category="建筑设计 视觉文化 设计史" data-search="ISSUE 019 2026-06-12 安藤忠雄的教堂 为什么光和水会让人安静下来 建筑设计 大师作品 视觉文化 光之教堂 水之教堂 Church of the Light Church on the Water 清水混凝土 空间体验 自然 光 水 住吉的长屋">
+            <span class="issue-index">ISSUE 019 <span class="date">2026-06-12</span></span>
+            <span>
+              <h3>安藤忠雄的两座教堂：为什么光和水会让人安静下来</h3>
+              <p class="summary">从光之教堂和水之教堂进入安藤忠雄的空间判断：少不是冷淡，而是让光、水、路径和停顿成为主角。</p>
+              <span class="tags"><span class="tag">建筑设计</span><span class="tag">大师作品</span><span class="tag">视觉文化</span><span class="tag">空间体验</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-06-11-letter-spacing-leading.html" data-category="字体 版式 视觉层级" data-search="ISSUE 018 2026-06-11 字距与行距 文字之间的空气如何决定气质 字体 排版 版式 字距 行距 段距 行长 tracking leading kerning Jost Hochuli Detail in Typography San Francisco Roboto 时尚杂志 Vogue 阅读体验 中英文混排">
+            <span class="issue-index">ISSUE 018 <span class="date">2026-06-11</span></span>
+            <span>
+              <h3>字距与行距：文字之间的空气如何决定气质</h3>
+              <p class="summary">从字距、行距、段距、行长和中英文混排理解文字的空气系统，训练判断排版是否真正支持阅读与语气。</p>
+              <span class="tags"><span class="tag">字体</span><span class="tag">版式</span><span class="tag">视觉层级</span><span class="tag">阅读体验</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-06-10-book-cover-design.html" data-category="书籍装帧 版式 视觉文化" data-search="ISSUE 017 2026-06-10 书籍装帧 内容如何变成可触摸的秩序 书籍设计 封面 书脊 内页 开本 纸张 装订 材料 系列出版 Jan Tschichold Penguin Books Irma Boom 平装系统 阅读节奏">
+            <span class="issue-index">ISSUE 017 <span class="date">2026-06-10</span></span>
+            <span>
+              <h3>书籍装帧：内容如何变成可触摸的秩序</h3>
+              <p class="summary">从封面、书脊、内页、材料和系列系统理解书籍装帧如何把内容转化为可阅读、可陈列、可触摸的秩序。</p>
+              <span class="tags"><span class="tag">书籍装帧</span><span class="tag">版式</span><span class="tag">视觉文化</span><span class="tag">阅读体验</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-06-09-poster-history.html" data-category="海报史 设计史 视觉文化" data-search="ISSUE 016 2026-06-09 海报史 一张纸如何在街上说话 海报 设计史 视觉文化 公共空间 石版印刷 远距离轮廓 标题语气 信息层级 Toulouse-Lautrec Moulin Rouge A.M. Cassandre Nord Express Dubonnet 政治海报 公益海报">
+            <span class="issue-index">ISSUE 016 <span class="date">2026-06-09</span></span>
+            <span>
+              <h3>海报史：一张纸如何在街上说话</h3>
+              <p class="summary">从街道媒介、观看距离、标题语气和公共空间理解海报如何把复杂信息压缩成可记住的视觉命题。</p>
+              <span class="tags"><span class="tag">海报史</span><span class="tag">设计史</span><span class="tag">视觉文化</span><span class="tag">公共空间</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-06-08-visual-weight.html" data-category="构图 视觉层级 版式" data-search="ISSUE 015 2026-06-08 视觉重量 画面为什么会失衡 也为什么会有张力 构图 视觉层级 版式 平衡 不对称 空白 明度 对比 边缘张力 方向 语义 Rudolf Arnheim El Lissitzky Saul Bass Paula Scher Public Theater">
+            <span class="issue-index">ISSUE 015 <span class="date">2026-06-08</span></span>
+            <span>
+              <h3>视觉重量：画面为什么会失衡，也为什么会有张力</h3>
+              <p class="summary">从大小、明度、颜色、位置、方向和语义理解画面的拉力，训练判断不对称构图是否真正平衡。</p>
+              <span class="tags"><span class="tag">构图</span><span class="tag">视觉层级</span><span class="tag">视觉重量</span><span class="tag">动态平衡</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-06-05-data-visualization.html" data-category="信息设计 数据可视化 视觉层级" data-search="ISSUE 014 2026-06-05 数据可视化 让比较诚实 而不是让数字显得漂亮 信息设计 数据可视化 视觉层级 图表 视觉编码 比较 尺度 颜色 注释 Florence Nightingale Charles Joseph Minard Edward Tufte 仪表盘">
+            <span class="issue-index">ISSUE 014 <span class="date">2026-06-05</span></span>
+            <span>
+              <h3>数据可视化：让比较诚实，而不是让数字显得漂亮</h3>
+              <p class="summary">从视觉编码、尺度、颜色和注释理解图表如何让差异、比例、趋势与异常被诚实看见。</p>
+              <span class="tags"><span class="tag">信息设计</span><span class="tag">数据可视化</span><span class="tag">视觉编码</span><span class="tag">图表判断</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-06-04-color-temperature.html" data-category="色彩 视觉心理 视觉层级" data-search="ISSUE 013 2026-06-04 色彩温度 冷暖不是情绪标签 而是空间关系 色彩 视觉心理 视觉层级 冷暖 明度 纯度 面积 空间 Claude Monet Johannes Itten Josef Albers Interaction of Color IBM 蓝色信任感">
+            <span class="issue-index">ISSUE 013 <span class="date">2026-06-04</span></span>
+            <span>
+              <h3>色彩温度：冷暖不是情绪标签，而是空间关系</h3>
+              <p class="summary">从冷暖、明度、纯度和面积理解色彩温度如何组织远近、重量、光线与视觉焦点。</p>
+              <span class="tags"><span class="tag">色彩</span><span class="tag">视觉心理</span><span class="tag">视觉层级</span><span class="tag">色彩温度</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-06-03-swiss-international-style.html" data-category="设计史 版式 信息设计 现代主义" data-search="ISSUE 012 2026-06-03 瑞士国际主义 清晰不是冷漠 而是公共秩序 设计史 版式 信息设计 网格 Helvetica Akzidenz-Grotesk Josef Muller-Brockmann Armin Hofmann Emil Ruder Max Bill Neue Grafik Massimo Vignelli 纽约地铁导视">
+            <span class="issue-index">ISSUE 012 <span class="date">2026-06-03</span></span>
+            <span>
+              <h3>瑞士国际主义：清晰不是冷漠，而是公共秩序</h3>
+              <p class="summary">从网格、无衬线字体、客观摄影和公共导视理解瑞士国际主义，训练判断清晰是否真正服务理解。</p>
+              <span class="tags"><span class="tag">设计史</span><span class="tag">版式</span><span class="tag">信息设计</span><span class="tag">瑞士国际主义</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-06-02-visual-rhythm.html" data-category="版式 构图 视觉层级" data-search="ISSUE 011 2026-06-02 视觉节奏 让版面有速度 而不是平均地填满 版式 构图 重复 变化 停顿 重音 Alexey Brodovitch Harper's Bazaar Jan Tschichold Penguin Books Saul Bass">
+            <span class="issue-index">ISSUE 011 <span class="date">2026-06-02</span></span>
+            <span>
+              <h3>视觉节奏：让版面有速度，而不是平均地填满</h3>
+              <p class="summary">从重复、变化、停顿、重音和观看路径理解版式节奏，训练判断页面是否有速度与呼吸。</p>
+              <span class="tags"><span class="tag">版式</span><span class="tag">构图</span><span class="tag">视觉节奏</span><span class="tag">观看路径</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-06-02-brand-identity.html" data-category="品牌视觉 识别系统 视觉层级" data-search="ISSUE 010 2026-06-02 品牌识别 一致不是重复 而是让人认得出来 品牌视觉 识别系统 视觉基因 IBM Paul Rand NASA 无印良品">
+            <span class="issue-index">ISSUE 010 <span class="date">2026-06-02</span></span>
+            <span>
+              <h3>品牌识别：一致不是重复，而是让人认得出来</h3>
+              <p class="summary">从标志、字体、颜色、版式和触点理解品牌识别系统，训练判断“可识别”而非只看单张好看。</p>
+              <span class="tags"><span class="tag">品牌视觉</span><span class="tag">识别系统</span><span class="tag">视觉基因</span><span class="tag">品牌语气</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-05-26-modernism-discipline.html" data-category="设计史 现代主义 版式" data-search="ISSUE 009 2026-05-26 现代主义 少不是空 而是选择的纪律 网格 秩序 Josef Muller-Brockmann Dieter Rams">
+            <span class="issue-index">ISSUE 009 <span class="date">2026-05-26</span></span>
+            <span>
+              <h3>现代主义：少不是空，而是选择的纪律</h3>
+              <p class="summary">从网格、删减和功能秩序理解现代主义，训练“少即是多”背后的判断力。</p>
+              <span class="tags"><span class="tag">设计史</span><span class="tag">现代主义</span><span class="tag">版式</span><span class="tag">网格</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-05-21-information-design.html" data-category="信息设计 视觉层级" data-search="ISSUE 008 2026-05-21 信息设计 把复杂变清楚 而不是把简单变好看 分组 顺序 编码 比较 行动 地铁图 Isotype 数据新闻">
+            <span class="issue-index">ISSUE 008 <span class="date">2026-05-21</span></span>
+            <span>
+              <h3>信息设计：把复杂变清楚，而不是把简单变好看</h3>
+              <p class="summary">从分组、顺序、编码、比较和行动路径理解信息设计如何降低复杂内容的理解成本。</p>
+              <span class="tags"><span class="tag">信息设计</span><span class="tag">视觉层级</span><span class="tag">图表</span><span class="tag">导视</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-05-20-negative-space.html" data-category="版式 视觉层级 留白" data-search="ISSUE 007 2026-05-20 留白 让画面会呼吸 也让重点被相信 版式 视觉层级 负空间 间距 外边距 内边距">
+            <span class="issue-index">ISSUE 007 <span class="date">2026-05-20</span></span>
+            <span>
+              <h3>留白：让画面会呼吸，也让重点被相信</h3>
+              <p class="summary">从外边距、内边距、组间距和焦点留白理解空处如何组织信息、制造节奏与信任。</p>
+              <span class="tags"><span class="tag">版式</span><span class="tag">视觉层级</span><span class="tag">留白</span><span class="tag">负空间</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-05-19-visual-hierarchy.html" data-category="视觉层级 信息设计" data-search="ISSUE 006 2026-05-19 视觉层级 让眼睛先看该看的东西 信息设计 层级 尺寸 字重 对比 位置 留白">
+            <span class="issue-index">ISSUE 006 <span class="date">2026-05-19</span></span>
+            <span>
+              <h3>视觉层级：让眼睛先看该看的东西</h3>
+              <p class="summary">理解尺寸、字重、对比、位置和留白如何共同安排观看顺序，让信息更清楚。</p>
+              <span class="tags"><span class="tag">视觉层级</span><span class="tag">信息设计</span><span class="tag">留白</span><span class="tag">注意力</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-05-18-bauhaus-function.html" data-category="设计史 现代主义" data-search="ISSUE 005 2026-05-18 包豪斯 功能不是无趣 而是形式找到理由 设计史 现代主义 材料 工艺 功能 生活">
+            <span class="issue-index">ISSUE 005 <span class="date">2026-05-18</span></span>
+            <span>
+              <h3>包豪斯：功能不是无趣，而是形式找到理由</h3>
+              <p class="summary">从包豪斯理解功能、材料、工艺与现代生活之间的关系，辨别真正有理由的现代形式。</p>
+              <span class="tags"><span class="tag">设计史</span><span class="tag">现代主义</span><span class="tag">功能</span><span class="tag">材料</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-05-17-grid-systems.html" data-category="版式 信息设计" data-search="ISSUE 004 2026-05-17 网格系统 不是把版面关起来 而是让自由有尺度 版式 信息设计 网格 栏 边距 留白">
+            <span class="issue-index">ISSUE 004 <span class="date">2026-05-17</span></span>
+            <span>
+              <h3>网格系统：不是把版面关起来，而是让自由有尺度</h3>
+              <p class="summary">理解网格如何把复杂内容组织成稳定、可预期、可比较的空间秩序。</p>
+              <span class="tags"><span class="tag">版式</span><span class="tag">信息设计</span><span class="tag">网格</span><span class="tag">留白</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-05-16-color-contrast.html" data-category="色彩 视觉层级" data-search="ISSUE 003 2026-05-16 色彩对比 好看的颜色 首先要站得住 色彩 明度 冷暖 纯度 面积 视觉层级">
+            <span class="issue-index">ISSUE 003 <span class="date">2026-05-16</span></span>
+            <span>
+              <h3>色彩对比：好看的颜色，首先要站得住</h3>
+              <p class="summary">从明度、冷暖、纯度和面积理解配色，判断颜色如何建立层级与情绪。</p>
+              <span class="tags"><span class="tag">色彩</span><span class="tag">视觉层级</span><span class="tag">明度</span><span class="tag">对比</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-05-15-gestalt-principles.html" data-category="视觉心理 构图 版式" data-search="ISSUE 002 2026-05-15 格式塔原则 为什么眼睛总想把世界整理成整体 视觉心理 构图 接近 相似 连续 闭合 共同区域">
+            <span class="issue-index">ISSUE 002 <span class="date">2026-05-15</span></span>
+            <span>
+              <h3>格式塔原则：为什么眼睛总想把世界整理成整体</h3>
+              <p class="summary">用接近、相似、连续、闭合和共同区域解释视觉关系如何先于单个元素被看见。</p>
+              <span class="tags"><span class="tag">视觉心理</span><span class="tag">构图</span><span class="tag">格式塔</span><span class="tag">关系</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+
+          <a class="issue" href="daily-lessons/2026-05-14-serif-vs-sans-serif.html" data-category="字体 排版" data-search="ISSUE 001 2026-05-14 衬线体 非衬线体 字形里的性格 秩序与时代感 字体 排版 Helvetica Vogue Didot San Francisco">
+            <span class="issue-index">ISSUE 001 <span class="date">2026-05-14</span></span>
+            <span>
+              <h3>衬线体 / 非衬线体：字形里的性格、秩序与时代感</h3>
+              <p class="summary">从书写痕迹、现代主义和系统字体理解字体语气，训练“字形是否准确”的判断。</p>
+              <span class="tags"><span class="tag">字体</span><span class="tag">排版</span><span class="tag">品牌语气</span><span class="tag">可读性</span></span>
+            </span>
+            <span class="read">进入阅读</span>
+          </a>
+        </div>
+        <p class="empty" id="emptyState">没有匹配的内容。换一个关键词或分类试试。</p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span class="brand">
+        <strong>审美的逻辑</strong>
+        <small>有关视觉、设计与判断力</small>
+      </span>
+      <span><a href="about.html">关于 Skip</a></span>
+    </footer>
+  </div>
+
+  <script>
+    const filters = Array.from(document.querySelectorAll('.filter'));
+    const searchInput = document.getElementById('searchInput');
+    const issues = Array.from(document.querySelectorAll('.issue'));
+    const resultCount = document.getElementById('resultCount');
+    const emptyState = document.getElementById('emptyState');
+    let activeFilter = '全部';
+
+    function normalize(value) {
+      return value.trim().toLowerCase();
+    }
+
+    function applyFilters() {
+      const query = normalize(searchInput.value);
+      let visible = 0;
+
+      issues.forEach((issue) => {
+        const category = issue.dataset.category || '';
+        const haystack = normalize(issue.dataset.search || issue.textContent);
+        const categoryMatch = activeFilter === '全部' || category.includes(activeFilter);
+        const searchMatch = !query || haystack.includes(query);
+        const show = categoryMatch && searchMatch;
+        issue.style.display = show ? 'grid' : 'none';
+        if (show) visible += 1;
+      });
+
+      resultCount.textContent = `${visible} 篇`;
+      emptyState.style.display = visible ? 'none' : 'block';
+    }
+
+    filters.forEach((button) => {
+      button.addEventListener('click', () => {
+        filters.forEach((item) => item.classList.remove('active'));
+        button.classList.add('active');
+        activeFilter = button.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    searchInput.addEventListener('input', applyFilters);
+  </script>
+</body>
+</html>
