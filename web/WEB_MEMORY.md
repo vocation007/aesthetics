@@ -14,3 +14,4 @@
 - 首页 masthead 标题需要有分量但不能抢过内容入口；当前首页 `h1` 尺度为桌面 `clamp(54px, 7.2vw, 118px)`、移动端 `clamp(46px, 14vw, 68px)`。
 - 首页文章列表区参考 Medium，不使用大型 serif 分区标题；`所有文章` 只作为 15px 的轻量栏目标签，重点放在内容流本身。
 - 已建立 GitHub Pages 自动部署配置：`.github/workflows/deploy-pages.yml`。部署源目录为 `web/web-html/`，本地保留域名标记文件 `web/web-html/CNAME`，域名是 `iskip.me`；使用 GitHub Actions 发布 Pages 时，真正生效的自定义域名以后以 GitHub 仓库 `Settings -> Pages -> Custom domain` 为准。第一次提交时不要直接 `git add .`，避免把草稿、备份和非网站文件一起推到 GitHub。
+- 2026-06-25：GitHub 仓库已连接并推送成功：`https://github.com/vocation007/aesthetics.git`。Pages 已启用为 `workflow` 发布方式，最新工作流部署成功。临时 Pages 地址为 `https://vocation007.github.io/aesthetics/`。GitHub Pages 的 custom domain 已设置为 `iskip.me`，但 `https_enforced` 目前为 `false`，需要等域名 DNS 指向 GitHub Pages 并生成证书后再开启。

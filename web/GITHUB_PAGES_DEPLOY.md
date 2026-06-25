@@ -33,6 +33,22 @@ iskip.me
 
 ## 第一次发布步骤
 
+当前状态：第一次 GitHub 推送已经完成，GitHub Pages 已启用为 `GitHub Actions` 发布方式，工作流已经成功部署过一次。
+
+临时 Pages 地址：
+
+```text
+https://vocation007.github.io/aesthetics/
+```
+
+GitHub Pages 已设置自定义域名：
+
+```text
+iskip.me
+```
+
+但 `Enforce HTTPS` 需要等 DNS 指向 GitHub Pages、证书生成后再开启。
+
 1. 在 GitHub 新建一个仓库，例如 `aesthetics`。
 2. 在本地项目根目录初始化 Git：
 
