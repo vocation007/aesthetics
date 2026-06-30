@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>阴影：为什么立体感不能靠一层黑边</title>
+  <style>
+    :root{
+      --paper:#eef0e7;
+      --paper-2:#dfe4d6;
+      --ink:#171716;
+      --muted:#66675f;
+      --line:#c7cdbd;
+      --cream:#fff9ed;
+      --red:#a94a36;
+      --blue:#235f72;
+      --green:#5e7250;
+      --gold:#a57a31;
+      --deep:#20201d;
+      --serif:Georgia,"Times New Roman","Songti SC","SimSun",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.84;letter-spacing:0}
+    body{margin:0;overflow-x:hidden;background:linear-gradient(90deg,rgba(23,23,22,.042) 1px,transparent 1px) 0 0/76px 76px,linear-gradient(0deg,rgba(23,23,22,.034) 1px,transparent 1px) 0 0/76px 76px,var(--paper)}
+    svg{display:block;max-width:100%;height:auto}
+    .hero{min-height:86vh;padding:52px clamp(22px,5vw,78px) 54px;display:grid;align-items:end;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+    .hero:before{content:"";position:absolute;right:-8vw;top:12vh;width:min(56vw,720px);height:min(56vw,720px);background:linear-gradient(135deg,rgba(255,249,237,.94) 0 42%,rgba(199,205,189,.56) 42% 100%);border:1px solid rgba(23,23,22,.12);box-shadow:42px 54px 0 rgba(23,23,22,.11);transform:rotate(-4deg)}
+    .hero:after{content:"";position:absolute;right:8vw;top:23vh;width:min(30vw,360px);height:min(30vw,360px);background:var(--blue);box-shadow:34px 34px 0 rgba(23,23,22,.22),82px 82px 0 rgba(169,74,54,.18)}
+    .hero-grid{position:relative;z-index:1;width:min(1180px,100%);margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,420px);gap:clamp(34px,6vw,92px);align-items:end}
+    .kicker{margin:0 0 26px;color:var(--red);font-size:13px;font-weight:760;letter-spacing:.12em;text-transform:uppercase}
+    h1{margin:0;font-family:var(--serif);font-size:clamp(48px,7.2vw,110px);line-height:1;font-weight:500}
+    .title-line{display:block}
+    .hero-note{border-top:2px solid var(--ink);padding-top:24px}
+    .hero-note p{margin:0;color:var(--muted);font-size:clamp(18px,1.5vw,22px);line-height:1.76}
+    .meta{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap}
+    .tag{border:1px solid var(--line);background:rgba(255,249,237,.72);color:var(--muted);padding:8px 12px;font-size:14px;line-height:1}
+    .shadow-band{background:var(--deep);color:var(--cream);padding:48px clamp(22px,5vw,78px)}
+    .shadow-stage{width:min(1120px,100%);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,249,237,.22);border:1px solid rgba(255,249,237,.18)}
+    .stage-panel{background:#171716;padding:clamp(24px,4vw,42px);min-height:390px;display:grid;align-content:space-between}
+    .stage-panel h2{margin:0 0 22px;color:var(--cream);font-family:var(--serif);font-size:34px;line-height:1.1;font-weight:500}
+    .sample-space{min-height:232px;background:var(--cream);position:relative;overflow:hidden}
+    .heavy .sample-space:before{content:"";position:absolute;left:23%;top:23%;width:54%;height:38%;background:var(--paper);box-shadow:0 22px 0 rgba(0,0,0,.42),0 42px 0 rgba(0,0,0,.22)}
+    .heavy .sample-space:after{content:"";position:absolute;left:30%;top:38%;width:40%;height:16px;background:var(--red)}
+    .steady .sample-space{background:linear-gradient(135deg,var(--cream) 0 50%,var(--paper-2) 50% 100%)}
+    .steady .sample-space:before{content:"";position:absolute;left:21%;top:22%;width:56%;height:40%;background:var(--paper);box-shadow:18px 24px 34px rgba(23,23,22,.22)}
+    .steady .sample-space:after{content:"";position:absolute;left:31%;top:39%;width:38%;height:14px;background:var(--blue)}
+    .stage-panel p{margin:24px 0 0;color:rgba(255,249,237,.76);font-size:16px;line-height:1.76}
+    .section{padding:74px clamp(22px,5vw,78px);border-bottom:1px solid var(--line)}
+    .inner{width:min(1080px,100%);margin:0 auto}
+    .grid{display:grid;grid-template-columns:minmax(150px,220px) minmax(0,760px);gap:clamp(32px,6vw,78px);align-items:start}
+    .label{position:sticky;top:24px;color:var(--red);font-size:13px;font-weight:760;letter-spacing:.12em;text-transform:uppercase}
+    h2{margin:0 0 24px;font-family:var(--serif);font-size:clamp(34px,4.1vw,58px);line-height:1.08;font-weight:500}
+    h3{margin:30px 0 12px;font-size:20px;line-height:1.45}
+    p{margin:0 0 19px}
+    .lead{font-size:clamp(22px,2.25vw,30px);line-height:1.52}
+    .muted{color:var(--muted)}
+    .figure{margin:40px 0;border-top:2px solid var(--ink);border-bottom:1px solid var(--line);padding:18px 0 16px}
+    figcaption{color:var(--muted);font-size:15px;line-height:1.7;margin-top:12px}
+    .quote{margin:38px 0;padding-top:28px;border-top:2px solid var(--blue);font-family:var(--serif);font-size:clamp(27px,3vw,40px);line-height:1.28}
+    .situations{display:grid;gap:1px;margin-top:34px;background:var(--line);border:1px solid var(--line)}
+    .situation{background:var(--cream);display:grid;grid-template-columns:146px 1fr;gap:28px;align-items:center;padding:24px}
+    .situation-mark{height:116px;background:var(--paper);position:relative;overflow:hidden}
+    .situation:nth-child(1) .situation-mark:before{content:"";position:absolute;left:32px;top:30px;width:78px;height:50px;background:var(--ink);box-shadow:14px 18px 22px rgba(23,23,22,.22)}
+    .situation:nth-child(1) .situation-mark:after{content:"";position:absolute;left:52px;top:48px;width:38px;height:8px;background:var(--gold)}
+    .situation:nth-child(2) .situation-mark:before{content:"";position:absolute;left:34px;top:22px;width:78px;height:78px;background:var(--cream);border:5px solid var(--ink);box-shadow:22px 24px 0 rgba(35,95,114,.36)}
+    .situation:nth-child(2) .situation-mark:after{content:"";position:absolute;left:54px;top:50px;width:38px;height:38px;background:var(--green)}
+    .situation:nth-child(3) .situation-mark:before{content:"";position:absolute;left:26px;top:32px;width:94px;height:52px;background:var(--blue);box-shadow:10px 14px 26px rgba(23,23,22,.2)}
+    .situation:nth-child(3) .situation-mark:after{content:"";position:absolute;left:42px;top:50px;width:62px;height:9px;background:var(--cream)}
+    .situation h3{margin:0 0 8px}
+    .situation p{margin:0;color:var(--muted);font-size:17px;line-height:1.72}
+    .checks{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:34px;background:var(--line);border:1px solid var(--line)}
+    .check{background:var(--cream);min-height:232px;padding:22px 18px}
+    .check b{display:block;margin-bottom:12px;color:var(--red);font-size:15px;line-height:1.38}
+    .check p{font-size:16px;line-height:1.72;color:var(--muted);margin:0}
+    .check i{display:block;width:48px;height:48px;margin-bottom:18px;background:var(--paper);border:1px solid rgba(23,23,22,.12)}
+    .check:nth-child(1) i{box-shadow:14px 14px 0 rgba(23,23,22,.18)}
+    .check:nth-child(2) i{background:linear-gradient(135deg,var(--paper) 0 54%,var(--line) 54% 100%)}
+    .check:nth-child(3) i{background:radial-gradient(ellipse at 56% 66%,rgba(23,23,22,.22) 0 34%,transparent 35%),var(--paper)}
+    .check:nth-child(4) i{background:linear-gradient(90deg,var(--blue) 0 42%,var(--paper) 42% 100%);box-shadow:12px 16px 20px rgba(23,23,22,.2)}
+    .practice{background:var(--blue);color:var(--cream)}
+    .practice .label,.practice .muted{color:rgba(255,249,237,.74)}
+    .practice h2{color:var(--cream)}
+    .steps{display:grid;gap:1px;margin-top:34px;background:rgba(255,249,237,.24);border:1px solid rgba(255,249,237,.2)}
+    .step{display:grid;grid-template-columns:82px 1fr;gap:24px;background:var(--blue);padding:24px}
+    .step span{color:var(--gold);font-family:var(--serif);font-size:38px;line-height:1}
+    .step p{margin:0;color:rgba(255,249,237,.86);font-size:17px;line-height:1.78}
+    .reflection{padding:88px clamp(22px,5vw,78px);background:var(--paper-2)}
+    .reflection div{width:min(940px,100%);margin:0 auto}
+    .reflection p{font-family:var(--serif);font-size:clamp(34px,5vw,66px);line-height:1.1;margin:0}
+    .footer{padding:28px clamp(22px,5vw,78px);color:var(--muted);font-size:14px;display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
+    .brand{display:grid;gap:3px}.brand strong{color:var(--ink);font-size:15px}.brand small{font-size:14px;color:var(--muted)}.powered{white-space:nowrap}
+    @media(max-width:960px){.hero-grid,.grid,.shadow-stage{grid-template-columns:1fr}.label{position:static}.checks{grid-template-columns:1fr 1fr}.hero:before{opacity:.52;right:-26vw;width:86vw;height:86vw}.hero:after{opacity:.82;right:-8vw;width:48vw;height:48vw}}
+    @media(max-width:680px){html{font-size:18px}.hero{min-height:auto;padding-top:40px;padding-bottom:44px}.hero:before{right:-54vw;top:18vh;width:122vw;height:122vw}.hero:after{right:-36vw;top:27vh;width:78vw;height:78vw}.title-line{white-space:normal}h1{font-size:clamp(42px,11vw,64px)}.hero-note p{font-size:18px}.section{padding:48px 22px}.shadow-band{padding:36px 22px}.stage-panel{min-height:auto}.sample-space{min-height:176px}.checks{grid-template-columns:1fr}.check{min-height:auto;padding:19px 18px}.situation{grid-template-columns:1fr;gap:18px;padding:20px}.situation-mark{height:96px}.step{grid-template-columns:1fr;gap:8px}.reflection{padding:58px 22px}.powered{font-size:14px}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-grid">
+      <div>
+        <p class="kicker">审美的逻辑 · ISSUE 027 · 2026-06-30</p>
+        <h1><span class="title-line">阴影：</span><span class="title-line">为什么立体感</span><span class="title-line">不能靠一层黑边</span></h1>
+      </div>
+      <div class="hero-note">
+        <p>阴影不是给画面加戏的装饰。它真正要说明的是：东西离背景有多远，光从哪里来，眼睛该把它当作一层，还是一个实体。</p>
+        <div class="meta"><span class="tag">日常设计</span><span class="tag">构图</span><span class="tag">5 分钟</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="shadow-band">
+    <div class="shadow-stage" aria-label="阴影粗重与阴影稳定的对照">
+      <article class="stage-panel heavy">
+        <h2>黑边压住了</h2>
+        <div class="sample-space" aria-hidden="true"></div>
+        <p>阴影又黑又硬，像给元素描了一圈重边。它没有制造空间，反而把画面压低，显得急、脏、廉价。</p>
+      </article>
+      <article class="stage-panel steady">
+        <h2>距离出来了</h2>
+        <div class="sample-space" aria-hidden="true"></div>
+        <p>阴影有方向、有范围，也有退让。它让元素和背景分开，但不急着证明自己存在。</p>
+      </article>
+    </div>
+  </section>
+
+  <main>
+    <section class="section">
+      <div class="inner grid">
+        <div class="label">01 · Distance</div>
+        <article>
+          <p class="lead">阴影最容易被误用的地方，是把“立体”理解成“更黑”。</p>
+          <p>你一定见过那种按钮、海报、商品图：每个东西下面都有一层很重的影子，像从画面里硬抠出来，再贴回去。设计者可能只是想让它更突出，但结果常常相反。影子太重，东西会变脏；影子太硬，东西会变假；影子太多，页面会开始吵。</p>
+          <p>好的阴影并不急着让你看见它。它像一段轻轻的解释：这个物件离桌面有一点高度；这张卡片在背景前面；这个灯从左上方照过来。你先感觉到秩序，再意识到那里有阴影。</p>
+          <p>所以判断阴影，不是问“有没有立体感”，而是问：它有没有说清楚空间关系。说清楚了，哪怕很淡，也够。说不清楚，越重越像补丁。</p>
+          <figure class="figure">
+            <svg viewBox="0 0 1600 900" role="img" aria-labelledby="shadow-title shadow-desc">
+              <title id="shadow-title">阴影的三个判断</title>
+              <desc id="shadow-desc">用光源、距离和边缘软硬解释阴影为什么要服务空间关系。</desc>
+              <rect width="1600" height="900" fill="#eef0e7"/>
+              <text x="88" y="96" font-family="Arial" font-size="30" font-weight="700" fill="#171716">SHADOW / 阴影先说明距离，再制造气质</text>
+              <text x="88" y="136" font-family="Arial" font-size="21" fill="#66675f">别把阴影当作按钮效果。它真正处理的是光、距离和层次。</text>
+              <rect x="116" y="218" width="1368" height="482" fill="#fff9ed" stroke="#171716" stroke-width="4"/>
+              <g font-family="Arial">
+                <circle cx="244" cy="324" r="44" fill="#a57a31"/>
+                <line x1="300" y1="346" x2="448" y2="430" stroke="#a57a31" stroke-width="5" stroke-linecap="round"/>
+                <line x1="300" y1="374" x2="448" y2="458" stroke="#a57a31" stroke-width="5" stroke-linecap="round" opacity=".6"/>
+                <text x="170" y="574" font-size="25" font-weight="700" fill="#171716">光源</text>
+                <text x="170" y="612" font-size="19" fill="#66675f">方向不清，阴影就像污渍。</text>
+
+                <ellipse cx="792" cy="508" rx="154" ry="40" fill="#171716" opacity=".18"/>
+                <rect x="656" y="340" width="272" height="142" fill="#eef0e7" stroke="#171716" stroke-width="4"/>
+                <line x1="976" y1="342" x2="976" y2="482" stroke="#a94a36" stroke-width="5"/>
+                <text x="1000" y="418" font-size="20" fill="#a94a36">距离</text>
+                <text x="650" y="574" font-size="25" font-weight="700" fill="#171716">距离</text>
+                <text x="650" y="612" font-size="19" fill="#66675f">离得越远，影子越散。</text>
+
+                <rect x="1128" y="328" width="180" height="132" fill="#235f72"/>
+                <rect x="1160" y="504" width="180" height="132" fill="#5e7250"/>
+                <ellipse cx="1218" cy="480" rx="116" ry="18" fill="#171716" opacity=".32"/>
+                <ellipse cx="1250" cy="668" rx="150" ry="34" fill="#171716" opacity=".13"/>
+                <text x="1134" y="574" font-size="25" font-weight="700" fill="#171716">边缘</text>
+                <text x="1134" y="612" font-size="19" fill="#66675f">越硬越近，越软越远。</text>
+              </g>
+              <path d="M192 760 C404 806 566 724 784 760 C1016 798 1138 724 1372 766" fill="none" stroke="#a94a36" stroke-width="7" stroke-linecap="round"/>
+              <text x="116" y="828" font-family="Arial" font-size="22" fill="#66675f">阴影好不好，不看它有没有存在感，而看它是否让空间关系更可信。</text>
+            </svg>
+            <figcaption>图解：阴影至少要回应三件事：光从哪里来、物体离背景多远、边缘应该硬还是软。缺少这些关系，阴影就只剩下一层黑。</figcaption>
+          </figure>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner grid">
+        <div class="label">02 · Taste</div>
+        <article>
+          <h2>廉价感常常来自不可信的光</h2>
+          <p>很多人以为阴影会带来高级感。其实阴影用不好，最容易暴露用力。因为人的眼睛每天都在看真实光线：杯子落在桌上的影子、窗帘投到墙上的灰、手机浮在桌面上的一圈暗处。我们不一定说得出规则，但很容易感觉哪里不对。</p>
+          <p>不可信的阴影通常有几个共同点：方向乱，左边也有、右边也有；边缘太硬，像复制了一块黑形状；颜色太脏，灰得没有空气；距离不对，一个很薄的卡片却像离桌面十厘米。</p>
+          <p>这些问题放在商品图、菜单、海报和 App 页面里，都会改变气质。影子本来是让层次更清楚，最后却把“我想显得有层次”这件事直接喊了出来。</p>
+          <div class="quote">好的阴影有礼貌：它把东西托起来，但不替东西说话。</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner">
+        <div class="grid">
+          <div class="label">03 · Places</div>
+          <article>
+            <h2>今天就能看的三个地方</h2>
+            <p>阴影不是只存在于屏幕效果里。你在真实物件和日常设计中看到的每一种“浮起来”，都可以这样判断。</p>
+          </article>
+        </div>
+        <div class="situations">
+          <article class="situation">
+            <div class="situation-mark" aria-hidden="true"></div>
+            <div>
+              <h3>商品图</h3>
+              <p>看影子是否像物品真实落在台面上。好的商品图会让东西有重量，不会像被随便贴在背景上。</p>
+            </div>
+          </article>
+          <article class="situation">
+            <div class="situation-mark" aria-hidden="true"></div>
+            <div>
+              <h3>包装和招牌</h3>
+              <p>看浮雕、烫印、灯箱和立体字有没有共同光源。阴影方向统一，材料才会显得稳。</p>
+            </div>
+          </article>
+          <article class="situation">
+            <div class="situation-mark" aria-hidden="true"></div>
+            <div>
+              <h3>网页卡片和按钮</h3>
+              <p>看阴影是帮助分层，还是只是在制造“可点击”的假动作。层次清楚时，阴影可以很轻。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner">
+        <div class="grid">
+          <div class="label">04 · Checks</div>
+          <article>
+            <h2>判断阴影，先问四个小问题</h2>
+            <p>这些问题比参数更有用。你不需要知道软件里该填多少数值，只要先判断它是否可信。</p>
+          </article>
+        </div>
+        <div class="checks">
+          <div class="check"><i aria-hidden="true"></i><b>01 方向是否一致</b><p>同一个画面里的阴影，应该让人感觉光来自同一边。方向乱，空间就乱。</p></div>
+          <div class="check"><i aria-hidden="true"></i><b>02 距离是否合理</b><p>很贴近背景的东西，不该有很远的影子。阴影越大，物体看起来越离开背景。</p></div>
+          <div class="check"><i aria-hidden="true"></i><b>03 边缘是否太硬</b><p>远一点的影子通常会散开。太硬的黑边会让物体像纸片，不像真实存在。</p></div>
+          <div class="check"><i aria-hidden="true"></i><b>04 是否抢过主体</b><p>如果你先看见的是阴影，而不是内容或物体，它就已经太用力了。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner grid">
+        <div class="label">05 · Restraint</div>
+        <article>
+          <h2>阴影不是补救设计的工具</h2>
+          <p>有些页面层级不清，就给所有卡片加阴影；按钮不够明确，就把按钮底下压一块黑；商品图不够有质感，就把影子拖得很长。这样做短时间会显得“有东西”，但它没有解决真正的问题。</p>
+          <p>如果排版、间距、对比和信息顺序本来就乱，阴影只会把乱变得更厚。好的阴影通常出现在已经有秩序的地方。它不是主结构，而是最后那一点空气。</p>
+          <p>所以我更喜欢把阴影当成一种克制的说明：它可以告诉你这里有层次、有材料、有距离，但不应该替代设计本身的判断。能不用时不用；需要用时，也让它退后一点。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section practice">
+      <div class="inner grid">
+        <div class="label">Practice</div>
+        <article>
+          <h2>一个很快的观察练习</h2>
+          <p class="muted">今天看到任何带阴影的设计，先不要评价好不好看。按下面三步看一遍，你会更快知道问题在哪里。</p>
+          <div class="steps">
+            <div class="step"><span>1</span><p>先找光源：它暗示光从哪里来？画面里的其他阴影是否也接受这个方向？</p></div>
+            <div class="step"><span>2</span><p>再看距离：这个物体看起来离背景多远？影子的大小和模糊程度是否支持这个距离？</p></div>
+            <div class="step"><span>3</span><p>最后看存在感：如果把阴影减淡一半，画面是否更舒服？如果答案是是，原来的阴影多半太用力。</p></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="reflection">
+      <div>
+        <p>阴影的高级，不是让东西浮起来，而是让你相信它本来就在那里。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="brand"><strong>审美的逻辑</strong><small>有关视觉、设计与判断力</small></span>
+    <span class="powered">ISSUE 027 · 2026-06-30</span>
+  </footer>
+</body>
+</html>

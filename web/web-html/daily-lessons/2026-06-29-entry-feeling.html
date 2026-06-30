@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>入口感：为什么有些设计让人愿意走进去</title>
+  <style>
+    :root{
+      --paper:#f1ebdf;
+      --soft:#e2d5c2;
+      --ink:#181614;
+      --muted:#6c645b;
+      --line:#d3c4b2;
+      --cream:#fffaf0;
+      --red:#a94a36;
+      --blue:#1f6675;
+      --green:#5f7659;
+      --gold:#a67b32;
+      --deep:#211f1c;
+      --serif:Georgia,"Times New Roman","Songti SC","SimSun",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.84;letter-spacing:0}
+    body{margin:0;overflow-x:hidden;background:linear-gradient(90deg,rgba(24,22,20,.04) 1px,transparent 1px) 0 0/76px 76px,linear-gradient(0deg,rgba(24,22,20,.032) 1px,transparent 1px) 0 0/76px 76px,var(--paper)}
+    svg{display:block;max-width:100%;height:auto}
+    .hero{min-height:86vh;padding:52px clamp(22px,5vw,78px) 54px;display:grid;align-items:end;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+    .hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(24,22,20,.06) 1px,transparent 1px) 0 0/18vw 100%;opacity:.55;pointer-events:none}
+    .entry-gate{position:absolute;right:clamp(-80px,-3vw,34px);top:12vh;width:min(48vw,620px);height:min(62vh,600px);background:var(--deep);border:1px solid rgba(24,22,20,.22);box-shadow:28px 28px 0 rgba(24,22,20,.1)}
+    .entry-gate:before{content:"";position:absolute;left:12%;right:12%;top:15%;bottom:0;background:var(--cream)}
+    .entry-gate:after{content:"";position:absolute;left:18%;top:22%;width:64%;height:17%;background:linear-gradient(90deg,var(--red) 0 38%,var(--blue) 38% 66%,var(--gold) 66% 100%);box-shadow:0 84px 0 rgba(24,22,20,.86),0 146px 0 rgba(95,118,89,.72)}
+    .hero-grid{position:relative;z-index:1;width:min(1180px,100%);margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,420px);gap:clamp(34px,6vw,92px);align-items:end}
+    .kicker{margin:0 0 26px;color:var(--red);font-size:13px;font-weight:760;letter-spacing:.12em;text-transform:uppercase}
+    h1{margin:0;font-family:var(--serif);font-size:clamp(48px,7.3vw,112px);line-height:1;font-weight:500}
+    .title-line{display:block}
+    .hero-note{border-top:2px solid var(--ink);padding-top:24px}
+    .hero-note p{margin:0;color:var(--muted);font-size:clamp(18px,1.5vw,22px);line-height:1.76}
+    .meta{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap}
+    .tag{border:1px solid var(--line);background:rgba(255,250,240,.72);color:var(--muted);padding:8px 12px;font-size:14px;line-height:1}
+    .threshold{background:var(--deep);color:var(--cream);padding:48px clamp(22px,5vw,78px)}
+    .threshold-inner{width:min(1120px,100%);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,250,240,.22);border:1px solid rgba(255,250,240,.18)}
+    .door{background:#171514;padding:clamp(24px,4vw,42px);min-height:390px;display:grid;align-content:space-between}
+    .door h2{margin:0 0 22px;color:var(--cream);font-family:var(--serif);font-size:34px;line-height:1.1;font-weight:500}
+    .door-scene{min-height:230px;background:var(--cream);position:relative;overflow:hidden}
+    .blocked .door-scene:before{content:"";position:absolute;left:10%;top:13%;width:80%;height:16%;background:var(--ink)}
+    .blocked .door-scene:after{content:"";position:absolute;left:10%;right:10%;bottom:14%;height:46%;background:repeating-linear-gradient(0deg,rgba(24,22,20,.22) 0 9px,transparent 9px 18px)}
+    .blocked .door-scene span{position:absolute;background:var(--red)}
+    .blocked .door-scene span:nth-child(1){left:18%;top:38%;width:64%;height:8px}
+    .blocked .door-scene span:nth-child(2){right:9%;top:48%;width:48px;height:118px}
+    .inviting .door-scene{background:linear-gradient(90deg,var(--cream) 0 58%,var(--soft) 58% 100%)}
+    .inviting .door-scene:before{content:"";position:absolute;left:13%;top:18%;width:45%;height:15%;background:var(--ink)}
+    .inviting .door-scene:after{content:"";position:absolute;left:13%;bottom:18%;width:58%;height:11px;background:var(--blue);box-shadow:0 34px 0 rgba(95,118,89,.86)}
+    .inviting .door-scene span{position:absolute;right:15%;top:24%;width:18%;height:58%;background:var(--gold)}
+    .door p{margin:24px 0 0;color:rgba(255,250,240,.76);font-size:16px;line-height:1.76}
+    .section{padding:74px clamp(22px,5vw,78px);border-bottom:1px solid var(--line)}
+    .inner{width:min(1080px,100%);margin:0 auto}
+    .grid{display:grid;grid-template-columns:minmax(150px,220px) minmax(0,760px);gap:clamp(32px,6vw,78px);align-items:start}
+    .label{position:sticky;top:24px;color:var(--red);font-size:13px;font-weight:760;letter-spacing:.12em;text-transform:uppercase}
+    h2{margin:0 0 24px;font-family:var(--serif);font-size:clamp(34px,4.1vw,58px);line-height:1.08;font-weight:500}
+    h3{margin:30px 0 12px;font-size:20px;line-height:1.45}
+    p{margin:0 0 19px}
+    .lead{font-size:clamp(22px,2.25vw,30px);line-height:1.52}
+    .muted{color:var(--muted)}
+    .figure{margin:40px 0;border-top:2px solid var(--ink);border-bottom:1px solid var(--line);padding:18px 0 16px}
+    figcaption{color:var(--muted);font-size:15px;line-height:1.7;margin-top:12px}
+    .quote{margin:38px 0;padding-top:28px;border-top:2px solid var(--blue);font-family:var(--serif);font-size:clamp(27px,3vw,40px);line-height:1.28}
+    .routes{display:grid;gap:1px;margin-top:34px;background:var(--line);border:1px solid var(--line)}
+    .route{background:var(--cream);display:grid;grid-template-columns:138px 1fr;gap:28px;align-items:center;padding:24px}
+    .route-mark{height:112px;background:var(--paper);position:relative;overflow:hidden}
+    .route:nth-child(1) .route-mark:before{content:"";position:absolute;left:28px;top:22px;width:56px;height:70px;background:var(--ink);box-shadow:42px 20px 0 var(--blue),84px 42px 0 var(--gold)}
+    .route:nth-child(2) .route-mark:before{content:"";position:absolute;left:24px;top:22px;width:90px;height:68px;border:7px solid var(--red);border-left-color:var(--ink)}
+    .route:nth-child(3) .route-mark:before{content:"";position:absolute;left:22px;right:22px;top:28px;height:18px;background:var(--ink);box-shadow:0 36px 0 var(--green)}
+    .route h3{margin:0 0 8px}
+    .route p{margin:0;color:var(--muted);font-size:17px;line-height:1.72}
+    .checks{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:34px;background:var(--line);border:1px solid var(--line)}
+    .check{background:var(--cream);min-height:232px;padding:22px 18px}
+    .check b{display:block;margin-bottom:12px;color:var(--red);font-size:15px;line-height:1.38}
+    .check p{font-size:16px;line-height:1.72;color:var(--muted);margin:0}
+    .check i{display:block;width:42px;height:42px;margin-bottom:18px;background:var(--paper);border:1px solid rgba(24,22,20,.12)}
+    .check:nth-child(1) i{background:linear-gradient(90deg,var(--ink) 0 58%,var(--paper) 58% 100%)}
+    .check:nth-child(2) i{background:linear-gradient(0deg,var(--gold) 0 30%,var(--paper) 30% 100%)}
+    .check:nth-child(3) i{background:radial-gradient(circle at 50% 50%,var(--blue) 0 30%,transparent 31%),var(--paper)}
+    .check:nth-child(4) i{background:linear-gradient(135deg,var(--red) 0 46%,var(--paper) 46% 100%)}
+    .practice{background:var(--blue);color:var(--cream)}
+    .practice .label,.practice .muted{color:rgba(255,250,240,.74)}
+    .practice h2{color:var(--cream)}
+    .steps{display:grid;gap:1px;margin-top:34px;background:rgba(255,250,240,.24);border:1px solid rgba(255,250,240,.2)}
+    .step{display:grid;grid-template-columns:82px 1fr;gap:24px;background:var(--blue);padding:24px}
+    .step span{color:var(--gold);font-family:var(--serif);font-size:38px;line-height:1}
+    .step p{margin:0;color:rgba(255,250,240,.86);font-size:17px;line-height:1.78}
+    .reflection{padding:88px clamp(22px,5vw,78px);background:var(--soft)}
+    .reflection div{width:min(940px,100%);margin:0 auto}
+    .reflection p{font-family:var(--serif);font-size:clamp(34px,5vw,66px);line-height:1.1;margin:0}
+    .footer{padding:28px clamp(22px,5vw,78px);color:var(--muted);font-size:14px;display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
+    .brand{display:grid;gap:3px}.brand strong{color:var(--ink);font-size:15px}.brand small{font-size:14px;color:var(--muted)}.powered{white-space:nowrap}
+    @media(max-width:960px){.hero-grid,.grid,.threshold-inner{grid-template-columns:1fr}.label{position:static}.checks{grid-template-columns:1fr 1fr}.entry-gate{opacity:.42;right:-32vw;width:86vw}}
+    @media(max-width:680px){html{font-size:18px}.hero{min-height:auto;padding-top:40px;padding-bottom:44px}.entry-gate{top:18vh;right:-50vw;width:112vw;height:48vh}.title-line{white-space:normal}h1{font-size:clamp(42px,11vw,64px)}.hero-note p{font-size:18px}.section{padding:48px 22px}.threshold{padding:36px 22px}.door{min-height:auto}.door-scene{min-height:176px}.checks{grid-template-columns:1fr}.check{min-height:auto;padding:19px 18px}.route{grid-template-columns:1fr;gap:18px;padding:20px}.route-mark{height:96px}.step{grid-template-columns:1fr;gap:8px}.reflection{padding:58px 22px}.powered{font-size:14px}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="entry-gate" aria-hidden="true"></div>
+    <div class="hero-grid">
+      <div>
+        <p class="kicker">审美的逻辑 · ISSUE 026 · 2026-06-29</p>
+        <h1><span class="title-line">入口感：</span><span class="title-line">为什么有些设计</span><span class="title-line">让人愿意走进去</span></h1>
+      </div>
+      <div class="hero-note">
+        <p>一个东西好不好看，常常在你真正开始使用之前就有了答案。门口、封面、首屏、包装正面，都在决定第一步是轻松，还是犹豫。</p>
+        <div class="meta"><span class="tag">日常设计</span><span class="tag">版式</span><span class="tag">5 分钟</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="threshold">
+    <div class="threshold-inner" aria-label="入口拥堵与入口清楚的对照">
+      <article class="door blocked">
+        <h2>入口堵住了</h2>
+        <div class="door-scene" aria-hidden="true"><span></span><span></span></div>
+        <p>信息先挤到门口，主次还没分清，读者已经开始退后。不是内容多，而是第一步太费劲。</p>
+      </article>
+      <article class="door inviting">
+        <h2>入口打开了</h2>
+        <div class="door-scene" aria-hidden="true"><span></span></div>
+        <p>先给方向，再给细节；先让人站稳，再邀请他往里看。入口感好的设计，会降低开始的阻力。</p>
+      </article>
+    </div>
+  </section>
+
+  <main>
+    <section class="section">
+      <div class="inner grid">
+        <div class="label">01 · First step</div>
+        <article>
+          <p class="lead">入口感，是设计给人的第一句“你可以从这里开始”。</p>
+          <p>有些店，你站在门口就知道该往哪里走。不是因为装修多贵，而是招牌、灯光、门把手、陈列和动线都没有互相打架。它们一起把第一步说清楚了。</p>
+          <p>有些页面也是这样。打开之后，你不需要先破解它的结构，就知道标题在说什么，主要内容在哪里，下一步可以点什么。它没有急着把所有东西都端出来，而是先替你清出一个可以进入的位置。</p>
+          <p>入口感不等于“第一眼惊艳”。惊艳有时只是声音大。真正好的入口，是让人愿意靠近，愿意多看一眼，愿意把注意力交出去。它有一点礼貌，也有一点控制。</p>
+          <figure class="figure">
+            <svg viewBox="0 0 1600 900" role="img" aria-labelledby="entry-title entry-desc">
+              <title id="entry-title">入口感的四个位置</title>
+              <desc id="entry-desc">展示门口、封面、首屏和包装正面如何提供进入线索。</desc>
+              <rect width="1600" height="900" fill="#f1ebdf"/>
+              <text x="88" y="94" font-family="Arial" font-size="30" font-weight="700" fill="#181614">ENTRY / 第一眼不是表演，而是引导</text>
+              <text x="88" y="134" font-family="Arial" font-size="21" fill="#6c645b">好的入口先建立方向感，再让细节慢慢出现。</text>
+              <rect x="116" y="210" width="1368" height="500" fill="#fffaf0" stroke="#181614" stroke-width="4"/>
+              <g stroke="#d3c4b2" stroke-width="2">
+                <line x1="458" y1="210" x2="458" y2="710"/>
+                <line x1="800" y1="210" x2="800" y2="710"/>
+                <line x1="1142" y1="210" x2="1142" y2="710"/>
+              </g>
+              <g font-family="Arial">
+                <text x="168" y="278" font-size="25" font-weight="700" fill="#181614">门口</text>
+                <rect x="184" y="332" width="178" height="236" fill="#181614"/>
+                <rect x="222" y="384" width="102" height="184" fill="#fffaf0"/>
+                <circle cx="302" cy="472" r="9" fill="#a67b32"/>
+                <text x="162" y="648" font-size="19" fill="#6c645b">让人知道如何靠近。</text>
+
+                <text x="510" y="278" font-size="25" font-weight="700" fill="#181614">封面</text>
+                <rect x="538" y="326" width="164" height="240" fill="#1f6675"/>
+                <rect x="566" y="362" width="108" height="18" fill="#fffaf0"/>
+                <rect x="566" y="410" width="76" height="8" fill="#fffaf0" opacity=".72"/>
+                <circle cx="620" cy="492" r="42" fill="#a67b32"/>
+                <text x="504" y="648" font-size="19" fill="#6c645b">先承诺语气和类型。</text>
+
+                <text x="852" y="278" font-size="25" font-weight="700" fill="#181614">首屏</text>
+                <rect x="874" y="332" width="188" height="236" fill="#f1ebdf" stroke="#181614" stroke-width="4"/>
+                <rect x="904" y="366" width="126" height="28" fill="#181614"/>
+                <rect x="904" y="428" width="90" height="10" fill="#6c645b"/>
+                <rect x="904" y="520" width="118" height="28" fill="#a94a36"/>
+                <text x="848" y="648" font-size="19" fill="#6c645b">先告诉眼睛第一步。</text>
+
+                <text x="1194" y="278" font-size="25" font-weight="700" fill="#181614">包装正面</text>
+                <rect x="1214" y="338" width="178" height="222" fill="#fffaf0" stroke="#181614" stroke-width="4"/>
+                <rect x="1240" y="366" width="126" height="16" fill="#181614"/>
+                <rect x="1240" y="414" width="88" height="88" fill="#5f7659"/>
+                <rect x="1240" y="526" width="118" height="10" fill="#a94a36"/>
+                <text x="1190" y="648" font-size="19" fill="#6c645b">让选择变得不慌。</text>
+              </g>
+              <path d="M245 762 C442 816 630 816 802 760 C996 697 1150 714 1348 776" fill="none" stroke="#a94a36" stroke-width="7" stroke-linecap="round"/>
+              <text x="116" y="828" font-family="Arial" font-size="22" fill="#6c645b">入口不是装饰在最前面的那块东西，而是把观看者从外面带到里面的那段关系。</text>
+            </svg>
+            <figcaption>图解：入口感发生在“还没有真正开始”的位置。它不负责讲完所有内容，只负责让人愿意开始。</figcaption>
+          </figure>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner grid">
+        <div class="label">02 · Why it works</div>
+        <article>
+          <h2>好的入口，会替人省下一点力气</h2>
+          <p>很多设计的问题，不是信息不够，而是把人拦在了开始处。门口堆太满，读者不知道哪里是重点；封面太用力，反而看不出内容的性格；页面首屏太热闹，像同时伸出十只手来拉你。</p>
+          <p>入口感好的设计，通常有一个安静的顺序：先给方向，再给理由，最后给选择。它不会把所有精彩都塞在最前面，也不会让人一开始就面对复杂结构。</p>
+          <p>这件事很日常。餐厅门口的菜单，如果先把招牌菜、价格区间和排队方式说清楚，人就不容易尴尬。一本书封面，如果先让人知道它是冷静的、轻快的、严肃的，读者拿起来时会更有预期。一个 App 首屏，如果先让你知道“我现在在哪里”，后面的操作才不紧张。</p>
+          <div class="quote">入口感不是讨好眼睛，而是照顾一个人刚开始接触时的犹豫。</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner">
+        <div class="grid">
+          <div class="label">03 · Places</div>
+          <article>
+            <h2>三个容易练习的入口</h2>
+            <p>入口感的练习不需要特殊场景。你今天出门、买东西、打开手机，都会经过很多小入口。</p>
+          </article>
+        </div>
+        <div class="routes">
+          <article class="route">
+            <div class="route-mark" aria-hidden="true"></div>
+            <div>
+              <h3>店铺门口</h3>
+              <p>看招牌、灯光、门、陈列和通道是否指向同一个邀请。如果每个元素都想抢先说话，门口就会变得吵。</p>
+            </div>
+          </article>
+          <article class="route">
+            <div class="route-mark" aria-hidden="true"></div>
+            <div>
+              <h3>书和包装的正面</h3>
+              <p>看它有没有在三秒内说明类型、语气和重要信息。好的正面不是把所有卖点堆上去，而是给人一个准确的预期。</p>
+            </div>
+          </article>
+          <article class="route">
+            <div class="route-mark" aria-hidden="true"></div>
+            <div>
+              <h3>网页或 App 的首屏</h3>
+              <p>看第一屏有没有明确的主句、焦点和行动位置。入口太复杂，后面的功能再完整，也会先损失信任。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner">
+        <div class="grid">
+          <div class="label">04 · Checks</div>
+          <article>
+            <h2>判断入口感，看四件小事</h2>
+            <p>入口不是越亮越好，也不是越极简越好。它要做的是让人顺利开始。下面四件事，比风格更可靠。</p>
+          </article>
+        </div>
+        <div class="checks">
+          <div class="check"><i aria-hidden="true"></i><b>01 第一眼有没有落点</b><p>标题、标志、图像或动作入口，至少要有一个先被看见。没有落点，人会在门口停住。</p></div>
+          <div class="check"><i aria-hidden="true"></i><b>02 信息有没有先后</b><p>入口处不适合平铺所有细节。先让人知道这是什么，再解释为什么值得继续。</p></div>
+          <div class="check"><i aria-hidden="true"></i><b>03 情绪是否准确</b><p>入口的语气要和里面一致。外面装得热闹，里面却很冷，读者会觉得被误导。</p></div>
+          <div class="check"><i aria-hidden="true"></i><b>04 动线是否清楚</b><p>门往哪里开，按钮在哪里，下一步是什么，都属于审美。顺畅本身就是一种好看。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner grid">
+        <div class="label">05 · Restraint</div>
+        <article>
+          <h2>不要把入口做成全部</h2>
+          <p>入口感最容易被误解成“前面一定要炸”。于是店门口越来越亮，封面越来越大字，首页越来越像广告牌。短时间看是有存在感，久了会让人累。</p>
+          <p>真正舒服的入口，常常更克制。它不急着证明自己，而是把必要的线索放在正确的位置：一个清楚的名字，一段不费解的说明，一个足够明显但不刺眼的动作，一个能让人稍微停一下的空处。</p>
+          <p>我喜欢这种入口。它像有人把门打开，但没有站在门口用力推你。你可以自己决定走进去，而不是被视觉噪音赶进去。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section practice">
+      <div class="inner grid">
+        <div class="label">06 · Practice</div>
+        <article>
+          <h2>今天的练习</h2>
+          <p class="muted">找三个你今天一定会经过的入口：一个真实门口、一个商品正面、一个手机页面。不要急着说好看不好看，只看它有没有让你顺利开始。</p>
+          <div class="steps">
+            <div class="step"><span>1</span><p>先用三秒钟判断：你第一眼看到了什么，它是不是入口最该被看见的东西。</p></div>
+            <div class="step"><span>2</span><p>再看第二步：看完第一眼之后，你知道该往哪里走、拿起什么、点击什么吗。</p></div>
+            <div class="step"><span>3</span><p>最后看语气：入口给你的期待，和里面真正的内容是否一致。</p></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="reflection">
+      <div>
+        <p>好的入口，不是把人吸进去，而是让人不再需要犹豫。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="brand">
+      <strong>审美的逻辑</strong>
+      <small>有关视觉、设计与判断力</small>
+    </span>
+    <span class="powered">ISSUE 026 · 2026-06-29</span>
+  </footer>
+</body>
+</html>

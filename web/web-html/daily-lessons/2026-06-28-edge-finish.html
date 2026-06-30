@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>边缘：为什么收口会暴露审美</title>
+  <style>
+    :root{
+      --paper:#f3eadf;
+      --paper-2:#dfd0c0;
+      --ink:#181513;
+      --muted:#6b6259;
+      --line:#d4c3b2;
+      --cream:#fffaf0;
+      --rust:#a84b36;
+      --blue:#215f70;
+      --olive:#68724f;
+      --ochre:#a77a32;
+      --dark:#23201d;
+      --serif:Georgia,"Times New Roman","Songti SC","SimSun",serif;
+      --sans:-apple-system,BlinkMacSystemFont,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Arial,sans-serif;
+    }
+    *{box-sizing:border-box}
+    html{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.84;letter-spacing:0}
+    body{margin:0;overflow-x:hidden;background:linear-gradient(90deg,rgba(24,21,19,.04) 1px,transparent 1px) 0 0/78px 78px,linear-gradient(0deg,rgba(24,21,19,.032) 1px,transparent 1px) 0 0/78px 78px,var(--paper)}
+    svg{display:block;max-width:100%;height:auto}
+    .hero{min-height:88vh;padding:54px clamp(22px,5vw,78px) 58px;display:grid;align-items:end;position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+    .hero:before{content:"";position:absolute;right:clamp(-160px,-9vw,-44px);top:9vh;width:min(58vw,700px);height:min(66vh,640px);background:linear-gradient(135deg,rgba(255,250,240,.94),rgba(223,208,192,.88));border:1px solid rgba(24,21,19,.12);clip-path:polygon(0 0,100% 0,100% 82%,82% 100%,0 100%);transform:rotate(2deg)}
+    .hero:after{content:"";position:absolute;right:clamp(30px,8vw,140px);top:17vh;width:min(39vw,480px);height:min(48vh,450px);background:linear-gradient(90deg,transparent 0 9%,rgba(24,21,19,.16) 9% 10%,transparent 10% 100%),linear-gradient(0deg,transparent 0 87%,rgba(24,21,19,.18) 87% 88%,transparent 88% 100%),radial-gradient(circle at 73% 30%,var(--rust) 0 12%,transparent 12.3%),linear-gradient(145deg,var(--cream) 0 40%,var(--blue) 40% 58%,var(--olive) 58% 100%);box-shadow:18px 18px 0 rgba(24,21,19,.13);clip-path:polygon(0 0,100% 0,100% 80%,80% 100%,0 100%);transform:rotate(2deg)}
+    .hero-grid{position:relative;z-index:1;width:min(1180px,100%);margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,430px);gap:clamp(34px,6vw,92px);align-items:end}
+    .kicker{margin:0 0 26px;color:var(--rust);font-size:13px;font-weight:760;letter-spacing:.12em;text-transform:uppercase}
+    h1{margin:0;font-family:var(--serif);font-size:clamp(50px,7.4vw,112px);line-height:1;font-weight:500}
+    .title-line{display:block}
+    .hero-note{border-top:2px solid var(--ink);padding-top:24px}
+    .hero-note p{margin:0;color:var(--muted);font-size:clamp(18px,1.5vw,22px);line-height:1.76}
+    .meta{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap}
+    .tag{border:1px solid var(--line);background:rgba(255,250,240,.72);color:var(--muted);padding:8px 12px;font-size:14px;line-height:1}
+    .band{background:var(--dark);color:var(--cream);padding:48px clamp(22px,5vw,78px)}
+    .edge-stage{width:min(1160px,100%);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,250,240,.22);border:1px solid rgba(255,250,240,.18)}
+    .panel{background:#171514;padding:clamp(24px,4vw,42px);min-height:390px;display:grid;align-content:space-between}
+    .panel h2{margin:0 0 22px;color:var(--cream);font-family:var(--serif);font-size:34px;line-height:1.1;font-weight:500}
+    .specimen{min-height:230px;position:relative;background:var(--cream);overflow:hidden}
+    .loose .specimen{clip-path:polygon(0 0,96% 0,100% 8%,100% 100%,4% 100%,0 94%)}
+    .held .specimen{clip-path:polygon(0 0,100% 0,100% 82%,82% 100%,0 100%)}
+    .specimen:before{content:"";position:absolute;left:34px;top:34px;width:54%;height:20px;background:var(--ink)}
+    .specimen:after{content:"";position:absolute;left:34px;bottom:34px;width:42%;height:70px;background:repeating-linear-gradient(0deg,rgba(24,21,19,.26) 0 5px,transparent 5px 15px)}
+    .loose .specimen span{position:absolute;background:var(--rust)}
+    .loose .specimen span:nth-child(1){right:-18px;top:26px;width:80px;height:80px;transform:rotate(12deg)}
+    .loose .specimen span:nth-child(2){left:18px;bottom:-14px;width:68%;height:22px}
+    .held .specimen span{position:absolute;background:var(--blue)}
+    .held .specimen span:nth-child(1){right:0;top:0;width:26px;height:100%}
+    .held .specimen span:nth-child(2){right:26px;bottom:0;width:132px;height:26px;background:var(--ochre)}
+    .panel p{margin:24px 0 0;color:rgba(255,250,240,.76);font-size:16px;line-height:1.76}
+    .section{padding:76px clamp(22px,5vw,78px);border-bottom:1px solid var(--line)}
+    .inner{width:min(1080px,100%);margin:0 auto}
+    .grid{display:grid;grid-template-columns:minmax(150px,220px) minmax(0,760px);gap:clamp(32px,6vw,78px);align-items:start}
+    .label{position:sticky;top:24px;color:var(--rust);font-size:13px;font-weight:760;letter-spacing:.12em;text-transform:uppercase}
+    h2{margin:0 0 24px;font-family:var(--serif);font-size:clamp(34px,4.1vw,58px);line-height:1.08;font-weight:500}
+    h3{margin:30px 0 12px;font-size:20px;line-height:1.45}
+    p{margin:0 0 19px}
+    .lead{font-size:clamp(22px,2.25vw,30px);line-height:1.52}
+    .muted{color:var(--muted)}
+    .figure{margin:40px 0;border-top:2px solid var(--ink);border-bottom:1px solid var(--line);padding:18px 0 16px}
+    figcaption{color:var(--muted);font-size:15px;line-height:1.7;margin-top:12px}
+    .quote{margin:38px 0;padding-top:28px;border-top:2px solid var(--blue);font-family:var(--serif);font-size:clamp(27px,3vw,40px);line-height:1.28}
+    .checks{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:34px;background:var(--line);border:1px solid var(--line)}
+    .check{background:var(--cream);min-height:244px;padding:23px 18px}
+    .check i{display:block;width:100%;height:76px;margin-bottom:20px;background:var(--paper);border:1px solid rgba(24,21,19,.08)}
+    .check:nth-child(1) i{background:linear-gradient(90deg,var(--paper) 0 12%,var(--rust) 12% 18%,var(--cream) 18% 82%,var(--rust) 82% 88%,var(--paper) 88% 100%)}
+    .check:nth-child(2) i{background:linear-gradient(135deg,var(--cream) 0 46%,var(--blue) 46% 54%,var(--paper) 54% 100%)}
+    .check:nth-child(3) i{background:radial-gradient(circle at 18% 18%,var(--ochre) 0 11%,transparent 11.4%),radial-gradient(circle at 82% 82%,var(--olive) 0 9%,transparent 9.4%),linear-gradient(90deg,var(--cream) 0 72%,var(--ink) 72% 74%,var(--cream) 74% 100%)}
+    .check:nth-child(4) i{background:linear-gradient(90deg,var(--cream) 0 20%,var(--ink) 20% 21%,var(--cream) 21% 79%,var(--ink) 79% 80%,var(--cream) 80% 100%),linear-gradient(0deg,var(--paper) 0 24%,transparent 24% 100%)}
+    .check b{display:block;margin-bottom:12px;color:var(--rust);font-size:15px;line-height:1.38}
+    .check p{font-size:16px;line-height:1.72;color:var(--muted);margin:0}
+    .scenes{display:grid;gap:1px;margin-top:34px;background:var(--line);border:1px solid var(--line)}
+    .scene{background:var(--cream);padding:24px;display:grid;grid-template-columns:150px 1fr;gap:28px;align-items:center}
+    .scene-mark{min-height:112px;display:grid;place-items:center;background:var(--paper);font-family:var(--serif);font-size:38px;color:var(--blue)}
+    .scene h3{margin:0 0 8px}
+    .scene p{margin:0;color:var(--muted);font-size:17px;line-height:1.72}
+    .exercise{background:var(--blue);color:var(--cream)}
+    .exercise .label,.exercise .muted{color:rgba(255,250,240,.74)}
+    .exercise h2{color:var(--cream)}
+    .steps{display:grid;gap:1px;margin-top:34px;background:rgba(255,250,240,.24);border:1px solid rgba(255,250,240,.2)}
+    .step{display:grid;grid-template-columns:82px 1fr;gap:24px;background:var(--blue);padding:24px}
+    .step span{color:var(--ochre);font-family:var(--serif);font-size:38px;line-height:1}
+    .step p{margin:0;color:rgba(255,250,240,.86);font-size:17px;line-height:1.78}
+    .reflection{padding:88px clamp(22px,5vw,78px);background:var(--paper-2)}
+    .reflection div{width:min(940px,100%);margin:0 auto}
+    .reflection p{font-family:var(--serif);font-size:clamp(34px,5vw,66px);line-height:1.1;margin:0}
+    .footer{padding:28px clamp(22px,5vw,78px);color:var(--muted);font-size:14px;display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
+    .brand{display:grid;gap:3px}.brand strong{color:var(--ink);font-size:15px}.brand small{font-size:14px;color:var(--muted)}.powered{white-space:nowrap}
+    @media(max-width:960px){.hero-grid,.grid,.edge-stage{grid-template-columns:1fr}.label{position:static}.checks{grid-template-columns:1fr 1fr}.hero:before{opacity:.48;right:-38vw;width:94vw}.hero:after{right:-12vw;width:82vw}}
+    @media(max-width:680px){html{font-size:18px}.hero{min-height:auto;padding-top:40px;padding-bottom:44px}.title-line{white-space:normal}h1{font-size:clamp(42px,11vw,64px)}.hero-note p{font-size:18px}.section{padding:48px 22px}.band{padding:36px 22px}.panel{min-height:auto}.specimen{min-height:178px}.checks{grid-template-columns:1fr}.check{min-height:auto;padding:19px 18px}.scene{grid-template-columns:1fr;gap:18px;padding:20px}.scene-mark{min-height:96px}.step{grid-template-columns:1fr;gap:8px}.reflection{padding:58px 22px}.powered{font-size:14px}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-grid">
+      <div>
+        <p class="kicker">审美的逻辑 · ISSUE 025 · 2026-06-28</p>
+        <h1><span class="title-line">边缘：</span><span class="title-line">为什么收口</span><span class="title-line">会暴露审美</span></h1>
+      </div>
+      <div class="hero-note">
+        <p>很多东西第一眼还不错，靠近之后却松了。问题常常出在边缘：图案怎么停下来，圆角怎么转过去，文字离边界多远，材质在哪里结束。</p>
+        <div class="meta"><span class="tag">日常设计</span><span class="tag">版式</span><span class="tag">5 分钟</span></div>
+      </div>
+    </div>
+  </header>
+
+  <section class="band">
+    <div class="edge-stage" aria-label="边缘松散与收口克制的对照">
+      <article class="panel loose">
+        <h2>边缘散掉了</h2>
+        <div class="specimen" aria-hidden="true"><span></span><span></span></div>
+        <p>主体还算干净，但角落随意、图形顶边、底部像没想好。眼睛会从边缘漏出去。</p>
+      </article>
+      <article class="panel held">
+        <h2>边缘收住了</h2>
+        <div class="specimen" aria-hidden="true"><span></span><span></span></div>
+        <p>边界清楚，转角有分寸，元素没有贴着边逃跑。画面因此显得更稳，也更像完成品。</p>
+      </article>
+    </div>
+  </section>
+
+  <main>
+    <section class="section">
+      <div class="inner grid">
+        <div class="label">01 · Start here</div>
+        <article>
+          <p class="lead">审美最容易露怯的地方，往往不是中心，而是边缘。</p>
+          <p>中心太容易被照顾。标题会被放大，主图会被修好，颜色会被反复挑。边缘却常常被当成“剩下的地方”：包装的开口、页面的四周、海报的角落、家具的接缝、衣服的下摆。</p>
+          <p>但观看不是只看中间。眼睛会顺着形状走到边界，手会摸到物件的收口，手机页面会在滚动和切换时暴露那些没处理好的边。一个东西到底有没有被认真完成，边缘会比中心更诚实。</p>
+          <p>我说的边缘，不只是线条外框。它更像一种结束方式：信息在哪里停，颜色在哪里停，材料在哪里停，动作在哪里停。收口不好，东西会显得毛、薄、临时；收口稳，气质就立住了。</p>
+          <figure class="figure">
+            <svg viewBox="0 0 1600 900" role="img" aria-labelledby="edge-title edge-desc">
+              <title id="edge-title">边缘收口的四个观察位置</title>
+              <desc id="edge-desc">展示边距、转角、裁切和接缝如何共同影响完整感。</desc>
+              <rect width="1600" height="900" fill="#f3eadf"/>
+              <text x="88" y="94" font-family="Arial" font-size="30" font-weight="700" fill="#181513">EDGE / 收口是设计的最后一口气</text>
+              <text x="88" y="134" font-family="Arial" font-size="21" fill="#6b6259">边缘不是装饰，它决定一个东西看起来像完成了，还是还在临时拼凑。</text>
+              <rect x="116" y="210" width="1368" height="500" fill="#fffaf0" stroke="#181513" stroke-width="4"/>
+              <g stroke="#d4c3b2" stroke-width="2">
+                <line x1="116" y1="460" x2="1484" y2="460"/>
+                <line x1="458" y1="210" x2="458" y2="710"/>
+                <line x1="800" y1="210" x2="800" y2="710"/>
+                <line x1="1142" y1="210" x2="1142" y2="710"/>
+              </g>
+              <g font-family="Arial">
+                <text x="168" y="278" font-size="25" font-weight="700" fill="#181513">边距</text>
+                <rect x="178" y="328" width="190" height="250" fill="#f3eadf" stroke="#181513" stroke-width="4"/>
+                <rect x="202" y="354" width="116" height="22" fill="#181513"/>
+                <rect x="202" y="420" width="140" height="12" fill="#6b6259"/>
+                <rect x="202" y="452" width="92" height="12" fill="#6b6259"/>
+                <text x="164" y="648" font-size="19" fill="#6b6259">离边太近，会像急着逃走。</text>
+
+                <text x="510" y="278" font-size="25" font-weight="700" fill="#181513">转角</text>
+                <path d="M532 342 H682 V512 H532 Z" fill="#215f70"/>
+                <path d="M560 370 H654 V484 H560 Z" fill="#fffaf0"/>
+                <circle cx="682" cy="342" r="18" fill="#a84b36"/>
+                <text x="506" y="648" font-size="19" fill="#6b6259">圆角要服务材料和手感。</text>
+
+                <text x="852" y="278" font-size="25" font-weight="700" fill="#181513">裁切</text>
+                <rect x="862" y="328" width="200" height="250" fill="#181513"/>
+                <circle cx="1012" cy="372" r="72" fill="#a77a32"/>
+                <rect x="886" y="502" width="120" height="24" fill="#fffaf0"/>
+                <text x="848" y="648" font-size="19" fill="#6b6259">切到哪里，决定语气是准还是乱。</text>
+
+                <text x="1194" y="278" font-size="25" font-weight="700" fill="#181513">接缝</text>
+                <rect x="1204" y="344" width="210" height="190" fill="#f3eadf" stroke="#181513" stroke-width="4"/>
+                <line x1="1310" y1="344" x2="1310" y2="534" stroke="#a84b36" stroke-width="8"/>
+                <line x1="1204" y1="438" x2="1414" y2="438" stroke="#68724f" stroke-width="8"/>
+                <text x="1190" y="648" font-size="19" fill="#6b6259">接缝干净，物件才有完成感。</text>
+              </g>
+              <text x="116" y="812" font-family="Arial" font-size="22" fill="#6b6259">下次看一个东西，别急着看主角。先沿着四周走一圈，很多判断会自己出现。</text>
+            </svg>
+            <figcaption>图解：边缘的四个常见观察点。边距、转角、裁切和接缝都在回答同一个问题：这个东西有没有被好好结束。</figcaption>
+          </figure>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner grid">
+        <div class="label">02 · Finish</div>
+        <article>
+          <h2>收口不好，东西会显得临时</h2>
+          <p>有些包装，正面图案很好看，可一到开口、折线、贴纸边缘，就突然变得粗糙。你会感觉它只设计了被拍照的那一面，没有设计被拿起来的那一刻。</p>
+          <p>页面也是一样。一个弹窗中间的信息很清楚，按钮也醒目，但四周留白忽宽忽窄，圆角和阴影没有关系，底部文字贴着边界，整个东西就像刚从别处复制过来。</p>
+          <p>收口不是把边框加粗，也不是把圆角调大。它是让元素知道自己在哪里停下。该留出的地方留出来，该切干净的地方切干净，该让材料延续的地方不要突然断掉。</p>
+          <div class="quote">边缘处理得好，设计会有一种安静的完成感。</div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner">
+        <div class="grid">
+          <div class="label">03 · Checks</div>
+          <article>
+            <h2>四个当天就能用的观察</h2>
+            <p>边缘感不需要专业软件。你今天拿起一盒茶、打开一个 App、翻一本书，顺着四周看一圈，就能练习。</p>
+          </article>
+        </div>
+        <div class="checks">
+          <div class="check"><i aria-hidden="true"></i><b>01 看离边界的距离</b><p>文字、按钮、图案不能只是“不碰到边”。好的边距会让内容有安放感，而不是勉强塞进去。</p></div>
+          <div class="check"><i aria-hidden="true"></i><b>02 看转角是否有性格</b><p>圆角太软会显得玩具化，直角太硬会显得冷。角的处理要和材料、场景、语气一致。</p></div>
+          <div class="check"><i aria-hidden="true"></i><b>03 看裁切是否有判断</b><p>图片和图形被切掉一点，可能很有力量；也可能只是误伤。关键是切口有没有明确的观看理由。</p></div>
+          <div class="check"><i aria-hidden="true"></i><b>04 看结束是否干净</b><p>线条、色块、纹理、阴影都要知道在哪里停。拖泥带水的边缘，会让整体显得没有精神。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner grid">
+        <div class="label">04 · Restraint</div>
+        <article>
+          <h2>高级感有时只是没有漏气</h2>
+          <p>我不太愿意把所有审美问题都归到“高级感”。这个词太方便，也太容易把判断说空。但如果一定要说，很多所谓高级，确实来自边缘没有漏气。</p>
+          <p>一张海报四周留白稳定，画面就会显得有底气。一件衣服下摆收得干净，布料才显得有重量。一本书的书脊、封口、内页边距彼此照应，内容才像被完整地托住。</p>
+          <p>好的收口通常不抢戏。它不会让人第一眼惊呼，但会让人靠近之后没有失望。很多设计的分寸，就藏在这种不让人分心的地方。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="inner">
+        <div class="grid">
+          <div class="label">05 · Scenes</div>
+          <article>
+            <h2>三个最容易练习的地方</h2>
+            <p>边缘是日常里非常慷慨的老师。它不需要你知道风格名称，只要求你多看半秒。</p>
+          </article>
+        </div>
+        <div class="scenes">
+          <article class="scene">
+            <div class="scene-mark">盒</div>
+            <div>
+              <h3>包装的开口和折线</h3>
+              <p>看图案有没有把折线当成障碍，开口处有没有突然破坏正面的秩序。好包装会把被打开的动作也算进去。</p>
+            </div>
+          </article>
+          <article class="scene">
+            <div class="scene-mark">屏</div>
+            <div>
+              <h3>手机页面的四周</h3>
+              <p>看标题、图片、按钮和底部说明离屏幕边缘的距离。边距不稳，页面再漂亮也会显得临时。</p>
+            </div>
+          </article>
+          <article class="scene">
+            <div class="scene-mark">物</div>
+            <div>
+              <h3>家具和衣物的接缝</h3>
+              <p>看转角、包边、缝线和材料交接。一个物件是否耐看，常常在这些不被宣传的地方决定。</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section exercise">
+      <div class="inner grid">
+        <div class="label">06 · Practice</div>
+        <article>
+          <h2>今天的练习</h2>
+          <p class="muted">找一个你每天都会碰到的东西：手机壳、杯子、外卖袋、书、App 弹窗都可以。不要先评价它好不好看，只沿着边缘看一圈。</p>
+          <div class="steps">
+            <div class="step"><span>1</span><p>先看边距：内容是不是有地方站住，还是被挤到四周。</p></div>
+            <div class="step"><span>2</span><p>再看转角和接缝：它们是自然结束，还是像后补上去。</p></div>
+            <div class="step"><span>3</span><p>最后看整体感觉：边缘有没有让主体更稳，或者偷偷把主体拖垮。</p></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="reflection">
+      <div>
+        <p>设计的最后一步，不是再加一个亮点，而是把每个地方好好结束。</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span class="brand">
+      <strong>审美的逻辑</strong>
+      <small>有关视觉、设计与判断力</small>
+    </span>
+    <span class="powered">ISSUE 025 · 2026-06-28</span>
+  </footer>
+</body>
+</html>
